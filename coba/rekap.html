@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Rekap Bulanan</title>
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f3f4f6;
+  color:#0f172a;
+}
+
+.dashboard-layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* ======================
+SIDEBAR
+====================== */
+
+.sidebar{
+
+  width:260px;
+
+  background:
+  linear-gradient(
+    180deg,
+    #052e1b,
+    #06351f,
+    #041f14
+  );
+
+  padding:24px 16px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+  height:100vh;
+
+  overflow:hidden;
+}
+
+.sidebar::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  radial-gradient(
+    circle at top right,
+    rgba(32,201,111,0.16),
+    transparent 45%
+  );
+
+  pointer-events:none;
+}
+
+.logo{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  color:white;
+
+  margin-bottom:40px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.logo span{
+
+  font-size:16px;
+
+  font-weight:700;
+}
+
+.logo-icon{
+
+  width:44px;
+  height:44px;
+
+  border-radius:14px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+  rgba(255,255,255,0.08);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+}
+
+.logo-icon i{
+
+  font-size:22px;
+
+  color:#8dff9d;
+}
+
+.sidebar-menu{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:8px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.sidebar-item{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  padding:16px 18px;
+
+  border-radius:18px;
+
+  color:rgba(255,255,255,0.82);
+
+  text-decoration:none;
+
+  font-size:15px;
+
+  font-weight:500;
+
+  transition:.25s;
+}
+
+.sidebar-item i{
+
+  width:20px;
+
+  text-align:center;
+}
+
+.sidebar-item:hover{
+
+  background:
+  rgba(255,255,255,0.08);
+
+  color:white;
+}
+
+.sidebar-item.active{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0a6b2d,
+    #11853c
+  );
+
+  color:white;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,0.15);
+}
+
+.sidebar-title{
+
+  color:rgba(255,255,255,0.45);
+
+  font-size:12px;
+
+  font-weight:600;
+
+  margin:
+  24px 14px 8px;
+}
+
+.sidebar-submenu{
+  margin-left:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.sidebar-submenu .sidebar-item{
+  padding:12px 16px;
+  font-size:14px;
+}
+
+.sidebar-profile{
+
+  position:relative;
+
+  z-index:2;
+
+  background:
+  rgba(255,255,255,0.06);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  border-radius:22px;
+
+  padding:16px;
+
+  color:white;
+}
+
+.profile-top{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+}
+
+.profile-avatar{
+
+  width:46px;
+  height:46px;
+
+  border-radius:50%;
+
+  background:#1ec45d;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-weight:700;
+}
+
+/* ======================
+MAIN
+====================== */
+
+.main-content{
+
+  flex:1;
+
+  margin-left:260px;
+
+  padding:24px;
+
+  max-width:calc(100vw - 260px);
+}
+
+/* ======================
+TOPBAR
+====================== */
+
+.topbar{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  margin-bottom:24px;
+}
+
+.topbar h1{
+
+  font-size:44px;
+
+  font-weight:800;
+
+  color:#0f172a;
+
+  margin-bottom:6px;
+}
+
+.topbar p{
+
+  color:#64748b;
+
+  font-size:15px;
+  line-height:1.5;
+}
+
+.topbar-right{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:16px;
+}
+
+.date-box{
+
+  background:#ffffff;
+
+  border:1px solid #e2e8f0;
+
+  border-radius:16px;
+
+  padding:14px 20px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  font-weight:600;
+  font-size:14px;
+  color:#0f172a;
+}
+
+.date-box i{
+  font-size:18px;
+  color:#64748b;
+}
+
+/* ======================
+MODE FILTER
+====================== */
+
+.mode-filter{
+  display:flex;
+  gap:10px;
+  margin-bottom:24px;
+}
+
+.mode-btn{
+  padding:10px 24px;
+  border-radius:14px;
+  border:1px solid #d0d5dd;
+  background:#ffffff;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  transition:all 0.2s;
+  height:40px;
+  display:flex;
+  align-items:center;
+  color:#0f172a;
+}
+
+.mode-btn.active{
+  background:#11823b;
+  color:#ffffff;
+  border-color:#11823b;
+  box-shadow:0 2px 8px rgba(17,130,59,0.2);
+}
+
+.mode-btn:not(.active):hover{
+  background:#f8fafc;
+  border-color:#94a3b8;
+}
+
+/* ======================
+FILTER BAR
+====================== */
+
+.filter-bar{
+  display:flex;
+  align-items:flex-end;
+  gap:16px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+.filter-item{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.filter-item label{
+  font-size:13px;
+  font-weight:600;
+  color:#64748b;
+}
+
+.filter-item input[type="date"],
+.filter-item input[type="month"],
+.filter-item select{
+  height:40px;
+  padding:0 14px;
+  border:1px solid #d0d5dd;
+  border-radius:10px;
+  background:#ffffff;
+  font-size:14px;
+  color:#0f172a;
+  outline:none;
+  min-width:200px;
+  transition:border-color 0.2s;
+}
+
+.filter-item input[type="date"]:focus,
+.filter-item select:focus{
+  border-color:#11823b;
+}
+
+.filter-btn{
+  height:40px;
+  padding:0 22px;
+  border:none;
+  border-radius:10px;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+
+.btn-green{
+  background:#11823b;
+  color:#ffffff;
+}
+
+.btn-green:hover{
+  background:#0f6d32;
+  box-shadow:0 2px 8px rgba(17,130,59,0.25);
+}
+
+/* ======================
+KPI STATS GRID
+====================== */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.stat-card{
+  background:#ffffff;
+  border-radius:20px;
+  padding:20px 24px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.04);
+  border:1px solid #f1f5f9;
+  min-height:90px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.stat-title{
+  font-size:13px;
+  font-weight:500;
+  color:#64748b;
+  margin-bottom:8px;
+}
+
+.stat-value{
+  font-size:24px;
+  font-weight:800;
+  color:#0a7a38;
+  letter-spacing:-0.3px;
+}
+
+/* ======================
+MODAL CARD PREMIUM
+====================== */
+
+.modal-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:32px;
+  padding:34px 38px;
+  margin-bottom:24px;
+  background:
+  linear-gradient(
+    135deg,
+    #032417,
+    #08562b,
+    #0b7d3d
+  );
+  color:white;
+}
+
+.modal-card::before{
+  content:"";
+  position:absolute;
+  right:-80px;
+  bottom:-80px;
+  width:400px;
+  height:400px;
+  border-radius:50%;
+  border:2px solid rgba(164,255,186,0.2);
+  pointer-events:none;
+}
+
+.modal-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+  linear-gradient(
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px
+  );
+  background-size:80px 80px;
+  opacity:0.15;
+  pointer-events:none;
+}
+
+.modal-card .modal-content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:18px;
+}
+
+.modal-card .modal-left{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.modal-card .modal-icon-wrap{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+}
+
+.modal-card .modal-label{
+  font-size:15px;
+  opacity:0.82;
+  margin-bottom:6px;
+}
+
+.modal-card .modal-value{
+  font-size:36px;
+  font-weight:800;
+  letter-spacing:-0.5px;
+}
+
+.modal-card .modal-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.modal-card input{
+  height:52px;
+  border:none;
+  border-radius:14px;
+  padding:0 18px;
+  font-size:18px;
+  font-weight:700;
+  color:#0a6b2d;
+  outline:none;
+  width:200px;
+  text-align:right;
+  background:rgba(255,255,255,0.95);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.modal-card input:focus{
+  background:white;
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
+}
+
+.modal-card .save-modal-btn{
+  height:52px;
+  padding:0 24px;
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:14px;
+  background:rgba(255,255,255,0.12);
+  color:white;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  transition:background 0.2s;
+  white-space:nowrap;
+}
+
+.modal-card .save-modal-btn:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+/* ======================
+DETAIL CARD
+====================== */
+
+.card{
+  background:#ffffff;
+  border-radius:24px;
+  padding:28px 28px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.04);
+  border:1px solid #f1f5f9;
+  margin-bottom:24px;
+}
+
+.card-header{
+  margin-bottom:20px;
+}
+
+.card-title{
+  font-size:18px;
+  font-weight:700;
+  color:#0f172a;
+}
+
+/* ======================
+TABLE
+====================== */
+
+.table-box{
+  border:1px solid #eef2f6;
+  border-radius:16px;
+  overflow:hidden;
+  overflow-x:auto;
+}
+
+table{
+
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+thead{
+
+  background:#f8fafc;
+}
+
+th{
+
+  padding:16px 18px;
+
+  text-align:left;
+
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.4px;
+  color:#64748b;
+
+  position:sticky;
+
+  top:0;
+
+  background:#f8fafc;
+
+  z-index:10;
+
+  border-bottom:1px solid #eef2f6;
+}
+
+td{
+
+  padding:16px 18px;
+
+  border-bottom:1px solid #f1f5f9;
+
+  font-size:14px;
+  color:#0f172a;
+}
+
+tbody tr:last-child td{
+  border-bottom:none;
+}
+
+tbody tr:hover{
+  background:#fafcff;
+}
+
+.green{
+  color:#0a7a38;
+  font-weight:700;
+}
+
+/* ======================
+REKAP AKHIR KPI STYLE
+====================== */
+
+.rekap-akhir-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.rekap-akhir-card{
+  background:white;
+  border:1px solid #edf1f3;
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.rekap-akhir-card .label{
+  font-size:13px;
+  color:#6c757d;
+  margin-bottom:10px;
+  font-weight:500;
+}
+
+.rekap-akhir-card .value{
+  font-size:28px;
+  font-weight:800;
+  color:#0a6b2d;
+  letter-spacing:-0.3px;
+}
+
+.editable-saldo{
+  font-size:28px;
+  font-weight:800;
+  color:#0a6b2d;
+  letter-spacing:-0.3px;
+  background:none;
+  border:1px solid transparent;
+  border-radius:10px;
+  padding:6px 10px;
+  width:100%;
+  outline:none;
+  font-family:'Inter',sans-serif;
+  cursor:text;
+  transition:border-color 0.2s, background 0.2s;
+}
+
+.editable-saldo:hover{
+  border-color:#d0d5dd;
+  background:#f8fafc;
+}
+
+.editable-saldo:focus{
+  border-color:#11823b;
+  background:#f0fdf4;
+}
+
+/* ======================
+DROPDOWN CHECKBOX
+====================== */
+
+.dropdown-checkbox{
+  position:relative;
+  width:240px;
+}
+
+.dropdown-checkbox-btn{
+  width:100%;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 14px;
+  border:1px solid #d0d5dd;
+  border-radius:10px;
+  background:white;
+  font-size:14px;
+  cursor:pointer;
+  color:#1c1c1c;
+  transition:border-color 0.2s;
+}
+
+.dropdown-checkbox-btn:hover{
+  border-color:#a0aab4;
+}
+
+.dropdown-checkbox-btn span{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.dropdown-checkbox-panel{
+  display:none;
+  position:absolute;
+  top:44px;
+  left:0;
+  width:100%;
+  background:white;
+  border:1px solid #d0d5dd;
+  border-radius:12px;
+  padding:4px 0;
+  z-index:999;
+  box-shadow:0 12px 32px rgba(0,0,0,0.1);
+  max-height:260px;
+  overflow-y:auto;
+}
+
+.dropdown-checkbox-panel.show{
+  display:block;
+}
+
+.dropdown-checkbox-panel label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 16px;
+  font-size:14px;
+  cursor:pointer;
+  color:#1c1c1c;
+  transition:background 0.15s;
+}
+
+.dropdown-checkbox-panel label:hover{
+  background:#f0f4f2;
+}
+
+.dropdown-checkbox-panel input[type="checkbox"]{
+  accent-color:#0a6b2d;
+  width:17px;
+  height:17px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+
+/* ======================
+HIDDEN
+====================== */
+
+.hidden{
+  display:none !important;
+}
+
+/* ======================
+MOBILE
+====================== */
+
+@media(max-width:1400px){
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:1100px){
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:768px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main-content{
+    margin-left:0;
+    padding:16px;
+    max-width:100%;
+  }
+
+  .topbar{
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .topbar h1{
+    font-size:30px;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .filter-bar{
+    flex-direction:column;
+  }
+
+  .filter-item select,
+  .filter-item input{
+    width:100%;
+    min-width:auto;
+  }
+
+  .mode-filter{
+    flex-wrap:wrap;
+  }
+
+  .rekap-akhir-grid{
+    grid-template-columns:1fr;
+  }
+
+  .modal-card{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .modal-card input{
+    max-width:100%;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  .date-box{
+    padding:12px 16px;
+  }
+
+  .stat-card{
+    padding:16px 20px;
+  }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div>
+
+<div class="logo">
+
+<div class="logo-icon">
+<i class="fa-solid fa-database"></i>
+</div>
+
+<span>Digital Report</span>
+
+</div>
+
+<div class="sidebar-menu">
+
+<a href="dashboard.html"
+class="sidebar-item">
+<i class="fa-solid fa-house"></i>
+Dashboard
+</a>
+
+<a href="input.html"
+class="sidebar-item">
+<i class="fa-solid fa-pen-to-square"></i>
+Input Laporan
+</a>
+
+<a href="database.html"
+class="sidebar-item">
+<i class="fa-solid fa-database"></i>
+Database
+</a>
+
+<a href="report.html"
+class="sidebar-item active">
+<i class="fa-regular fa-clipboard"></i>
+Report
+</a>
+
+<a href="akun.html" class="sidebar-item">
+  <i class="fa-solid fa-user"></i>
+  Akun
+</a>
+
+<div class="sidebar-title">
+  MASTER DATA
+</div>
+
+<a href="report.html" class="sidebar-item">
+  <i class="fa-solid fa-chart-line"></i>
+  Trend
+</a>
+
+<a href="rekap.html" class="sidebar-item active">
+  <i class="fa-regular fa-calendar"></i>
+  Rekap Bulanan
+</a>
+
+<a href="pelanggan.html" class="sidebar-item">
+  <i class="fa-solid fa-user-group"></i>
+  Data Pelanggan
+</a>
+
+</div>
+
+</div>
+
+<div class="sidebar-profile">
+
+<div class="profile-top">
+
+<div class="profile-avatar">
+T
+</div>
+
+<div>
+
+<h4>Tokosayyida</h4>
+
+<p style="opacity:.7;font-size:13px;">
+Admin
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main-content">
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div>
+
+<h1>
+Rekap Keuangan
+</h1>
+
+<p>
+Pantau rekap harian dan bulanan berdasarkan laporan yang telah difinalisasi
+</p>
+
+</div>
+
+<div class="topbar-right">
+
+<div class="date-box">
+<i class="fa-regular fa-calendar"></i>
+<span id="todayDate"></span>
+</div>
+
+</div>
+
+</div>
+
+<!-- MODE FILTER -->
+
+<div class="mode-filter">
+
+<button class="mode-btn active" id="modeHarianBtn" onclick="setMode('harian')">
+<i class="fa-regular fa-calendar-check"></i>
+&nbsp; Rekap Harian
+</button>
+
+<button class="mode-btn" id="modeBulananBtn" onclick="setMode('bulanan')">
+<i class="fa-regular fa-calendar-alt"></i>
+&nbsp; Rekap Bulanan
+</button>
+
+</div>
+
+<!-- ============================
+MODE HARIAN
+============================ -->
+
+<div id="modeHarian">
+
+<!-- FILTER HARIAN -->
+
+<div class="filter-bar">
+
+<div class="filter-item">
+<label>Pilih Bulan</label>
+<input type="month" id="filterTanggalHarian">
+</div>
+
+<button class="filter-btn btn-green" onclick="loadRekapHarian()">
+<i class="fa-solid fa-magnifying-glass"></i>
+&nbsp; Tampilkan
+</button>
+
+</div>
+
+<!-- KPI HARIAN -->
+
+<div class="stats-grid" id="kpiHarian">
+
+<div class="stat-card">
+<div class="stat-title">Total Admin</div>
+<div class="stat-value" id="kpiHarianAdmin">Rp 0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-title">Total Admin Bank</div>
+<div class="stat-value" id="kpiHarianAdminBank">Rp 0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-title">Total Fee</div>
+<div class="stat-value" id="kpiHarianFee">Rp 0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-title">Total Transaksi</div>
+<div class="stat-value" id="kpiHarianTransaksi">0</div>
+</div>
+
+</div>
+
+<!-- TABEL HARIAN -->
+
+<div class="card">
+
+<div class="card-header">
+
+<div class="card-title">
+Detail Rekap Harian
+</div>
+
+</div>
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tanggal</th>
+<th>Cash Akhir</th>
+<th>Saldo Akhir</th>
+<th>Total Admin</th>
+<th>Admin Bank</th>
+<th>Fee</th>
+<th>Total Transaksi</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelHarianBody">
+
+<tr>
+<td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">
+Silakan pilih tanggal dan klik Tampilkan
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- REKAP AKHIR -->
+
+<div class="card">
+
+<div class="card-header">
+
+<div class="card-title">
+Rekap Akhir
+</div>
+
+</div>
+
+<div class="rekap-akhir-grid">
+
+<div class="rekap-akhir-card">
+<div class="label">Saldo Awal</div>
+<input class="value editable-saldo" id="saldoAwalInput" value="Rp 0" placeholder="Rp 0">
+</div>
+
+<div class="rekap-akhir-card">
+<div class="label">Saldo Akhir</div>
+<div class="value" id="saldoAkhirBulan">Rp 0</div>
+</div>
+
+<div class="rekap-akhir-card">
+<div class="label">Setoran / Hasil</div>
+<div class="value" id="setoranBulan">Rp 0</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================
+MODE BULANAN
+============================ -->
+
+<div id="modeBulanan" class="hidden">
+
+<!-- FILTER BULANAN -->
+
+<div class="filter-bar">
+
+<div class="filter-item">
+<label>Tahun</label>
+<select id="filterTahun"></select>
+</div>
+
+<div class="filter-item">
+<label>Pilih Bulan</label>
+<div class="dropdown-checkbox">
+<button class="dropdown-checkbox-btn" id="dropdownBulanBtn" onclick="toggleDropdownBulan()">
+<span id="dropdownBulanLabel">Semua Bulan</span>
+<i class="fa-solid fa-chevron-down" style="font-size:12px;"></i>
+</button>
+<div class="dropdown-checkbox-panel" id="dropdownBulanPanel">
+</div>
+</div>
+</div>
+
+<button class="filter-btn btn-green" onclick="loadRekapBulanan()">
+<i class="fa-solid fa-magnifying-glass"></i>
+&nbsp; Tampilkan
+</button>
+
+</div>
+
+<!-- TABEL BULANAN -->
+
+<div class="card">
+
+<div class="card-header">
+
+<div class="card-title">
+Detail Rekap Bulanan
+</div>
+
+</div>
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tahun</th>
+<th>Bulan</th>
+<th>Modal</th>
+<th>Admin</th>
+<th>Potongan Bank</th>
+<th>Fee</th>
+<th>Total Transaksi</th>
+<th>Pendapatan Bersih</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelBulananBody">
+
+<tr>
+<td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">
+Silakan pilih tahun/bulan dan klik Tampilkan
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+KONSTANTA & HELPERS
+========================= */
+
+const BULAN_NAMA = [
+'Januari','Februari','Maret','April','Mei','Juni',
+'Juli','Agustus','September','Oktober','November','Desember'
+];
+
+function formatDateKey(date){
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2,'0');
+  const d = String(date.getDate()).padStart(2,'0');
+  return y + '-' + m + '-' + d;
+}
+
+function parseDateKey(key){
+  const parts = key.split('-').map(Number);
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+function getLaporanStorageKey(date){
+  return 'laporan_' + date;
+}
+
+function parseRupiah(value){
+  return Number(
+    value.replace(/[^0-9]/g,'')
+  ) || 0;
+}
+
+function formatRupiah(number){
+  return 'Rp ' +
+  number.toLocaleString('id-ID');
+}
+
+function getTodayKey(){
+  return formatDateKey(new Date());
+}
+
+/* =========================
+NORMALISASI LAPORAN
+========================= */
+
+function normalizeLaporan(raw){
+  const parseArr = (val, fallback) => {
+    if(Array.isArray(val)) return val;
+    try{
+      return JSON.parse(val || fallback);
+    }catch(e){
+      return JSON.parse(fallback);
+    }
+  };
+  return {
+    cashPagi: raw.cashPagi || '',
+    saldoData: parseArr(raw.saldoData, '[]'),
+    transaksiData: parseArr(raw.transaksiData, '[]'),
+    mutasiData: parseArr(raw.mutasiData, '[]'),
+    feeFormula: raw.feeFormula || '',
+    feeTotal: Number(raw.feeTotal) || 0
+  };
+}
+
+/* =========================
+HITUNG REKAP PER TANGGAL
+========================= */
+
+function hitungRekapFromLaporan(laporan){
+  const cashPagi = parseRupiah(laporan.cashPagi || '0');
+  const saldoData = laporan.saldoData || [];
+  const transaksiData = laporan.transaksiData || [];
+  const mutasiData = laporan.mutasiData || [];
+  const feeTotal = Number(laporan.feeTotal) || 0;
+
+  const saldoAkhir = {};
+  saldoData.forEach(item => {
+    saldoAkhir[item.nama] = parseRupiah(item.nominal || '0');
+  });
+
+  let cashAkhir = cashPagi;
+  let totalAdmin = 0;
+  let totalAdminBank = 0;
+
+  const prosesBaris = (item, hitungAdminNasabah) => {
+    const nominal = parseRupiah(item.nominal || '0');
+    const admin = parseRupiah(item.admin || '0');
+    const adminBank = parseRupiah(item.adminBank || '0');
+
+    let arah = item.arah || '';
+    let cash = item.cash || '';
+    let sumber = item.SumberSaldo || '';
+
+    if(!arah || !cash){
+      const master = JSON.parse(localStorage.getItem('jenisTransaksiData') || '[]')
+        .find(j => String(j.nama || '').toLowerCase().trim() === String(item.jenis || '').toLowerCase().trim());
+      if(master){
+        if(!arah) arah = master.kategori || '';
+        if(!cash) cash = master.efek || '';
+        if(!sumber) sumber = master.SumberSaldo || '';
+      }
+    }
+
+    const isSaldoIn = String(arah || '').toLowerCase().includes('saldo in');
+    const isSaldoOut = String(arah || '').toLowerCase().includes('saldo out');
+    const isCashIn = String(cash || '').toLowerCase().includes('cash in');
+    const isCashOut = String(cash || '').toLowerCase().includes('cash out');
+
+    const keyNama = String(sumber || '').trim();
+    const key = saldoAkhir[keyNama] !== undefined ? keyNama :
+      Object.keys(saldoAkhir).find(k => k.toLowerCase() === keyNama.toLowerCase()) || null;
+
+    let deltaCash = 0;
+    let deltaSaldo = 0;
+
+    if(isCashIn && isSaldoOut){
+      deltaCash = nominal + admin;
+      if(key) deltaSaldo = -(nominal + adminBank);
+    }else if(isCashOut && isSaldoIn){
+      deltaCash = -nominal + admin;
+      if(key) deltaSaldo = nominal - adminBank;
+    }else{
+      if(isCashIn) deltaCash += nominal + admin;
+      if(isCashOut) deltaCash -= nominal;
+      if(key){
+        if(isSaldoIn) deltaSaldo += nominal - adminBank;
+        if(isSaldoOut) deltaSaldo -= nominal + adminBank;
+      }
+    }
+
+    cashAkhir += deltaCash;
+    if(key !== null) saldoAkhir[key] += deltaSaldo;
+
+    if(hitungAdminNasabah) totalAdmin += admin;
+    totalAdminBank += adminBank;
+  };
+
+  transaksiData.forEach(item => prosesBaris(item, true));
+  (mutasiData || []).forEach(item => prosesBaris(item, false));
+
+  if(saldoAkhir['Mesin EDC'] !== undefined){
+    saldoAkhir['Mesin EDC'] += feeTotal;
+  }
+
+  const totalSaldoAkhir = Object.values(saldoAkhir).reduce((a, b) => a + b, 0);
+
+  return {
+    cashAkhir,
+    totalSaldoAkhir,
+    totalAdmin,
+    totalAdminBank,
+    fee: feeTotal,
+    totalTransaksi: transaksiData.length
+  };
+}
+
+function getLaporanByDate(dateKey){
+  const raw = localStorage.getItem(getLaporanStorageKey(dateKey));
+  if(!raw) return null;
+  try{
+    return normalizeLaporan(JSON.parse(raw));
+  }catch(e){
+    return null;
+  }
+}
+
+/* =========================
+MODE FILTER
+========================= */
+
+function setMode(mode){
+  document.getElementById('modeHarian').classList.toggle('hidden', mode !== 'harian');
+  document.getElementById('modeBulanan').classList.toggle('hidden', mode !== 'bulanan');
+  document.getElementById('modeHarianBtn').classList.toggle('active', mode === 'harian');
+  document.getElementById('modeBulananBtn').classList.toggle('active', mode === 'bulanan');
+}
+
+/* =========================
+INIT TAHUN
+========================= */
+
+function initTahunSelect(){
+  const select = document.getElementById('filterTahun');
+  select.innerHTML = '';
+  const optAll = document.createElement('option');
+  optAll.value = '';
+  optAll.textContent = 'Semua Tahun';
+  optAll.selected = true;
+  select.appendChild(optAll);
+  const currentYear = new Date().getFullYear();
+  for(let y = currentYear; y >= 2020; y--){
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    select.appendChild(opt);
+  }
+}
+
+function initTanggalInput(){
+  const input = document.getElementById('filterTanggalHarian');
+  const now = new Date();
+  const tahun = now.getFullYear();
+  const bulan = String(now.getMonth() + 1).padStart(2, '0');
+  input.value = tahun + '-' + bulan;
+}
+
+/* =========================
+LOAD REKAP HARIAN
+========================= */
+
+function loadRekapHarian(){
+  const bulanStr = document.getElementById('filterTanggalHarian').value;
+  if(!bulanStr){
+    alert('Silakan pilih bulan terlebih dahulu');
+    return;
+  }
+
+  const parts = bulanStr.split('-');
+  const tahun = parseInt(parts[0]);
+  const bulan = parseInt(parts[1]);
+  const daysInMonth = new Date(tahun, bulan, 0).getDate();
+
+  let totalAdmin = 0;
+  let totalAdminBank = 0;
+  let totalFee = 0;
+  let totalTransaksi = 0;
+  let totalCashAkhir = 0;
+  let adaData = false;
+  let rowsHtml = '';
+
+  for(let day = 1; day <= daysInMonth; day++){
+    const dayStr = String(day).padStart(2, '0');
+    const monthStr = String(bulan).padStart(2, '0');
+    const dateKey = tahun + '-' + monthStr + '-' + dayStr;
+    const laporan = getLaporanByDate(dateKey);
+    if(!laporan) continue;
+
+    const rekap = hitungRekapFromLaporan(laporan);
+    totalAdmin += rekap.totalAdmin;
+    totalAdminBank += rekap.totalAdminBank;
+    totalFee += rekap.fee;
+    totalTransaksi += rekap.totalTransaksi;
+    totalCashAkhir += rekap.cashAkhir;
+    adaData = true;
+
+    const dt = parseDateKey(dateKey);
+    const tglLabel = dt.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+
+    rowsHtml += `
+      <tr>
+        <td>${tglLabel}</td>
+        <td class="green">${formatRupiah(rekap.cashAkhir)}</td>
+        <td class="green">${formatRupiah(rekap.totalSaldoAkhir)}</td>
+        <td class="green">${formatRupiah(rekap.totalAdmin)}</td>
+        <td>${formatRupiah(rekap.totalAdminBank)}</td>
+        <td class="green">${formatRupiah(rekap.fee)}</td>
+        <td>${rekap.totalTransaksi}</td>
+      </tr>
+    `;
+  }
+
+  if(!adaData){
+    document.getElementById('tabelHarianBody').innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">
+          Tidak ada laporan untuk bulan ${BULAN_NAMA[bulan - 1]} ${tahun}
+        </td>
+      </tr>
+    `;
+    document.getElementById('kpiHarianAdmin').textContent = 'Rp 0';
+    document.getElementById('kpiHarianAdminBank').textContent = 'Rp 0';
+    document.getElementById('kpiHarianFee').textContent = 'Rp 0';
+    document.getElementById('kpiHarianTransaksi').textContent = '0';
+    document.getElementById('saldoAkhirBulan').textContent = 'Rp 0';
+    document.getElementById('setoranBulan').textContent = 'Rp 0';
+  } else {
+    /* KPI */
+    document.getElementById('kpiHarianAdmin').textContent = formatRupiah(totalAdmin);
+    document.getElementById('kpiHarianAdminBank').textContent = formatRupiah(totalAdminBank);
+    document.getElementById('kpiHarianFee').textContent = formatRupiah(totalFee);
+    document.getElementById('kpiHarianTransaksi').textContent = totalTransaksi;
+
+    /* Simpan total bulanan untuk digunakan hitungSaldoAkhirDanSetoran */
+    window._rekapTotalAdmin = totalAdmin;
+    window._rekapTotalFee = totalFee;
+    window._rekapTotalAdminBank = totalAdminBank;
+
+    /* Hitung Saldo Akhir & Setoran dengan rumus baru */
+    hitungSaldoAkhirDanSetoran();
+
+    /* TABLE */
+    document.getElementById('tabelHarianBody').innerHTML = rowsHtml;
+  }
+}
+
+/* =========================
+LOAD REKAP BULANAN
+========================= */
+
+function initDropdownBulan(){
+  const panel = document.getElementById('dropdownBulanPanel');
+  panel.innerHTML = '';
+  BULAN_NAMA.forEach((nama, idx) => {
+    const bulan = idx + 1;
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" value="${bulan}"> ${nama}`;
+    panel.appendChild(label);
+  });
+
+  /* Tutup dropdown saat klik di luar */
+  document.addEventListener('click', function(e){
+    const dropdown = document.querySelector('.dropdown-checkbox');
+    if(dropdown && !dropdown.contains(e.target)){
+      document.getElementById('dropdownBulanPanel').classList.remove('show');
+    }
+  });
+}
+
+function toggleDropdownBulan(){
+  const panel = document.getElementById('dropdownBulanPanel');
+  panel.classList.toggle('show');
+}
+
+function getCheckedBulanList(){
+  const checkboxes = document.querySelectorAll('#dropdownBulanPanel input[type="checkbox"]');
+  const checked = [];
+  checkboxes.forEach(cb => {
+    if(cb.checked) checked.push(parseInt(cb.value));
+  });
+  return checked;
+}
+
+function updateDropdownLabel(){
+  const checked = getCheckedBulanList();
+  const label = document.getElementById('dropdownBulanLabel');
+  if(checked.length === 0){
+    label.textContent = 'Semua Bulan';
+  }else if(checked.length <= 2){
+    label.textContent = checked.map(b => BULAN_NAMA[b - 1]).join(', ');
+  }else{
+    label.textContent = checked.length + ' Bulan Dipilih';
+  }
+}
+
+/* Event listener untuk update label saat checkbox diklik */
+document.addEventListener('change', function(e){
+  if(e.target.closest('#dropdownBulanPanel')){
+    updateDropdownLabel();
+  }
+});
+
+function getSaldoAwalByBulan(tahun, bulan){
+  const key = 'rekapHarian_saldoAwal_' + tahun + '_' + String(bulan).padStart(2, '0');
+  return parseInt(localStorage.getItem(key)) || 0;
+}
+
+function getSemuaBulanDenganData(){
+  const bulanSet = {};
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('laporan_')){
+      const datePart = key.replace('laporan_', '');
+      const parts = datePart.split('-');
+      if(parts.length === 3){
+        const tahun = parseInt(parts[0]);
+        const bulan = parseInt(parts[1]);
+        if(!isNaN(tahun) && !isNaN(bulan)){
+          const keyBulan = tahun + '-' + String(bulan).padStart(2, '0');
+          bulanSet[keyBulan] = { tahun, bulan };
+        }
+      }
+    }
+  }
+  return Object.values(bulanSet).sort((a, b) => {
+    if(a.tahun !== b.tahun) return a.tahun - b.tahun;
+    return a.bulan - b.bulan;
+  });
+}
+
+function loadRekapBulanan(){
+  const tahunStr = document.getElementById('filterTahun').value;
+  const tahun = tahunStr ? parseInt(tahunStr) : null;
+  const bulanList = getCheckedBulanList();
+
+  /* Jika tidak ada yang dicentang, tampilkan semua */
+  if(bulanList.length === 0){
+    for(let b = 1; b <= 12; b++){
+      bulanList.push(b);
+    }
+  }
+
+  /* Dapatkan semua bulan yang memiliki data */
+  const semuaBulan = getSemuaBulanDenganData();
+
+  /* Filter berdasarkan tahun dan bulan yang dipilih */
+  const bulanFiltered = semuaBulan.filter(item => {
+    if(tahun !== null && item.tahun !== tahun) return false;
+    if(bulanList.length > 0 && !bulanList.includes(item.bulan)) return false;
+    return true;
+  });
+
+  /* Kumpulkan data per bulan */
+  const dataBulan = [];
+
+  bulanFiltered.forEach(({ tahun: th, bulan: bl }) => {
+    const monthStr = String(bl).padStart(2, '0');
+    let totalAdmin = 0;
+    let totalAdminBank = 0;
+    let totalFee = 0;
+    let totalTransaksi = 0;
+
+    /* Hitung jumlah hari dalam bulan */
+    const daysInMonth = new Date(th, bl, 0).getDate();
+
+    for(let day = 1; day <= daysInMonth; day++){
+      const dayStr = String(day).padStart(2, '0');
+      const dateKey = th + '-' + monthStr + '-' + dayStr;
+      const laporan = getLaporanByDate(dateKey);
+      if(!laporan) continue;
+
+      const rekap = hitungRekapFromLaporan(laporan);
+      totalAdmin += rekap.totalAdmin;
+      totalAdminBank += rekap.totalAdminBank;
+      totalFee += rekap.fee;
+      totalTransaksi += rekap.totalTransaksi;
+    }
+
+    /* Modal = Saldo Awal dari Rekap Harian */
+    const modal = getSaldoAwalByBulan(th, bl);
+
+    /* Pendapatan Bersih = Total Admin + Total Fee - Total Admin Bank */
+    const pendapatanBersih = totalAdmin + totalFee - totalAdminBank;
+
+    dataBulan.push({
+      tahun: th,
+      bulan: bl,
+      modal,
+      totalAdmin,
+      totalAdminBank,
+      totalFee,
+      totalTransaksi,
+      pendapatanBersih
+    });
+  });
+
+  /* Urutkan berdasarkan tahun (desc) lalu bulan (asc) */
+  dataBulan.sort((a, b) => {
+    if(a.tahun !== b.tahun) return b.tahun - a.tahun;
+    return a.bulan - b.bulan;
+  });
+
+  /* Simpan Pendapatan Bersih ke localStorage sebagai SINGLE SOURCE OF TRUTH */
+  dataBulan.forEach(d => {
+    const key = 'rekapPendapatan_' + d.tahun + '_' + String(d.bulan).padStart(2, '0');
+    localStorage.setItem(key, String(d.pendapatanBersih));
+  });
+  /* Tandai versi terbaru */
+  const rekapVersionKey = 'rekapPendapatan_version';
+  localStorage.setItem(rekapVersionKey, String(Date.now()));
+
+  /* Table Bulanan */
+  if(dataBulan.length === 0){
+    document.getElementById('tabelBulananBody').innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">
+          Tidak ada data laporan untuk periode yang dipilih
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  let tabelHtml = '';
+  dataBulan.forEach(d => {
+    tabelHtml += `
+      <tr>
+        <td>${d.tahun}</td>
+        <td><strong>${BULAN_NAMA[d.bulan - 1]}</strong></td>
+        <td class="green">${formatRupiah(d.modal)}</td>
+        <td class="green">${formatRupiah(d.totalAdmin)}</td>
+        <td>${formatRupiah(d.totalAdminBank)}</td>
+        <td class="green">${formatRupiah(d.totalFee)}</td>
+        <td>${d.totalTransaksi}</td>
+        <td class="green">${formatRupiah(d.pendapatanBersih)}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById('tabelBulananBody').innerHTML = tabelHtml;
+}
+
+/* =========================
+SALDO AWAL REKAP HARIAN (EDITABLE)
+========================= */
+
+function getSaldoAwalKey(){
+  const bulanStr = document.getElementById('filterTanggalHarian').value;
+  if(bulanStr) return 'rekapHarian_saldoAwal_' + bulanStr.replace('-', '_');
+  return 'rekapHarian_saldoAwal';
+}
+
+function muatSaldoAwal(){
+  const key = getSaldoAwalKey();
+  const tersimpan = localStorage.getItem(key);
+  if(tersimpan !== null){
+    const angka = parseInt(tersimpan) || 0;
+    document.getElementById('saldoAwalInput').value = formatRupiah(angka);
+    perbaruiSetoran();
+  } else {
+    document.getElementById('saldoAwalInput').value = 'Rp 0';
+    document.getElementById('setoranBulan').textContent = 'Rp 0';
+  }
+}
+
+function simpanSaldoAwal(){
+  const input = document.getElementById('saldoAwalInput');
+  const angka = parseRupiah(input.value);
+  const key = getSaldoAwalKey();
+  localStorage.setItem(key, String(angka));
+  input.value = formatRupiah(angka);
+  perbaruiSetoran();
+}
+
+function hitungSaldoAkhirDanSetoran(){
+  const key = getSaldoAwalKey();
+  const saldoAwal = parseInt(localStorage.getItem(key)) || 0;
+  const saldoAkhirEl = document.getElementById('saldoAkhirBulan');
+  const setoranEl = document.getElementById('setoranBulan');
+
+  if(saldoAkhirEl && setoranEl){
+    /* Saldo Akhir = Saldo Awal + Total Admin + Total Fee - Total Admin Bank */
+    const totalAdmin = window._rekapTotalAdmin || 0;
+    const totalFee = window._rekapTotalFee || 0;
+    const totalAdminBank = window._rekapTotalAdminBank || 0;
+    const saldoAkhir = saldoAwal + totalAdmin + totalFee - totalAdminBank;
+    saldoAkhirEl.textContent = formatRupiah(saldoAkhir >= 0 ? saldoAkhir : 0);
+
+    /* Setoran / Hasil = Saldo Akhir - Saldo Awal */
+    const setoran = saldoAkhir - saldoAwal;
+    setoranEl.textContent = formatRupiah(setoran >= 0 ? setoran : 0);
+  }
+}
+
+function perbaruiSetoran(){
+  hitungSaldoAkhirDanSetoran();
+}
+
+document.getElementById('saldoAwalInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    simpanSaldoAwal();
+    this.blur();
+  }
+});
+
+document.getElementById('saldoAwalInput').addEventListener('blur', function(){
+  const angka = parseRupiah(this.value);
+  this.value = formatRupiah(angka || 0);
+  simpanSaldoAwal();
+});
+
+/* Muat ulang saldo awal saat bulan berubah */
+document.getElementById('filterTanggalHarian').addEventListener('change', function(){
+  muatSaldoAwal();
+});
+
+/* =========================
+SIMPAN PENDAPATAN BERSIH KE LOCALSTORAGE (SINGLE SOURCE OF TRUTH)
+Dipanggil otomatis saat init agar data selalu tersedia untuk halaman Trend
+========================= */
+
+function simpanSemuaPendapatanBersih() {
+  const semuaBulan = getSemuaBulanDenganData();
+  semuaBulan.forEach(({ tahun: th, bulan: bl }) => {
+    const monthStr = String(bl).padStart(2, '0');
+    let totalAdmin = 0;
+    let totalAdminBank = 0;
+    let totalFee = 0;
+    const daysInMonth = new Date(th, bl, 0).getDate();
+    for(let day = 1; day <= daysInMonth; day++){
+      const dayStr = String(day).padStart(2, '0');
+      const dateKey = th + '-' + monthStr + '-' + dayStr;
+      const laporan = getLaporanByDate(dateKey);
+      if(!laporan) continue;
+      const rekap = hitungRekapFromLaporan(laporan);
+      totalAdmin += rekap.totalAdmin;
+      totalAdminBank += rekap.totalAdminBank;
+      totalFee += rekap.fee;
+    }
+    const pendapatanBersih = totalAdmin + totalFee - totalAdminBank;
+    const key = 'rekapPendapatan_' + th + '_' + monthStr;
+    localStorage.setItem(key, String(pendapatanBersih));
+  });
+  localStorage.setItem('rekapPendapatan_version', String(Date.now()));
+}
+
+/* =========================
+AUTO-UPDATE: Saat data berubah di tab lain
+========================= */
+
+window.addEventListener('storage', function(e){
+  /* Jika ada perubahan data laporan atau saldo awal, refresh Rekap Bulanan */
+  if(e.key && (e.key.startsWith('laporan_') || e.key.startsWith('rekapHarian_saldoAwal_'))){
+    const modeBulananVisible = !document.getElementById('modeBulanan').classList.contains('hidden');
+    if(modeBulananVisible){
+      loadRekapBulanan();
+    }
+  }
+});
+
+/* =========================
+AUTO-UPDATE: Polling untuk deteksi perubahan di tab yang sama
+========================= */
+
+let _rekapCacheVersion = 0;
+
+function getRekapCacheVersion(){
+  let hash = 0;
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && (key.startsWith('laporan_') || key.startsWith('rekapHarian_saldoAwal_'))){
+      const val = localStorage.getItem(key) || '';
+      for(let c = 0; c < val.length; c++){
+        hash = ((hash << 5) - hash) + val.charCodeAt(c);
+        hash |= 0;
+      }
+    }
+  }
+  return hash;
+}
+
+function cekPerubahanData(){
+  const newVersion = getRekapCacheVersion();
+  if(newVersion !== _rekapCacheVersion){
+    _rekapCacheVersion = newVersion;
+    /* Update pendapatan bersih di localStorage untuk halaman Trend */
+    simpanSemuaPendapatanBersih();
+    const modeBulananVisible = !document.getElementById('modeBulanan').classList.contains('hidden');
+    if(modeBulananVisible){
+      loadRekapBulanan();
+    }
+  }
+}
+
+/* Cek perubahan setiap 2 detik */
+setInterval(cekPerubahanData, 2000);
+
+/* =========================
+AUTO-GENERATE: Saat membuka tab Bulanan, load data
+========================= */
+
+/* Saat user switch ke mode bulanan, refresh data */
+const observerMode = new MutationObserver(function(){
+  const modeBulanan = document.getElementById('modeBulanan');
+  if(modeBulanan && !modeBulanan.classList.contains('hidden')){
+    loadRekapBulanan();
+  }
+});
+
+/* Pantau perubahan class hidden pada modeBulanan */
+const modeBulananEl = document.getElementById('modeBulanan');
+if(modeBulananEl){
+  observerMode.observe(modeBulananEl, { attributes: true, attributeFilter: ['class'] });
+}
+
+/* =========================
+INIT
+========================= */
+
+function init(){
+  const now = new Date();
+  document.getElementById('todayDate').textContent =
+    now.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+
+  initTahunSelect();
+  initTanggalInput();
+  initDropdownBulan();
+  muatSaldoAwal();
+
+  /* Hitung versi awal untuk auto-update */
+  _rekapCacheVersion = getRekapCacheVersion();
+
+  /* Default: mode harian dengan tanggal hari ini */
+  loadRekapHarian();
+
+  /* Simpan Pendapatan Bersih ke localStorage agar tersedia untuk halaman Trend */
+  simpanSemuaPendapatanBersih();
+}
+
+init();
+
+</script>
+
+</body>
+</html>

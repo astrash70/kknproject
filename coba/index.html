@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Dashboard</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+   *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+
+  min-height:100vh;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  overflow:hidden;
+
+  position:relative;
+
+  background-color:#06351f;
+
+  background-image:
+  linear-gradient(135deg, #052e1b 0%, #15803d 45%, #041f14 100%),
+  url("bg-desktop.png");
+
+  background-size:100% 100%, cover;
+
+  background-position:center;
+
+  background-repeat:no-repeat;
+}
+/* CONTAINER */
+
+.container{
+
+  position:relative;
+
+  width:560px;
+  height:560px;
+  
+  max-width:560px;
+  max-height:560px;
+
+  border-radius:
+46% 54% 58% 42% /
+38% 40% 60% 62%;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  background:
+linear-gradient(
+  145deg,
+
+  rgba(255,255,255,0.20),
+
+  rgba(255,255,255,0.06),
+
+  rgba(255,255,255,0.02)
+);
+
+  backdrop-filter:
+blur(15px)
+saturate(180%)
+contrast(115%)
+brightness(1.08);
+
+  border: 
+  1px solid rgba(255,255,255,.12);
+
+  border-top:
+  2px solid rgba(255,255,255,0.85);
+
+  border-left:
+  3px solid rgba(255,255,255,0.45);
+
+  border-right:
+  1px solid rgba(255,255,255,0.12);
+  
+box-shadow:
+
+inset 0 1px 1px rgba(255,255,255,.8),
+
+inset 0 -8px 12px rgba(255,255,255,.08),
+
+0 0 25px rgba(255,255,255,.12);
+
+  overflow:visible;
+
+animation: liquid 14s ease-in-out infinite;}
+    
+    
+    
+/* GLOW DALAM */
+
+.container::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+border-radius:inherit;
+
+background:
+
+linear-gradient(
+145deg,
+
+rgba(255,255,255,.55) 0%,
+
+rgba(255,255,255,.08) 30%,
+
+transparent 55%
+);
+
+opacity:.9;
+
+pointer-events:none;
+
+}
+
+    .container::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:520px;
+  height:300px;
+
+  top:-10px;
+  left:20px;
+
+  pointer-events:none;
+      
+  border-radius:50%;
+  mix-blend-mode:screen;
+  background:
+  linear-gradient(
+
+    to bottom,
+
+    rgba(255,255,255,0.98),
+
+    rgba(255,255,255,0.45),
+
+    rgba(255,255,255,0.12),
+
+    transparent
+
+  );
+
+  filter:blur(12px);
+
+  opacity:.95;
+
+  transform:rotate(-10deg);
+
+}
+    
+   .logo{
+  width:110px;
+  margin-bottom:50px;
+  position:relative;
+  z-index:5;
+  filter:
+drop-shadow(0 4px 8px rgba(255,255,255,.45));
+}
+
+.logo-fallback{
+  width:110px;
+  height:110px;
+  margin-bottom:50px;
+  border-radius:24px;
+  background:rgba(255,255,255,.12);
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  color:#8dff9d;
+  filter:drop-shadow(0 4px 8px rgba(255,255,255,.45));
+}
+    .input-group{
+      margin-bottom:19px;
+      text-align:left;
+      position:relative;
+      z-index:10;
+    }
+
+    .input-group i{
+
+  position:absolute;
+
+  right:20px;
+
+  top:50%;
+
+  transform:translateY(-50%);
+
+  font-size:30px;
+
+  color:#04552b;
+
+  cursor:pointer;
+
+}
+
+    .input-group label{
+      font-size:14px;
+      color:#555;
+      margin-bottom:7px;
+      display:block;
+    }
+
+  .input-group input{
+
+  width:368px;
+  height:58px;
+
+  border-radius:18px;
+  padding:0 65px 0 18px;
+
+  background:
+rgba(255,255,255,0.14);
+    
+backdrop-filter:
+blur(18px)
+brightness(1.1);
+
+border:
+1px solid rgba(255,255,255,0.45);
+
+  border:
+1px solid rgba(255,255,255,.35);
+
+    transition:.3s ease;
+
+  font-size:14px;
+
+  box-shadow:
+
+0 8px 18px rgba(0,0,0,0.08),
+
+0 0 12px rgba(255,255,255,0.18),
+
+inset 0 1px 1px rgba(255,255,255,.7),
+
+inset 0 -2px 6px rgba(255,255,255,.18);
+
+} 
+    .input-group input:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+
+0 12px 24px rgba(0,0,0,0.10),
+
+0 0 18px rgba(255,255,255,0.22),
+
+inset 0 1px 1px rgba(255,255,255,.8);
+
+}
+    
+    /* <- INI YANG KURANG */
+
+.login-btn{
+
+  width:128px;
+  height:39px;
+  margin:auto;
+  border-radius:45px;
+
+  display:block;
+
+  position:relative;
+  overflow:hidden;
+
+  transform:translateY(20px);
+  font-size:14px;
+
+  letter-spacing:1px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f7a38,
+    #032f1b
+  );
+
+  color:white;
+
+  border:none;
+
+  box-shadow:
+  0 10px 30px rgba(0,80,35,0.45),
+  inset 0 0 12px rgba(255,255,255,0.15);
+
+  cursor:pointer;
+}
+    .login-btn:hover{
+  transform:translateY(18px);
+  opacity:0.95;
+}
+    .login-btn::before{
+
+content:"";
+
+position:absolute;
+
+inset:2px;
+
+border-radius:inherit;
+
+background:
+linear-gradient(
+to bottom,
+rgba(255,255,255,.25),
+transparent
+);
+
+opacity:.7;
+
+}
+
+    .signin-text{
+      margin-top:35px;
+      font-size:10px;
+      color:#666;
+    }
+
+    .signin-text a{
+      color:#012b08;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    .footer{
+      margin-top:6px;
+      font-size:10px;
+      color:#999;
+    }
+
+    html, body{
+  overflow-x:hidden;
+}
+    .reflection{
+
+  position:absolute;
+
+  width:22px;
+  height:22px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.9);
+
+  top:80px;
+  right:70px;
+
+  filter:blur(2px);
+
+}
+    
+    @media(max-width:768px){
+
+ body{
+
+  background-image:url("bg-mobile.png");
+
+  background-size:cover;
+
+  background-position:center;
+
+  background-repeat:no-repeat;
+
+  height:100dvh;
+
+  overflow:hidden;
+
+  padding:20px;
+
+}
+
+
+  .container{
+
+width:88vw;
+
+aspect-ratio:0.82/1;
+
+height:auto;
+
+max-width:520px;
+
+border-radius:
+46% 54% 58% 42% /
+38% 40% 60% 62%;
+
+}
+
+
+  .logo{
+
+    width:80px;
+
+    margin-bottom:40px;
+
+    margin-top: 10px;
+
+  }
+
+
+  .input-group{
+
+    margin-bottom:10px;
+
+  }
+
+
+  .input-group input{
+
+    width:58vw;
+
+    height:36px;
+
+    border-radius:22px;
+
+    font-size:11px;
+
+    padding:0 50px 0 18px;
+
+  }
+
+
+  .input-group i{
+
+    font-size:18px;
+
+    right:16px;
+
+  }
+
+
+  .login-btn{
+
+    width:85px;
+
+    height:29px;
+
+    font-size:11px;
+
+    margin-top:25px;
+
+    transform:none;
+
+  }
+
+
+  .login-btn:hover{
+
+    transform:none;
+
+  }
+
+
+  .signin-text{
+
+    margin-top:5px;
+
+    font-size:9px;
+
+  }
+
+
+  .footer{
+
+    margin-top:2px;
+
+    font-size:8px;
+
+  }
+
+
+  .container::after{
+
+    width:260px;
+
+    height:120px;
+
+    top:20px;
+
+    left:50%;
+
+    transform:
+    translateX(-50%)
+    rotate(-8deg);
+
+  }
+
+
+  .bubble1{
+
+    width:14px;
+    height:14px;
+
+    left:20px;
+    bottom:80px;
+
+  }
+
+
+  .bubble2{
+
+    width:10px;
+    height:10px;
+
+    right:25px;
+    top:100px;
+
+  }
+
+}
+
+@keyframes liquid{
+
+  0%{
+    border-radius:
+    55% 45% 52% 48% /
+    48% 55% 45% 52%;
+  }
+
+  50%{
+    border-radius:
+    48% 52% 45% 55% /
+    55% 45% 52% 48%;
+  }
+
+  100%{
+    border-radius:
+    55% 45% 52% 48% /
+    48% 55% 45% 52%;
+  }
+
+}
+
+    .bubble{
+
+  position:absolute;
+
+  border-radius:50%;
+
+  background:
+  rgba(255,255,255,0.45);
+
+  backdrop-filter:blur(8px);
+
+  border:
+  1px solid rgba(255,255,255,0.7);
+
+}
+
+.bubble1{
+
+  width:18px;
+  height:18px;
+
+  left:30px;
+  bottom:65px;
+
+}
+
+.bubble2{
+
+  width:12px;
+  height:12px;
+
+  right:40px;
+  top:90px;
+
+}
+
+    .glass-edge{
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:inherit;
+
+  border-top:
+  4px solid rgba(255,255,255,0.95);
+
+  border-left:
+  2px solid rgba(255,255,255,0.55);
+
+  border-right:
+  1px solid rgba(255,255,255,0.15);
+
+  border-bottom:
+  1px solid rgba(255,255,255,0.08);
+
+  filter:blur(1px);
+
+  opacity:0.95;
+
+  pointer-events:none;
+
+}
+
+    .container .liquid-ring{
+
+  position:absolute;
+
+  inset:-6px;
+
+  border-radius:inherit;
+
+  border:
+  5px solid rgba(255,255,255,0.45);
+
+  background:
+  linear-gradient(
+    to bottom right,
+    rgba(255,255,255,0.18),
+    transparent 40%
+  );
+
+  box-shadow:
+
+  inset 0 0 18px rgba(255,255,255,0.95),
+
+  inset 0 0 35px rgba(255,255,255,0.55),
+
+  0 0 12px rgba(255,255,255,0.45);
+
+  opacity:0.9;
+
+  filter:blur(1px);
+
+  pointer-events:none;
+
+}
+    
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+  <div class="liquid-ring"></div>
+
+  <div class="glass-edge"></div>
+
+  <div class="reflection"></div>
+  
+
+    <!-- LOGO -->
+<img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';">
+<div id="logoFallback" class="logo logo-fallback" style="display:none;" aria-hidden="true">
+<i class="fa-solid fa-chart-line"></i>
+</div>
+  
+    <!-- LOGIN FORM -->
+    <form>
+<div class="input-group">
+
+  <input
+  type="email"
+  id="email"
+  placeholder="Masukkan email">
+
+  <i class="fa-solid fa-user"></i>
+
+</div>
+
+
+<div class="input-group">
+
+  <input
+  type="password"
+  id="password"
+  placeholder="Masukkan password">
+
+  <i
+  class="fa-solid fa-lock lock-icon"
+  id="togglePassword"></i>
+
+</div>
+      
+      <button type="button" class="login-btn" onclick="loginUser()">
+  Login
+</button>
+
+    </form>
+
+    <!-- SIGN IN -->
+    <div class="signin-text">
+      Belum punya akun?
+      <a href="signup.html">Daftar</a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      By.Astri asih
+    </div>
+
+    <!-- BUBBLE -->
+  <div class="bubble bubble1"></div>
+  <div class="bubble bubble2"></div>
+
+  </div>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA0YHpAO0JyCNt-oJNwJdgKCOwLiagrfvg",
+  authDomain: "digital-report-3567d.firebaseapp.com",
+  projectId: "digital-report-3567d",
+  storageBucket: "digital-report-3567d.firebasestorage.app",
+  messagingSenderId: "509408276429",
+  appId: "1:509408276429:web:65323d54b3211644ecde84"
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+
+
+window.loginUser = async function () {
+
+  const email = document.getElementById("email").value;
+
+  const password = document.getElementById("password").value;
+
+
+  try {
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    window.location.href = "dashboard.html";
+
+}
+
+catch (error) {
+
+    console.log(error);
+
+    alert(error.message);
+
+}
+
+};
+
+const togglePassword =
+document.getElementById("togglePassword");
+
+const password =
+document.getElementById("password");
+
+
+togglePassword.addEventListener("click", ()=>{
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        togglePassword.classList.remove("fa-lock");
+
+        togglePassword.classList.add("fa-lock-open");
+
+    }
+
+    else{
+
+        password.type = "password";
+
+        togglePassword.classList.remove("fa-lock-open");
+
+        togglePassword.classList.add("fa-lock");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

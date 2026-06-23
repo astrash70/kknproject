@@ -1,0 +1,5226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Database - Digital Report</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* =========================
+RESET
+========================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f5f7f9;
+  color:#1c1c1c;
+}
+
+/* =========================
+LAYOUT
+========================= */
+
+.dashboard-layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+
+  width:260px;
+
+  background:
+  linear-gradient(
+    180deg,
+    #052e1b,
+    #06351f,
+    #041f14
+  );
+
+  padding:24px 16px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+  height:100vh;
+
+  overflow:hidden;
+}
+
+.sidebar::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  radial-gradient(
+    circle at top right,
+    rgba(32,201,111,0.16),
+    transparent 45%
+  );
+
+  pointer-events:none;
+}
+
+/* LOGO */
+
+.logo{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  color:white;
+
+  font-size:30px;
+
+  font-weight:700;
+
+  margin-bottom:40px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.logo span{
+  font-size:16px;
+}
+
+/* MENU */
+
+.sidebar-menu{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:8px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.sidebar-item{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  padding:16px 18px;
+
+  border-radius:18px;
+
+  color:rgba(255,255,255,0.82);
+
+  text-decoration:none;
+
+  font-size:15px;
+
+  font-weight:500;
+
+  transition:0.25s;
+}
+
+.sidebar-item:hover{
+
+  background:
+  rgba(255,255,255,0.08);
+
+  color:white;
+}
+
+.sidebar-item.active{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0a6b2d,
+    #11853c
+  );
+
+  color:white;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,0.15);
+}
+
+.sidebar-title{
+
+  color:rgba(255,255,255,0.45);
+
+  font-size:12px;
+
+  font-weight:600;
+
+  margin:
+  24px 14px 8px;
+}
+
+/* PROFILE */
+
+.sidebar-profile{
+
+  position:relative;
+
+  z-index:2;
+
+  background:
+  rgba(255,255,255,0.06);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  border-radius:22px;
+
+  padding:16px;
+
+  color:white;
+}
+
+.profile-top{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+}
+
+.profile-avatar{
+
+  width:46px;
+  height:46px;
+
+  border-radius:50%;
+
+  background:#1ec45d;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-weight:700;
+}
+
+/* =========================
+MAIN CONTENT
+========================= */
+
+.main-content{
+
+  flex:1;
+
+  margin-left:260px;
+
+  padding:24px;
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:24px;
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:20px 24px;
+
+  border:
+  1px solid #edf1f3;
+}
+
+.breadcrumb{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  font-size:14px;
+
+  color:#6b7280;
+}
+
+.breadcrumb strong{
+  color:#15803d;
+}
+
+.topbar-right{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+}
+
+.date-box{
+
+  background:#f8faf9;
+
+  border:
+  1px solid #edf1f3;
+
+  border-radius:14px;
+
+  padding:10px 14px;
+
+  font-size:14px;
+
+  font-weight:600;
+}
+
+/* =========================
+MAIN CARD
+========================= */
+
+.main-card{
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:26px;
+
+  border:
+  1px solid #edf1f3;
+
+  box-shadow:
+  0 2px 10px rgba(0,0,0,0.03);
+}
+
+/* =========================
+HEADER
+========================= */
+
+.page-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  margin-bottom:26px;
+}
+
+.page-header h1{
+
+  font-size:34px;
+
+  margin-bottom:8px;
+}
+
+.page-header p{
+
+  color:#6b7280;
+
+  font-size:15px;
+}
+
+.add-btn{
+
+  border:none;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0a6b2d,
+    #169344
+  );
+
+  color:white;
+
+  padding:16px 22px;
+
+  border-radius:16px;
+
+  font-weight:600;
+
+  cursor:pointer;
+}
+
+  .header-action{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+}
+
+.reset-btn{
+
+  width:54px;
+  height:54px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:#f4f7f5;
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  color:#374151;
+
+  transition:.2s;
+}
+
+.reset-btn:hover{
+
+  background:#ef4444;
+
+  color:white;
+}
+
+/* =========================
+SUMMARY
+========================= */
+
+.summary-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(5,1fr);
+
+  gap:16px;
+
+  margin-bottom:24px;
+}
+
+.summary-card{
+
+  border:
+  1px solid #edf1f3;
+
+  border-radius:22px;
+
+  padding:20px;
+
+  background:white;
+}
+
+.summary-top{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  margin-bottom:12px;
+}
+
+.summary-icon{
+
+  width:50px;
+  height:50px;
+
+  border-radius:50%;
+
+  background:#eef8f1;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+}
+
+.summary-icon svg{
+
+  width:22px;
+  height:22px;
+
+  stroke:#15803d;
+
+  fill:none;
+
+  stroke-width:2;
+}
+
+.summary-value{
+
+  font-size:34px;
+
+  font-weight:800;
+}
+
+.summary-title{
+
+  font-size:11px;
+
+  color:#6b7280;
+}
+
+/* =========================
+FILTER
+========================= */
+
+.filter-bar{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  margin-bottom:18px;
+}
+.filter-input{
+
+  flex:1;
+
+  max-width:500px;
+
+  height:50px;
+
+  border:
+  1px solid #e8edf0;
+
+  border-radius:14px;
+
+  padding:0 16px;
+
+  background:white;
+
+  outline:none;
+
+  font-family:inherit;
+}
+.filter-btn{
+
+  flex:none;
+
+  width:auto;
+
+  height:50px;
+
+  padding:0 20px;
+
+  border:none;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0a6b2d,
+    #169344
+  );
+
+  color:white;
+
+  border-radius:14px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.filter-btn:hover{
+
+  transform:translateY(-2px);
+
+  opacity:.95;
+}
+
+/* =========================
+TABLE
+========================= */
+
+.table-wrapper{
+
+  border:
+  1px solid #edf1f3;
+
+  border-radius:22px;
+
+  overflow-x:auto;
+
+  overflow-y:visible;
+}
+
+table{
+
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+thead{
+
+  background:#f4f8f5;
+}
+
+th{
+
+  text-align:left;
+
+  padding:18px;
+
+  font-size:14px;
+}
+
+td{
+
+  padding:14px 18px;
+
+  border-top:
+  1px solid #f0f3f5;
+
+  font-size:14px;
+
+  overflow:visible;
+}
+
+.badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  padding:8px 12px;
+
+  border-radius:999px;
+
+  font-size:12px;
+
+  font-weight:700;
+}
+
+/* SALDO IN */
+
+.badge.in{
+
+  background:#e8f8ee;
+
+  color:#16a34a;
+}
+
+/* SALDO OUT */
+
+.badge.out{
+
+  background:#fef0f0;
+
+  color:#ef4444;
+}
+
+.effect{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  font-weight:700;
+}
+
+.effect.in{
+  color:#16a34a;
+}
+
+.effect.out{
+  color:#ef4444;
+}
+
+  .transaction-name{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  font-weight:600;
+}
+
+.transaction-icon{
+
+  width:38px;
+  height:38px;
+
+  border-radius:12px;
+
+  background:white;
+
+  border:1px solid #edf1f3;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+}
+
+.transaction-icon img{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:contain;
+
+  padding:5px;
+}
+
+.expand-btn{
+
+  width:36px;
+  height:36px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#f5f7f9;
+
+  cursor:pointer;
+
+  font-size:18px;
+}
+
+/* =========================
+CHILD TABLE
+========================= */
+
+.child-wrapper{
+
+  background:#fcfdfc;
+
+  padding:6px 18px 10px;
+}
+
+.child-table{
+
+  width:92%;
+
+  margin:0 auto;
+
+  border:
+  1px solid #f1f3f5;
+
+  border-radius:8px;
+
+  overflow:visible;
+
+  background:white;
+
+  box-shadow:
+  0 1px 2px rgba(0,0,0,0.02);
+}
+
+  .child-table table{
+
+  overflow:visible;
+}
+
+.child-table th{
+
+  background:#f8faf9;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  padding:10px 16px;
+
+  color:#4b5563;
+}
+
+.child-table td{
+
+  font-size:13px;
+
+  padding:10px 16px;
+
+  border-top:
+  1px solid #f5f5f5;
+}
+
+  .action-menu{
+
+  position:relative;
+
+  overflow:visible;
+}
+
+.action-btn{
+
+  width:34px;
+  height:34px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#f5f7f9;
+
+  cursor:pointer;
+
+  font-size:18px;
+}
+
+  .add-range-btn{
+
+  width:36px;
+  height:36px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#e8f8ee;
+
+  color:#15803d;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+  transition:.2s;
+}
+
+.add-range-btn:hover{
+
+  background:#15803d;
+
+  color:white;
+}
+
+.copy-admin-btn{
+
+  width:36px;
+  height:36px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:#e8f8ee;
+  color:#15803d;
+
+  cursor:pointer;
+
+  font-size:14px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.2s;
+}
+
+.copy-admin-btn:hover{
+
+  background:#15803d;
+  color:#fff;
+}
+
+  .action-header{
+
+  width:90px;
+
+  text-align:center;
+}
+
+.header-action-wrap{
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:8px;
+}
+
+.action-dropdown{
+
+  position:absolute;
+
+  top:0;
+  right:45px;
+
+  background:white;
+
+  border:1px solid #edf1f3;
+
+  border-radius:12px;
+
+  padding:6px;
+
+  display:none;
+
+  flex-direction:column;
+
+  gap:6px;
+
+  box-shadow:
+  0 10px 20px rgba(0,0,0,0.08);
+
+  z-index:9999;
+}
+
+.action-dropdown button{
+
+  width:36px;
+  height:36px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#f8faf9;
+
+  cursor:pointer;
+}
+
+.action-menu.show .action-dropdown{
+
+  display:flex;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+.table-footer{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-top:18px;
+
+  font-size:14px;
+
+  color:#6b7280;
+}
+
+.pagination{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+}
+
+.page-btn{
+
+  width:38px;
+  height:38px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#f4f7f5;
+
+  cursor:pointer;
+
+  font-weight:700;
+}
+
+.page-btn.active{
+
+  background:#15803d;
+
+  color:white;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:1100px){
+
+  .summary-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main-content{
+    margin-left:0;
+    padding:14px;
+  }
+
+  .topbar{
+    padding:16px;
+    border-radius:20px;
+  }
+
+  .page-header{
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .page-header h1{
+    font-size:26px;
+  }
+
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .table-wrapper{
+    overflow:auto;
+  }
+
+  table{
+    min-width:900px;
+  }
+
+}
+
+  /* =========================
+POPUP MODAL
+========================= */
+
+.modal-overlay{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+  rgba(0,0,0,0.35);
+
+  backdrop-filter:blur(4px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+  overflow-y:auto;
+
+  opacity:0;
+
+  visibility:hidden;
+
+  transition:0.25s;
+
+  z-index:9999;
+}
+
+.modal-overlay.show{
+
+  opacity:1;
+
+  visibility:visible;
+}
+
+.modal-box{
+
+  width:100%;
+
+  max-width:420px;
+
+  max-height:min(88vh, 640px);
+
+  overflow-y:auto;
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:22px 24px 24px;
+
+  position:relative;
+
+  margin:auto;
+
+  flex-shrink:0;
+
+  transform:
+  translateY(12px) scale(.98);
+
+  transition:0.25s;
+
+  box-shadow:
+  0 24px 48px rgba(0,0,0,0.15);
+}
+
+.modal-overlay.show .modal-box{
+
+  transform:
+  translateY(0) scale(1);
+}
+
+.modal-box h2{
+
+  font-size:22px;
+
+  color:#15803d;
+
+  margin-bottom:24px;
+
+  font-weight:800;
+}
+
+/* CLOSE */
+
+.modal-close{
+
+  position:absolute;
+
+  top:20px;
+  right:20px;
+
+  width:42px;
+  height:42px;
+
+  border:none;
+
+  background:transparent;
+
+  font-size:24px;
+
+  color:#666;
+
+  cursor:pointer;
+}
+
+/* FORM */
+
+.popup-form{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+}
+
+.form-hint{
+
+  font-size:13px;
+
+  line-height:1.45;
+
+  color:#166534;
+
+  background:#f0fdf4;
+
+  border:1px solid #bbf7d0;
+
+  border-radius:12px;
+
+  padding:10px 12px;
+
+  margin-top:-6px;
+
+}
+
+.form-hint a{
+
+  color:#15803d;
+
+  font-weight:600;
+}
+
+.form-group{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+}
+
+.form-group label{
+
+  font-size:14px;
+
+  font-weight:700;
+
+  color:#3b3b3b;
+}
+
+.form-group input,
+.form-group select{
+
+  height:52px;
+
+  border:none;
+
+  background:#f3f4f4;
+
+  border-radius:16px;
+
+  padding:0 16px;
+
+  font-family:inherit;
+
+  font-size:14px;
+
+  outline:none;
+}
+
+.submit-btn{
+
+  margin-top:8px;
+
+  height:56px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0a6b2d,
+    #16a34a
+  );
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.submit-btn:hover{
+
+  transform:translateY(-2px);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .modal-box{
+
+    width:92%;
+
+    border-radius:28px;
+
+    padding:22px;
+  }
+
+}
+
+.confirm-overlay{
+
+  position:fixed;
+  inset:0;
+
+  background:
+  rgba(6,35,20,.18);
+
+  backdrop-filter:blur(4px);
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  z-index:99999;
+}
+
+.confirm-overlay.show{
+
+  display:flex;
+}
+
+.confirm-box{
+
+  width:420px;
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:28px;
+
+  text-align:center;
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,.12);
+}
+
+.confirm-icon{
+
+  width:70px;
+  height:70px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  background:#ecfdf3;
+
+  color:#16a34a;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:28px;
+
+  margin-bottom:18px;
+}
+
+.confirm-box h3{
+
+  font-size:24px;
+
+  margin-bottom:10px;
+
+  color:#0f5132;
+}
+
+.confirm-box p{
+
+  color:#6b7280;
+
+  line-height:1.6;
+}
+
+.confirm-actions{
+
+  display:flex;
+
+  gap:12px;
+
+  margin-top:22px;
+}
+
+.confirm-cancel,
+.confirm-yes{
+
+  flex:1;
+
+  height:52px;
+
+  border:none;
+
+  border-radius:14px;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+.confirm-cancel{
+
+  background:#eef2f3;
+}
+
+.confirm-yes{
+
+  background:#15803d;
+
+  color:white;
+}
+  
+  
+</style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+
+<div class="sidebar">
+
+  <div>
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+
+      <span>Digital Report</span>
+
+    </div>
+
+    <div class="sidebar-menu">
+
+      <a href="dashboard.html" class="sidebar-item">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+      </a>
+
+      <a href="input.html" class="sidebar-item">
+        <i class="fa-solid fa-circle-plus"></i>
+        Input Laporan
+      </a>
+
+      <a href="database.html" class="sidebar-item active">
+        <i class="fa-solid fa-database"></i>
+        Database
+      </a>
+
+<a href="report.html" class="sidebar-item">
+  <i class="fa-regular fa-clipboard"></i>
+  Report
+</a>
+
+<a href="akun.html" class="sidebar-item">
+  <i class="fa-solid fa-user"></i>
+  Akun
+</a>
+
+<div class="sidebar-title">
+  MASTER DATA
+</div>
+
+      <a href="database.html" class="sidebar-item active">
+        <i class="fa-solid fa-right-left"></i>
+        Jenis Transaksi
+      </a>
+
+      <a href="Sumber Saldo.html" class="sidebar-item">
+        <i class="fa-solid fa-building-columns"></i>
+        Sumber Saldo
+      </a>
+
+      <a href="datarange.html" class="sidebar-item">
+        <i class="fa-solid fa-layer-group"></i>
+        Data Range
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="sidebar-profile">
+
+    <div class="profile-top">
+
+      <div class="profile-avatar">
+        T
+      </div>
+
+      <div>
+        <h4>Tokosayyida</h4>
+
+        <p style="opacity:.7;font-size:13px;">
+          Admin
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main-content">
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div class="breadcrumb">
+
+<strong>Database</strong>
+
+<span>/</span>
+
+<span>Jenis Transaksi</span>
+
+</div>
+
+<div class="topbar-right">
+
+<div class="date-box" id="currentDate">
+-
+</div>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="main-card">
+
+<!-- HEADER -->
+
+<div class="page-header">
+
+<div>
+
+<h1>
+Jenis Transaksi
+</h1>
+
+<p>
+Kelola kategori transaksi, biaya admin, dan pengaruh saldo untuk kebutuhan laporan harian.
+</p>
+
+</div>
+
+<div class="header-action">
+
+  <button class="add-btn">
+    + Tambah Transaksi
+  </button>
+
+  <button class="reset-btn" id="resetAllBtn">
+    <i class="fa-solid fa-rotate-left"></i>
+  </button>
+
+</div>
+
+</div>
+
+<!-- SUMMARY -->
+
+<div class="summary-grid">
+
+<div class="summary-card">
+
+<div class="summary-top">
+
+<div class="summary-icon">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<path d="M12 5v14"></path>
+<path d="M5 12h14"></path>
+</svg>
+
+</div>
+
+<div>
+
+<div class="summary-title">
+Transaksi terdaftar
+</div>
+
+<div class="summary-value" id="totalTransaksi">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="summary-title">
+Total data tersimpan
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-top">
+
+<div class="summary-icon">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<path d="M17 7 7 17"></path>
+<path d="M7 7h10v10"></path>
+</svg>
+
+</div>
+
+<div>
+
+<div class="summary-title">
+Saldo In
+</div>
+
+<div class="summary-value" id="uangMasuk">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="summary-title">
+Total saldo masuk tersimpan
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-top">
+
+<div class="summary-icon">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<path d="M7 7 17 17"></path>
+<path d="M17 7H7v10"></path>
+</svg>
+
+</div>
+
+<div>
+
+<div class="summary-title">
+Saldo Out
+</div>
+
+<div class="summary-value" id="uangKeluar">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="summary-title">
+Total saldo keluar tersimpan
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-top">
+
+<div class="summary-icon">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<rect x="4" y="7" width="16" height="13" rx="2"></rect>
+<path d="M16 3v4"></path>
+<path d="M8 3v4"></path>
+</svg>
+
+</div>
+
+<div>
+
+<div class="summary-title">
+Cash In
+</div>
+
+<div class="summary-value" id="kasMasuk">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="summary-title">
+Total cash masuk tersimpan
+</div>
+
+</div>
+
+<div class="summary-card">
+
+<div class="summary-top">
+
+<div class="summary-icon">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<path d="M7 7 17 17"></path>
+<path d="M17 7H7v10"></path>
+</svg>
+
+</div>
+
+<div>
+
+<div class="summary-title">
+Cash Out
+</div>
+
+<div class="summary-value" id="kasKeluar">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="summary-title">
+Total cash keluar tersimpan
+</div>
+
+</div>
+
+</div>
+
+<!-- FILTER -->
+
+<div class="filter-bar">
+
+<input
+type="text"
+class="filter-input"
+placeholder="Cari jenis transaksi..."
+>
+
+<button class="filter-btn">
+↻ Reset Filter
+</button>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Jenis Transaksi</th>
+<th>Kategori</th>
+<th>Efek</th>
+<th>Sumber Saldo</th>
+<th></th>
+
+  
+
+</tr>
+
+</thead>
+
+<tbody id="transactionTable">
+
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="table-footer">
+
+<div id="dataInfo">
+0 transaksi ditemukan
+</div>
+
+<div class="pagination">
+
+<button class="page-btn">
+‹
+</button>
+
+<button class="page-btn active">
+1
+</button>
+
+<button class="page-btn">
+›
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+POPUP TAMBAH DATA
+========================= -->
+
+<div class="modal-overlay" id="popupForm">
+
+  <div class="modal-box">
+
+    <!-- CLOSE -->
+
+    <button class="modal-close" id="closePopup">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 id="popupTitle">Tambah Jenis Transaksi</h2>
+
+    <form class="popup-form">
+
+      <div class="form-group">
+        <label>Jenis Transaksi</label>
+
+        <input
+type="text"
+id="jenisInput"
+placeholder="Contoh: Tarik Tunai, BRIVA"
+>
+</div>
+
+<p id="newJenisHint" class="form-hint">
+  Range min–max otomatis dari
+  <a href="datarange.html">Data Range</a>.
+  Charge di bawah mengisi semua baris range sekaligus.
+</p>
+
+<div id="chargeFieldWrap" class="form-group">
+
+  <label>Charge</label>
+
+  <input
+    type="text"
+    id="chargeInput"
+    placeholder="Contoh: 2.500"
+    inputmode="numeric"
+  >
+
+</div>
+
+<div id="rangeFieldsGroup" style="display:none;">
+
+     <div class="form-group">
+
+  <label>Nominal Min</label>
+
+  <input
+type="text"
+id="minInput"
+placeholder="Contoh: 10000"
+inputmode="numeric"
+>
+
+</div>
+
+<div class="form-group">
+
+  <label>Nominal Max</label>
+
+  <input
+type="text"
+id="maxInput"
+placeholder="Contoh: 100000"
+inputmode="numeric"
+>
+
+</div>
+
+      <div class="form-group">
+        <label>Biaya Admin</label>
+
+        <input
+type="text"
+id="adminInput"
+placeholder="Masukkan nominal"
+>
+      </div>
+
+      <div class="form-group" id="chargeAddRangeWrap">
+
+  <label>Charge</label>
+
+  <input
+    type="text"
+    id="chargeInputAddRange"
+    placeholder="Contoh: 2.500"
+    inputmode="numeric"
+  >
+
+</div>
+
+</div>
+
+     <div class="form-group">
+
+  <label>Kategori</label>
+
+ <select id="kategoriSelect">
+
+  <option value="none">
+    None
+  </option>
+
+  <option value="saldo_in">
+    Saldo In
+  </option>
+
+  <option value="saldo_out">
+    Saldo Out
+  </option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+  <label>Efek Kategori</label>
+
+  <select id="efekSelect">
+
+  <option value="none">
+    None
+  </option>
+
+  <option value="cash_in">
+    Cash In
+  </option>
+
+  <option value="cash_out">
+    Cash Out
+  </option>
+
+</select>
+
+</div>
+
+      <div class="form-group">
+
+  <label>Sumber Saldo</label>
+
+  <select id="SumberSaldoSelect">
+    <option value="">Pilih Sumber Saldo</option>
+  </select>
+
+</div>
+
+      <button type="button" class="submit-btn" id="saveBtn">
+        Simpan Data
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+  <div class="confirm-overlay" id="duplicateModal">
+
+  <div class="confirm-box">
+
+    <div class="confirm-icon">
+      <i class="fa-solid fa-circle-exclamation"></i>
+    </div>
+
+    <h3>Data Sudah Ada</h3>
+
+    <p>
+      Data yang sama persis sudah tersimpan.
+      Apakah ingin tetap menambahkan data?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button
+      class="confirm-cancel"
+      id="duplicateNo">
+        Batal
+      </button>
+
+      <button
+      class="confirm-yes"
+      id="duplicateYes">
+        Ya, Tambahkan
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+SCRIPT POPUP
+========================= -->
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA0YHpAO0JyCNt-oJNwJdgKCOwLiagrfvg",
+  authDomain: "digital-report-3567d.firebaseapp.com",
+  projectId: "digital-report-3567d",
+  storageBucket: "digital-report-3567d.firebasestorage.app",
+  messagingSenderId: "509408276429",
+  appId: "1:509408276429:web:65323d54b3211644ecde84"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let _firestoreUid = null;
+
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    _firestoreUid = user.uid;
+    console.log("UID:", user.uid);
+    /* Load master data dari Firestore saat auth siap */
+    muatMasterDataDariFirestore();
+  } else {
+    _firestoreUid = null;
+  }
+});
+
+function getFirestoreUid(){
+  return _firestoreUid;
+}
+
+async function muatMasterDataDariFirestore(){
+  const uid = getFirestoreUid();
+  if(!uid) return;
+  try {
+    const masterRef = doc(db, "masterData", uid);
+    const snap = await getDoc(masterRef);
+    if(snap.exists()){
+      const data = snap.data();
+      let adaDataBaru = false;
+      
+      /* Sync jenisTransaksiData dari Firestore */
+      if(data.jenisTransaksi && Array.isArray(data.jenisTransaksi) && data.jenisTransaksi.length > 0){
+        console.log("LOAD MASTER DATA FROM FIRESTORE");
+        localStorage.setItem("jenisTransaksiData", JSON.stringify(data.jenisTransaksi));
+        adaDataBaru = true;
+      }
+      
+      /* Sync rangeData dari Firestore */
+      if(data.rangeData && Array.isArray(data.rangeData) && data.rangeData.length > 0){
+        localStorage.setItem("rangeData", JSON.stringify(data.rangeData));
+        adaDataBaru = true;
+      }
+      
+      /* Sync akunBankData dari Firestore */
+      if(data.akunBank && Array.isArray(data.akunBank) && data.akunBank.length > 0){
+        localStorage.setItem("akunBankData", JSON.stringify(data.akunBank));
+        adaDataBaru = true;
+      }
+      
+      /* Jika ada data baru, reload halaman untuk mengaplikasikan */
+      if(adaDataBaru && !window._sudahLoadFirestore){
+        window._sudahLoadFirestore = true;
+        /* Trigger reload data yang sudah tampil */
+        loadSumberSaldo();
+        applyJenisTransaksiBackupToDom();
+      }
+    }
+  } catch(e){
+    console.warn("FIRESTORE LOAD FAILED, FALLBACK TO LOCALSTORAGE", e);
+  }
+}
+
+/* =========================
+AUTO EFEK
+========================= */
+
+const kategoriSelect =
+document.getElementById("kategoriSelect");
+
+const efekSelect =
+document.getElementById("efekSelect");
+
+kategoriSelect.addEventListener("change", () => {
+
+  const value =
+  kategoriSelect.value;
+
+  if(value === "saldo_in"){
+
+  efekSelect.value =
+  "cash_out";
+
+}
+
+else if(value === "saldo_out"){
+
+  efekSelect.value =
+  "cash_in";
+
+}
+
+else{
+
+  efekSelect.value =
+  "none";
+
+}
+
+});
+
+const popup =
+document.getElementById("popupForm");
+
+const openBtn =
+document.querySelector(".add-btn");
+
+const closeBtn =
+document.getElementById("closePopup");
+
+const popupTitle =
+document.getElementById("popupTitle");
+
+const rangeFieldsGroup =
+document.getElementById("rangeFieldsGroup");
+
+const chargeFieldWrap =
+document.getElementById("chargeFieldWrap");
+
+const newJenisHint =
+document.getElementById("newJenisHint");
+
+let popupMode = "new-jenis";
+
+function setupEnterNavigation() {
+  const fieldIdsNewJenis = [
+    'jenisInput',
+    'chargeInput',
+    'kategoriSelect',
+    'efekSelect',
+    'SumberSaldoSelect'
+  ];
+
+  const fieldIdsAddRange = [
+    'minInput',
+    'maxInput',
+    'adminInput',
+    'chargeInputAddRange',
+    'kategoriSelect',
+    'efekSelect',
+    'SumberSaldoSelect'
+  ];
+
+  const fields = (popupMode === 'new-jenis' ? fieldIdsNewJenis : fieldIdsAddRange)
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  fields.forEach((field, index) => {
+    const handler = function(e) {
+      if (e.key === 'Enter') {
+        if (field.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+
+        let nextIndex = index + 1;
+        while (nextIndex < fields.length) {
+          const next = fields[nextIndex];
+          if (!next.readOnly && !next.disabled) {
+            next.focus();
+            return;
+          }
+          nextIndex++;
+        }
+
+        /* Last field: click save */
+        document.getElementById('saveBtn').click();
+      }
+    };
+    field.removeEventListener('keydown', handler);
+    field.addEventListener('keydown', handler);
+  });
+}
+
+function setPopupFormMode(mode){
+
+popupMode = mode;
+
+const jenisInput =
+document.getElementById("jenisInput");
+
+if(mode === "new-jenis"){
+
+popupTitle.textContent =
+"Tambah Jenis Transaksi";
+
+rangeFieldsGroup.style.display = "none";
+chargeFieldWrap.style.display = "flex";
+newJenisHint.style.display = "block";
+jenisInput.readOnly = false;
+
+}else{
+
+popupTitle.textContent =
+"Tambah Satu Range";
+
+rangeFieldsGroup.style.display = "block";
+chargeFieldWrap.style.display = "none";
+newJenisHint.style.display = "none";
+
+}
+
+setupEnterNavigation();
+
+}
+
+function resetPopupForm(){
+
+document.getElementById("jenisInput").value = "";
+document.getElementById("minInput").value = "";
+document.getElementById("maxInput").value = "";
+document.getElementById("adminInput").value = "";
+document.getElementById("chargeInput").value = "";
+const chargeAdd =
+document.getElementById("chargeInputAddRange");
+if(chargeAdd) chargeAdd.value = "";
+document.getElementById("SumberSaldoSelect").value = "";
+kategoriSelect.value = "none";
+efekSelect.value = "none";
+editTargetRow = null;
+
+}
+
+/* OPEN */
+
+openBtn.addEventListener("click", () => {
+
+resetPopupForm();
+setPopupFormMode("new-jenis");
+popup.classList.add("show");
+document.getElementById("jenisInput").focus();
+
+});
+
+/* CLOSE */
+
+closeBtn.addEventListener("click", () => {
+
+  popup.classList.remove("show");
+  resetPopupForm();
+  setPopupFormMode("new-jenis");
+
+});
+
+/* CLOSE KLIK LUAR */
+
+popup.addEventListener("click", (e) => {
+
+  if(e.target === popup){
+
+    
+
+  }
+
+});
+
+  /* =========================
+SIMPAN DATA
+========================= */
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+const tableBody =
+document.getElementById("transactionTable");
+
+  function formatRupiah(angka){
+
+  return "Rp " +
+  Number(angka)
+  .toLocaleString("id-ID");
+
+}
+
+function buildAdminInputHtml(admin){
+
+const n =
+Number(admin) || 0;
+
+return formatRupiah(n);
+
+}
+
+function getAdminFromRow(row){
+
+if(!row || !row.children[3]) return 0;
+
+return Number(
+row.children[3].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+}
+
+
+function setAdminCell(row, admin){
+
+const cell =
+row.children[3];
+
+cell.innerHTML =
+buildAdminInputHtml(admin);
+
+}
+
+
+function loadAdminInlineEditors(){
+
+/* Bersihkan input sisa (jika ada) */
+document
+.querySelectorAll(".child-table tbody tr")
+.forEach(row => {
+
+for(let i = 1; i <= 3; i++){
+
+const cell =
+row.children[i];
+
+if(!cell) continue;
+
+const inp =
+cell.querySelector("input");
+
+if(inp){
+
+const n =
+Number(
+inp.value.replace(/[^\d]/g,"")
+) || 0;
+
+cell.innerHTML =
+formatRupiah(n);
+
+}
+
+}
+
+});
+
+/* Pasang click-to-edit */
+document
+.querySelectorAll(".child-table tbody tr")
+.forEach(row => {
+
+for(let i = 1; i <= 3; i++){
+
+const cell =
+row.children[i];
+
+if(!cell) continue;
+
+cell.style.cursor = "pointer";
+
+cell.onclick = function(){
+
+if(cell.querySelector("input")) return;
+
+const raw =
+cell.innerText.replace(/[^\d]/g,"");
+const val =
+Number(raw) || 0;
+
+const input =
+document.createElement("input");
+input.type = "text";
+input.value =
+val > 0 ? String(val) : "";
+input.inputMode = "numeric";
+input.autocomplete = "off";
+input.style.cssText =
+"width:100%;border:none;outline:none;background:transparent;font-family:inherit;font-size:inherit;padding:0;color:inherit;";
+
+cell.innerHTML = "";
+cell.appendChild(input);
+input.focus();
+input.select();
+
+let done = false;
+
+function finish(){
+
+if(done) return;
+done = true;
+
+const n =
+Number(
+input.value.replace(/[^\d]/g,"")
+) || 0;
+
+cell.innerHTML =
+formatRupiah(n);
+cell.style.cursor = "pointer";
+
+const tr =
+cell.closest("tr");
+const tb =
+tr?.parentElement;
+if(tb){
+saveData();
+syncJenisTransaksi();
+}
+
+}
+
+input.addEventListener("blur", finish);
+
+input.addEventListener("keydown", function onKey(e){
+
+if(e.key !== "Enter") return;
+e.preventDefault();
+if(done) return;
+done = true;
+
+const n =
+Number(
+input.value.replace(/[^\d]/g,"")
+) || 0;
+
+cell.innerHTML =
+formatRupiah(n);
+
+const tr =
+cell.closest("tr");
+const tb =
+tr?.parentElement;
+if(tb){
+
+const rows =
+Array.from(
+tb.querySelectorAll(":scope > tr")
+);
+const idx =
+rows.indexOf(tr);
+const next =
+rows[idx + 1];
+if(next){
+const nc =
+next.children[i];
+if(nc){
+setTimeout(
+() => nc.click(), 0
+);
+}
+}
+
+saveData();
+syncJenisTransaksi();
+
+}
+
+});
+
+};
+
+}
+
+});
+
+}
+
+function getAdminMapFromTbody(tbody){
+
+const map =
+new Map();
+
+tbody
+.querySelectorAll("tr")
+.forEach(row => {
+
+const min =
+Number(
+row.children[1].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const max =
+Number(
+row.children[2].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+map.set(
+rangeMinMaxKey({ min, max }),
+getAdminFromRow(row)
+);
+
+});
+
+return map;
+
+}
+
+function getPreviousJenisParentRow(parentRow){
+
+const prevDetail =
+parentRow.previousElementSibling;
+
+if(!prevDetail) return null;
+
+const prevParent =
+prevDetail.previousElementSibling;
+
+if(
+prevParent &&
+prevParent.hasAttribute("data-jenis")
+){
+
+return prevParent;
+
+}
+
+return null;
+
+}
+
+function copyAdminFromPreviousJenis(parentRow){
+
+const prevParent =
+getPreviousJenisParentRow(parentRow);
+
+if(!prevParent){
+
+alert(
+"Tidak ada jenis transaksi di atasnya untuk disalin biaya admin."
+);
+
+return;
+
+}
+
+const prevDetail =
+prevParent.nextElementSibling;
+
+const currentDetail =
+parentRow.nextElementSibling;
+
+const prevTbody =
+prevDetail?.querySelector("tbody");
+
+const currentTbody =
+currentDetail?.querySelector("tbody");
+
+if(!prevTbody || !currentTbody){
+
+return;
+
+}
+
+const adminMap =
+getAdminMapFromTbody(prevTbody);
+
+let copied = 0;
+
+currentTbody
+.querySelectorAll("tr")
+.forEach(row => {
+
+const min =
+Number(
+row.children[1].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const max =
+Number(
+row.children[2].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const key =
+rangeMinMaxKey({ min, max });
+
+if(!adminMap.has(key)) return;
+
+setAdminCell(
+row,
+adminMap.get(key)
+);
+
+copied++;
+
+});
+
+if(copied === 0){
+
+alert(
+"Tidak ada baris range dengan nominal min/max yang sama dengan jenis transaksi sebelumnya."
+);
+
+return;
+
+}
+
+saveData();
+syncJenisTransaksi();
+
+const namaPrev =
+prevParent.getAttribute("data-jenis") ||
+prevParent.children[0].innerText.trim();
+
+const namaNow =
+parentRow.getAttribute("data-jenis") ||
+parentRow.children[0].innerText.trim();
+
+alert(
+"Biaya admin dari \"" +
+namaPrev +
+"\" disalin ke \"" +
+namaNow +
+"\" (" +
+copied +
+" baris)."
+);
+
+}
+
+function migrateCopyAdminButtons(){
+
+document
+.querySelectorAll(
+".child-table thead .header-action-wrap"
+)
+.forEach(wrap => {
+
+if(wrap.querySelector(".copy-admin-btn")) return;
+
+const btn =
+document.createElement("button");
+
+btn.type = "button";
+btn.className = "copy-admin-btn";
+btn.title =
+"Salin biaya admin dari jenis transaksi sebelumnya";
+
+btn.innerHTML =
+'<i class="fa-solid fa-copy"></i>';
+
+const addBtn =
+wrap.querySelector(".add-range-btn");
+
+if(addBtn){
+
+wrap.insertBefore(btn, addBtn);
+
+}else{
+
+wrap.appendChild(btn);
+
+}
+
+});
+
+}
+
+function loadCopyAdminButtons(){
+
+migrateCopyAdminButtons();
+
+document
+.querySelectorAll(".copy-admin-btn")
+.forEach(btn => {
+
+btn.onclick = () => {
+
+const childTable =
+btn.closest(".child-table");
+
+const detailRow =
+childTable.closest("tr");
+
+const parentRow =
+detailRow.previousElementSibling;
+
+if(
+!parentRow ||
+!parentRow.hasAttribute("data-jenis")
+){
+
+return;
+
+}
+
+copyAdminFromPreviousJenis(parentRow);
+
+};
+
+});
+
+}
+
+let editTargetRow = null;
+
+function getRangeDataList(){
+
+try{
+
+const raw =
+JSON.parse(
+localStorage.getItem("rangeData") || "[]"
+);
+
+if(!Array.isArray(raw)) return [];
+
+return raw
+.map(r => ({
+min: Number(String(r.min).replace(/[^\d]/g,"")) || 0,
+max: Number(String(r.max).replace(/[^\d]/g,"")) || 0,
+admin: 0,
+charge: 0
+}))
+.filter(r => r.min > 0 && r.max > 0)
+.sort((a,b) => a.min - b.min);
+
+}catch(e){
+
+return [];
+
+}
+
+}
+
+function buildRangeRowHtml(range, no){
+
+return `
+<td>${no}</td>
+<td>${formatRupiah(range.min)}</td>
+<td>${formatRupiah(range.max)}</td>
+<td>${buildAdminInputHtml(range.admin || 0)}</td>
+<td>${formatRupiah(range.charge || 0)}</td>
+<td>
+  <div class="action-menu">
+    <button type="button" class="action-btn">⋮</button>
+    <div class="action-dropdown">
+      <button type="button" class="edit-btn">
+        <i class="fa-solid fa-pen"></i>
+      </button>
+      <button type="button" class="delete-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</td>
+`;
+
+}
+
+function getRangesFromTbody(tbody){
+
+return Array.from(
+tbody.querySelectorAll("tr")
+).map(row => ({
+min: Number(row.children[1].innerText.replace(/[^\d]/g,"")) || 0,
+max: Number(row.children[2].innerText.replace(/[^\d]/g,"")) || 0,
+admin: getAdminFromRow(row),
+charge: Number(row.children[4].innerText.replace(/[^\d]/g,"")) || 0
+}));
+
+}
+
+function rangeMinMaxKey(r){
+
+return r.min + "|" + r.max;
+
+}
+
+const RANGE_REMOVED_KEY =
+"rangeRemovedPerJenis";
+
+function getRangeRemovedMap(){
+
+try{
+
+return JSON.parse(
+localStorage.getItem(RANGE_REMOVED_KEY) || "{}"
+);
+
+}catch(e){
+
+return {};
+
+}
+
+}
+
+function getRemovedRangesForJenis(jenisKey){
+
+const map =
+getRangeRemovedMap();
+
+const key =
+String(jenisKey || "")
+.toLowerCase()
+.trim();
+
+return new Set(map[key] || []);
+
+}
+
+function recordRemovedRange(parentRow, rangeRow){
+
+if(!parentRow || !rangeRow) return;
+
+const jenis =
+parentRow.getAttribute("data-jenis");
+
+if(!jenis) return;
+
+const min =
+Number(
+rangeRow.children[1].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const max =
+Number(
+rangeRow.children[2].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const rk =
+rangeMinMaxKey({ min, max });
+
+const map =
+getRangeRemovedMap();
+
+if(!map[jenis]) map[jenis] = [];
+
+if(!map[jenis].includes(rk)){
+
+map[jenis].push(rk);
+
+}
+
+localStorage.setItem(
+RANGE_REMOVED_KEY,
+JSON.stringify(map)
+);
+
+}
+
+function clearRemovedRange(jenisKey, min, max){
+
+const jenis =
+String(jenisKey || "")
+.toLowerCase()
+.trim();
+
+if(!jenis) return;
+
+const rk =
+rangeMinMaxKey({
+min: Number(min) || 0,
+max: Number(max) || 0
+});
+
+const map =
+getRangeRemovedMap();
+
+if(!map[jenis]) return;
+
+map[jenis] =
+map[jenis].filter(k => k !== rk);
+
+if(!map[jenis].length){
+
+delete map[jenis];
+
+}
+
+localStorage.setItem(
+RANGE_REMOVED_KEY,
+JSON.stringify(map)
+);
+
+}
+
+function renumberRangeRows(tbody){
+
+Array.from(
+tbody.querySelectorAll("tr")
+).forEach((row, index) => {
+
+row.children[0].innerHTML =
+index + 1;
+
+});
+
+}
+
+function syncRangeBaruDariDataRange(){
+
+const globalRanges =
+getRangeDataList();
+
+if(!globalRanges.length) return 0;
+
+const parents =
+document.querySelectorAll(
+"#transactionTable tr[data-jenis]"
+);
+
+if(!parents.length) return 0;
+
+let totalAdded = 0;
+
+parents.forEach(parentRow => {
+
+const detailRow =
+parentRow.nextElementSibling;
+
+if(!detailRow) return;
+
+const tbody =
+detailRow.querySelector("tbody");
+
+if(!tbody) return;
+
+const existing =
+getRangesFromTbody(tbody);
+
+const keys =
+new Set(
+existing.map(rangeMinMaxKey)
+);
+
+const defAdmin =
+existing.length ?
+existing[0].admin : 0;
+
+const defCharge =
+existing.length ?
+existing[0].charge : 0;
+
+const removedKeys =
+getRemovedRangesForJenis(
+parentRow.getAttribute("data-jenis")
+);
+
+let jenisAdded = 0;
+
+globalRanges.forEach(gr => {
+
+const key =
+rangeMinMaxKey(gr);
+
+if(keys.has(key)) return;
+
+if(removedKeys.has(key)) return;
+
+keys.add(key);
+
+const tr =
+document.createElement("tr");
+
+tr.innerHTML =
+buildRangeRowHtml({
+min: gr.min,
+max: gr.max,
+admin: defAdmin,
+charge: defCharge
+},
+tbody.querySelectorAll("tr").length + 1
+);
+
+tbody.appendChild(tr);
+jenisAdded++;
+
+});
+
+if(jenisAdded){
+
+sortRanges(tbody);
+totalAdded += jenisAdded;
+
+}
+
+});
+
+if(totalAdded > 0){
+
+saveData();
+updateSummary();
+updateDataInfo();
+syncJenisTransaksi();
+
+loadDeleteButtons();
+loadEditButtons();
+loadAddRangeButtons();
+loadCopyAdminButtons();
+loadAdminInlineEditors();
+loadActionMenu();
+
+}
+
+return totalAdded;
+
+}
+
+function applyRangesToDetailRow(detailRow, ranges){
+
+const tbody =
+detailRow.querySelector("tbody");
+
+if(!tbody || !ranges.length) return;
+
+tbody.innerHTML =
+ranges
+.map((r, i) =>
+`<tr>${buildRangeRowHtml(r, i + 1)}</tr>`
+)
+.join("");
+
+sortRanges(tbody);
+
+loadDeleteButtons();
+loadEditButtons();
+loadAddRangeButtons();
+loadCopyAdminButtons();
+loadAdminInlineEditors();
+loadActionMenu();
+
+}
+
+function parseAngkaForm(value){
+
+return Number(String(value).replace(/[^\d]/g,"")) || 0;
+
+}
+
+function getChargeInputValue(){
+
+if(popupMode === "new-jenis"){
+
+return document.getElementById("chargeInput").value;
+
+}
+
+return document.getElementById("chargeInputAddRange").value;
+
+}
+
+function simpanJenisTransaksiBaru(
+jenis,
+kategori,
+efek,
+SumberSaldo,
+chargeDefault
+){
+
+let ranges =
+getRangeDataList();
+
+const charge =
+parseAngkaForm(chargeDefault);
+
+if(charge > 0){
+
+ranges = ranges.map(r => ({
+...r,
+charge
+}));
+
+}
+
+if(!ranges.length){
+
+alert(
+"Belum ada data di Data Range.\n\n" +
+"Buka menu Data Range → tambah range min & max dulu."
+);
+
+return false;
+
+}
+
+const row =
+document.createElement("tr");
+
+row.setAttribute(
+"data-jenis",
+jenis.toLowerCase().trim()
+);
+
+row.innerHTML = `
+
+<td>
+  <div class="transaction-name">
+    <div class="transaction-icon">
+      ${getTransactionIcon(jenis)}
+    </div>
+    ${jenis}
+  </div>
+</td>
+
+<td>
+  <div class="effect ${kategori === "Saldo In" ? "in" : "out"}">
+    ${kategori === "Saldo In" ? "↓" : "↑"}
+    ${kategori}
+  </div>
+</td>
+
+<td>
+  <div class="effect ${efek === "Cash In" ? "in" : "out"}">
+    ${efek === "Cash In" ? "↓" : "↑"}
+    ${efek}
+  </div>
+</td>
+
+<td>${SumberSaldo || "-"}</td>
+
+<td>
+  <button type="button" class="expand-btn">⌃</button>
+</td>
+`;
+
+const detailRow =
+document.createElement("tr");
+
+detailRow.style.display =
+"table-row";
+
+detailRow.innerHTML = `
+
+<td colspan="5" class="child-wrapper">
+
+  <div class="child-table">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nominal Min</th>
+          <th>Nominal Max</th>
+          <th>Biaya Admin</th>
+          <th>Charge</th>
+          <th class="action-header">
+            <div class="header-action-wrap">
+              <button type="button" class="copy-admin-btn" title="Salin biaya admin dari jenis transaksi sebelumnya">
+                <i class="fa-solid fa-copy"></i>
+              </button>
+              <button type="button" class="add-range-btn">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody></tbody>
+
+    </table>
+
+  </div>
+
+</td>
+`;
+
+tableBody.appendChild(row);
+tableBody.appendChild(detailRow);
+
+applyRangesToDetailRow(detailRow, ranges);
+
+loadExpandButton();
+sortTransactionAZ();
+
+saveData();
+updateSummary();
+updateDataInfo();
+syncJenisTransaksi();
+
+alert(
+"Jenis \"" + jenis + "\" disimpan.\n\n" +
+ranges.length +
+" baris range otomatis dari Data Range."
+);
+
+return true;
+
+}
+
+  /* =========================
+ICON TRANSAKSI
+========================= */
+
+function getTransactionIcon(jenis){
+
+  const text =
+  jenis.toLowerCase();
+
+  /* DANA */
+
+  if(text.includes("dana")){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg">
+    `;
+
+  }
+
+  /* GOPAY */
+
+  else if(
+    text.includes("gopay")
+  ){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg">
+    `;
+
+  }
+
+  /* OVO */
+
+  else if(
+    text.includes("ovo")
+  ){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg">
+    `;
+
+  }
+
+  /* SHOPEEPAY */
+
+  else if(
+    text.includes("shopeepay")
+    || text.includes("shopee")
+  ){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg">
+    `;
+
+  }
+
+  /* BRI */
+
+  else if(
+    text.includes("bri")
+    || text.includes("brizzi")
+    || text.includes("briva")
+  ){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg">
+    `;
+
+  }
+
+  /* MANDIRI */
+
+  else if(
+    text.includes("mandiri")
+  ){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg">
+    `;
+
+  }
+
+  /* LINK AJA */
+
+  else if(
+    text.includes("link aja")
+    || text.includes("linkaja")
+  ){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/LinkAja.svg">
+    `;
+
+  }
+
+  /* PLN */
+
+  else if(text.includes("pln")){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Logo_PLN.png">
+    `;
+
+  }
+
+  /* PULSA */
+
+  else if(text.includes("pulsa")){
+
+    return `
+      <i class="fa-solid fa-mobile-screen"></i>
+    `;
+
+  }
+
+  /* BPJS */
+
+  else if(text.includes("bpjs")){
+
+    return `
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/BPJS_Kesehatan_logo.svg">
+    `;
+
+  }
+
+  /* FIF */
+
+ else if(text.includes("fif")){
+
+  return `
+    <img src="https://i.pinimg.com/736x/e7/a8/2d/e7a82dacf091b1a69b8cab1d71a5e638.jpg">
+  `;
+
+}
+  /* OTO / MULTIFINANCE */
+
+  else if(
+
+    text.includes("oto")
+    || text.includes("multifinance")
+    || text.includes("kredit")
+    || text.includes("angsuran")
+
+  ){
+
+    return `
+      <i class="fa-solid fa-car-side"></i>
+    `;
+
+  }
+
+  /* SETOR / TABUNGAN */
+
+  else if(
+
+    text.includes("setor")
+    || text.includes("tabungan")
+    || text.includes("simpanan")
+
+  ){
+
+    return `
+      <i class="fa-solid fa-piggy-bank"></i>
+    `;
+
+  }
+
+  /* TARIK */
+
+  else if(text.includes("tarik")){
+
+    return `
+      <i class="fa-solid fa-wallet"></i>
+    `;
+
+  }
+
+  /* TRANSFER */
+
+  else if(
+    text.includes("transfer")
+    || text.includes("tf")
+  ){
+
+    return `
+      <i class="fa-solid fa-right-left"></i>
+    `;
+
+  }
+
+  /* DEFAULT */
+
+  else{
+
+    return `
+      <i class="fa-solid fa-money-bill-wave"></i>
+    `;
+
+  }
+
+}
+
+saveBtn.addEventListener("click", () => {
+
+  /* =========================
+  MODE EDIT
+  ========================= */
+
+  if(editTargetRow){
+
+    updateData();
+    return;
+
+  }
+
+  const jenis =
+  document.getElementById("jenisInput").value;
+
+  const kategori =
+  document.getElementById("kategoriSelect")
+  .options[
+    document.getElementById("kategoriSelect").selectedIndex
+  ].text;
+
+  const efek =
+  document.getElementById("efekSelect")
+  .options[
+    document.getElementById("efekSelect").selectedIndex
+  ].text;
+
+  const SumberSaldo =
+document.getElementById(
+  "SumberSaldoSelect"
+).value;
+
+  const nominalMin =
+  document.getElementById("minInput").value;
+
+  const nominalMax =
+  document.getElementById("maxInput").value;
+
+  const admin =
+  document.getElementById("adminInput").value;
+
+  const charge =
+  getChargeInputValue();
+
+if(!jenis.trim()){
+
+alert("Nama jenis transaksi wajib diisi.");
+return;
+
+}
+
+/* CEK TRANSAKSI SUDAH ADA */
+
+const existingRow =
+document.querySelector(
+  `tr[data-jenis="${jenis.toLowerCase().trim()}"]`
+);
+
+/* JENIS BARU — RANGE DARI DATA RANGE */
+
+if(popupMode === "new-jenis"){
+
+if(existingRow){
+
+alert(
+"Jenis \"" + jenis + "\" sudah ada.\n" +
+"Gunakan tombol + di tabel range untuk menambah satu baris."
+);
+
+return;
+
+}
+
+if(
+simpanJenisTransaksiBaru(
+jenis.trim(),
+kategori,
+efek,
+SumberSaldo,
+document.getElementById("chargeInput").value
+)
+){
+
+popup.classList.remove("show");
+resetPopupForm();
+saveBtn.dataset.forceSave = "";
+
+}
+
+return;
+
+}
+
+if(!existingRow){
+
+alert(
+"Jenis transaksi belum ada.\n" +
+"Klik \"+ Tambah Transaksi\" untuk membuat jenis baru."
+);
+
+return;
+
+}
+
+/* =========================
+CEK DUPLIKAT RANGE
+========================= */
+
+if(existingRow){
+
+  const detailRow =
+  existingRow.nextElementSibling;
+
+  const tbody =
+  detailRow.querySelector("tbody");
+
+  let duplicateFound = false;
+
+  tbody
+  .querySelectorAll("tr")
+  .forEach(row => {
+
+    const min =
+    row.children[1]
+    .innerText
+    .replace(/[^\d]/g,'');
+
+    const max =
+    row.children[2]
+    .innerText
+    .replace(/[^\d]/g,'');
+
+    const adm =
+    getAdminFromRow(row);
+
+    const chg =
+    row.children[4]
+    .innerText
+    .replace(/[^\d]/g,'');
+
+    if(
+
+      min == nominalMin &&
+      max == nominalMax &&
+      adm == admin &&
+      chg == charge
+
+    ){
+
+      duplicateFound = true;
+
+    }
+
+  });
+
+if(
+  duplicateFound &&
+  saveBtn.dataset.forceSave !== "true"
+){
+
+  document
+  .getElementById("duplicateModal")
+  .classList.add("show");
+
+  return;
+
+}
+}
+
+/* =========================
+JIKA TRANSAKSI SUDAH ADA
+========================= */
+
+if(existingRow){
+
+  const detailRow =
+  existingRow.nextElementSibling;
+
+  const tbody =
+  detailRow.querySelector("tbody");
+
+  const totalRow =
+  tbody.querySelectorAll("tr").length + 1;
+
+  const newRange =
+  document.createElement("tr");
+
+  newRange.innerHTML = `
+
+    <td>${totalRow}</td>
+
+    <td>${formatRupiah(nominalMin)}</td>
+
+    <td>${formatRupiah(nominalMax)}</td>
+
+    <td>${buildAdminInputHtml(parseAngkaForm(admin))}</td>
+
+    <td>${formatRupiah(charge)}</td>
+
+<td>
+
+  <div class="action-menu">
+
+    <button class="action-btn">
+      ⋮
+    </button>
+
+    <div class="action-dropdown">
+
+      <button class="edit-btn">
+        <i class="fa-solid fa-pen"></i>
+      </button>
+
+      <button class="delete-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+</td>
+
+  `;
+
+  tbody.appendChild(newRange);
+
+clearRemovedRange(
+existingRow.getAttribute("data-jenis"),
+parseAngkaForm(nominalMin),
+parseAngkaForm(nominalMax)
+);
+
+/* SORT OTOMATIS */
+
+sortRanges(tbody);
+
+saveData();
+
+updateSummary();
+updateDataInfo();
+syncJenisTransaksi();
+
+loadEditButtons();
+loadDeleteButtons();
+loadAddRangeButtons();
+loadCopyAdminButtons();
+loadAdminInlineEditors();
+
+
+
+ /* DELETE BUTTON */
+
+newRange
+.querySelector(".delete-btn")
+.addEventListener("click", (event) => {
+
+  const currentRow =
+  event.target.closest("tr");
+
+  recordRemovedRange(
+  existingRow,
+  currentRow
+  );
+
+  currentRow.remove();
+
+  if(tbody.children.length){
+
+  renumberRangeRows(tbody);
+
+  }
+
+  if(tbody.children.length === 0){
+
+    existingRow.remove();
+    detailRow.remove();
+
+  }
+
+  saveData();
+  updateSummary();
+  updateDataInfo();
+
+  syncJenisTransaksi();
+
+});                         
+   
+/* ACTION MENU */
+
+newRange
+.querySelector(".action-btn")
+.addEventListener("click", (e) => {
+
+ e.stopPropagation();
+
+/* TUTUP SEMUA */
+
+document
+.querySelectorAll(".action-menu")
+.forEach((menu) => {
+
+  menu.classList.remove("show");
+
+});
+
+/* BUKA YANG DIKLIK */
+
+newRange
+.querySelector(".action-menu")
+.classList.add("show");
+
+});
+
+
+  }   
+
+
+
+  /* RESET FORM */
+
+resetPopupForm();
+
+popup.classList.remove("show");
+
+saveBtn.dataset.forceSave = "";
+
+});
+
+function loadActionMenu(){
+
+  document
+  .querySelectorAll(".action-btn")
+  .forEach((btn) => {
+
+    btn.addEventListener("click", (e) => {
+
+      e.stopPropagation();
+
+      /* TUTUP SEMUA */
+
+      document
+      .querySelectorAll(".action-menu")
+      .forEach((menu) => {
+
+        menu.classList.remove("show");
+
+      });
+
+      /* BUKA YANG DIKLIK */
+
+      btn
+      .closest(".action-menu")
+      .classList.add("show");
+
+    });
+
+  });
+
+}
+
+  /* =========================
+SORT TRANSAKSI A-Z
+========================= */
+
+function sortTransactionAZ(){
+
+  const allRows =
+  Array.from(tableBody.children);
+
+  const grouped = [];
+
+  for(let i = 0; i < allRows.length; i += 2){
+
+    grouped.push({
+      parent: allRows[i],
+      child: allRows[i + 1]
+    });
+
+  }
+
+  grouped.sort((a,b) => {
+
+    const textA =
+    a.parent
+    .getAttribute("data-jenis")
+    .toLowerCase();
+
+    const textB =
+    b.parent
+    .getAttribute("data-jenis")
+    .toLowerCase();
+
+    return textA.localeCompare(textB);
+
+  });
+
+  tableBody.innerHTML = "";
+
+  grouped.forEach((item) => {
+
+    tableBody.appendChild(item.parent);
+    tableBody.appendChild(item.child);
+
+  });
+
+}
+  
+
+  /* =========================
+SORT RANGE
+========================= */
+
+function sortRanges(tbody){
+
+  const rows =
+  Array.from(
+    tbody.querySelectorAll("tr")
+  );
+
+  rows.sort((a,b) => {
+
+    const minA =
+    Number(
+      a.children[1]
+      .innerText
+      .replace(/[^\d]/g,'')
+    );
+
+    const minB =
+    Number(
+      b.children[1]
+      .innerText
+      .replace(/[^\d]/g,'')
+    );
+
+    return minA - minB;
+
+  });
+
+  /* RESET ISI */
+
+  tbody.innerHTML = "";
+
+  /* MASUKKAN ULANG */
+
+  rows.forEach((row,index) => {
+
+    /* UPDATE NOMOR */
+
+    row.children[0].innerHTML =
+    index + 1;
+
+    tbody.appendChild(row);
+
+  });
+
+}
+  
+function flushAdminCellsForStorage(){
+
+/* Cells are already plain text — nothing to flush */
+
+}
+
+function findJenisParentRow(namaKey){
+
+const key =
+String(namaKey || "")
+.toLowerCase()
+.trim();
+
+const rows =
+document.querySelectorAll(
+"#transactionTable tr[data-jenis]"
+);
+
+for(const row of rows){
+
+if(
+row.getAttribute("data-jenis") === key
+){
+
+return row;
+
+}
+
+}
+
+return null;
+
+}
+
+function applyJenisTransaksiBackupToDom(){
+
+let list = [];
+
+try{
+
+list =
+JSON.parse(
+localStorage.getItem("jenisTransaksiData") || "[]"
+);
+
+}catch(e){
+
+return;
+
+}
+
+if(!Array.isArray(list) || !list.length) return;
+
+list.forEach(item => {
+
+const key =
+String(item.nama || "")
+.toLowerCase()
+.trim();
+
+if(!key || !item.ranges) return;
+
+const parent =
+findJenisParentRow(key);
+
+if(!parent) return;
+
+const detail =
+parent.nextElementSibling;
+
+const tbody =
+detail?.querySelector("tbody");
+
+if(!tbody) return;
+
+const adminMap =
+new Map();
+
+const chargeMap =
+new Map();
+
+item.ranges.forEach(r => {
+
+const min =
+Number(r.min) || 0;
+
+const max =
+Number(r.max) || 0;
+
+const mapKey =
+min + "|" + max;
+
+adminMap.set(
+mapKey,
+Number(r.admin) || 0
+);
+
+chargeMap.set(
+mapKey,
+Number(r.charge) || 0
+);
+
+});
+
+tbody
+.querySelectorAll("tr")
+.forEach(row => {
+
+const min =
+Number(
+row.children[1].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const max =
+Number(
+row.children[2].innerText.replace(/[^\d]/g,"")
+) || 0;
+
+const mapKey =
+min + "|" + max;
+
+if(adminMap.has(mapKey)){
+
+setAdminCell(
+row,
+adminMap.get(mapKey)
+);
+
+}
+
+if(
+chargeMap.has(mapKey) &&
+row.children[4]
+){
+
+row.children[4].innerHTML =
+formatRupiah(chargeMap.get(mapKey));
+
+}
+
+});
+
+});
+
+}
+
+let persistTimer = null;
+
+function flushExpandStateForStorage(){
+
+document
+.querySelectorAll("#transactionTable tr[data-jenis]")
+.forEach(parent => {
+
+const detail =
+parent.nextElementSibling;
+
+if(!detail) return;
+
+const isOpen =
+detail.style.display === "table-row";
+
+detail.dataset.open =
+isOpen ? "true" : "false";
+
+});
+
+}
+
+function restoreExpandStateFromStorage(){
+
+document
+.querySelectorAll("#transactionTable tr[data-jenis]")
+.forEach(parent => {
+
+const detail =
+parent.nextElementSibling;
+
+const btn =
+parent.querySelector(".expand-btn");
+
+if(!detail || !btn) return;
+
+if(detail.dataset.open === "true"){
+
+detail.style.display = "table-row";
+btn.innerHTML = "⌃";
+
+}else{
+
+detail.style.display = "none";
+btn.innerHTML = "⌄";
+
+}
+
+});
+
+}
+
+function persistDatabase(){
+
+if(!tableBody) return;
+
+try{
+
+syncJenisTransaksi();
+flushExpandStateForStorage();
+flushAdminCellsForStorage();
+
+localStorage.setItem(
+"databaseContent",
+tableBody.innerHTML
+);
+
+loadAdminInlineEditors();
+
+}catch(error){
+
+console.error("Gagal menyimpan database:", error);
+
+alert(
+"Gagal menyimpan perubahan.\n\n" +
+"Pastikan penyimpanan browser tidak diblokir, dan buka aplikasi " +
+"dari alamat yang sama setiap kali (disarankan pakai Live Server, " +
+"bukan file ganda di folder berbeda)."
+);
+
+}
+
+}
+
+function schedulePersistDatabase(){
+
+clearTimeout(persistTimer);
+
+persistTimer =
+setTimeout(persistDatabase, 500);
+
+}
+
+function setupAutoSave(){
+
+window.addEventListener("beforeunload", () => {
+
+persistDatabase();
+
+});
+
+document.addEventListener("visibilitychange", () => {
+
+if(document.visibilityState === "hidden"){
+
+persistDatabase();
+
+}
+
+});
+
+}
+
+  function saveData(){
+
+  persistDatabase();
+
+}
+
+
+
+/* LOAD SAVED DATA */
+
+const savedData =
+localStorage.getItem("databaseContent");
+
+if(savedData){
+
+  tableBody.innerHTML =
+  savedData;
+
+  updateSummary();
+  updateDataInfo();
+
+  loadExpandButton();
+  loadActionMenu();
+  loadEditButtons();
+  loadDeleteButtons();
+  loadAddRangeButtons();
+  loadCopyAdminButtons();
+  loadAdminInlineEditors();
+
+  restoreExpandStateFromStorage();
+
+  syncJenisTransaksi();
+
+}
+
+setupAutoSave();
+
+  function loadExpandButton(){
+
+  document
+  .querySelectorAll(".expand-btn")
+  .forEach((btn) => {
+
+    btn.addEventListener("click", () => {
+
+      const row =
+      btn.closest("tr");
+
+      const detailRow =
+      row.nextElementSibling;
+
+      if(
+        detailRow.style.display === "none"
+        || detailRow.style.display === ""
+      ){
+
+        detailRow.style.display =
+        "table-row";
+
+        detailRow.dataset.open = "true";
+
+        btn.innerHTML = "⌃";
+
+      }
+
+      else{
+
+        detailRow.style.display =
+        "none";
+
+        detailRow.dataset.open = "false";
+
+        btn.innerHTML = "⌄";
+
+      }
+
+      schedulePersistDatabase();
+
+    });
+
+  });
+
+}
+  /* =========================
+RESET ALL
+========================= */
+
+const resetAllBtn =
+document.getElementById("resetAllBtn");
+
+resetAllBtn.addEventListener("click", () => {
+
+  const confirmReset =
+  confirm("Hapus semua data transaksi?");
+
+  if(confirmReset){
+
+    tableBody.innerHTML = "";
+
+    localStorage.removeItem(
+      "databaseContent"
+    );
+    updateSummary();
+    updateDataInfo();
+
+  }
+
+});
+
+  /* CLOSE DROPDOWN KLIK LUAR */
+
+document.addEventListener("click", () => {
+
+  document
+  .querySelectorAll(".action-menu")
+  .forEach((menu) => {
+
+    menu.classList.remove("show");
+
+  });
+
+});
+
+  /* =========================
+DELETE BUTTON
+========================= */
+
+function loadDeleteButtons(){
+
+  document
+  .querySelectorAll(".delete-btn")
+  .forEach((btn) => {
+
+    btn.onclick = (event) => {
+
+      const currentRow =
+      event.target.closest("tr");
+
+      if(!currentRow) return;
+
+      const tbody =
+      currentRow.parentElement;
+
+      const detailRow =
+      tbody.closest("tr");
+
+      const parentRow =
+      detailRow?.previousElementSibling;
+
+      if(
+        parentRow &&
+        parentRow.hasAttribute("data-jenis")
+      ){
+
+      recordRemovedRange(
+      parentRow,
+      currentRow
+      );
+
+      }
+
+      currentRow.remove();
+
+      if(tbody.children.length){
+
+      renumberRangeRows(tbody);
+
+      }
+
+      /* CEK APAKAH MASIH ADA ROW */
+
+      if(tbody.children.length === 0){
+
+        if(parentRow){
+          parentRow.remove();
+        }
+
+        detailRow.remove();
+
+      }
+
+      saveData();
+      updateSummary();
+      updateDataInfo();
+
+      syncJenisTransaksi();
+
+    };
+
+  });
+
+}
+
+/* =========================
+ADD RANGE BUTTON
+========================= */
+
+function loadAddRangeButtons(){
+
+  document
+  .querySelectorAll(".add-range-btn")
+  .forEach((btn) => {
+
+    btn.onclick = () => {
+
+      /* AMBIL CHILD TABLE */
+
+      const childTable =
+      btn.closest(".child-table");
+
+      /* AMBIL DETAIL ROW */
+
+      const detailRow =
+      childTable.closest("tr");
+
+      /* AMBIL PARENT */
+
+      const parentRow =
+      detailRow.previousElementSibling;
+
+      /* AMBIL JENIS */
+
+      const jenis =
+      parentRow.children[0]
+      .innerText;
+
+      /* AMBIL DATA MOTHER ROW */
+
+const kategoriText =
+parentRow.children[1]
+.innerText
+.trim();
+
+const efekText =
+parentRow.children[2]
+.innerText
+.trim();
+
+const sumberSaldo =
+parentRow.children[3]
+.innerText
+.trim();
+
+
+      /* AMBIL CHARGE TERAKHIR */
+
+const tbody =
+detailRow.querySelector("tbody");
+
+const lastRow =
+tbody.querySelector("tr:last-child");
+
+let lastCharge = "";
+
+if(lastRow){
+
+  lastCharge =
+  lastRow.children[4]
+  .innerText
+  .replace(/[^\d]/g,'');
+
+}
+
+     /* RESET FORM */
+
+document.getElementById("minInput").value = "";
+document.getElementById("maxInput").value = "";
+document.getElementById("adminInput").value = "";
+
+document.getElementById("chargeInputAddRange").value =
+lastCharge;
+
+/* KATEGORI */
+
+if(kategoriText.includes("Saldo In")){
+
+  kategoriSelect.value =
+  "saldo_in";
+
+}
+
+else if(kategoriText.includes("Saldo Out")){
+
+  kategoriSelect.value =
+  "saldo_out";
+
+}
+
+else{
+
+  kategoriSelect.value =
+  "none";
+
+}
+
+/* EFEK */
+
+if(efekText.includes("Cash In")){
+
+  efekSelect.value =
+  "cash_in";
+
+}
+
+else if(efekText.includes("Cash Out")){
+
+  efekSelect.value =
+  "cash_out";
+
+}
+
+else{
+
+  efekSelect.value =
+  "none";
+
+}
+
+/* SUMBER SALDO */
+
+document.getElementById(
+  "SumberSaldoSelect"
+).value = sumberSaldo;
+
+      /* AUTO ISI */
+
+      document.getElementById("jenisInput").value =
+      jenis;
+
+      /* RESET EDIT MODE */
+
+      editTargetRow = null;
+
+      document.getElementById("jenisInput").readOnly = true;
+
+      setPopupFormMode("add-range");
+
+      popup.classList.add("show");
+
+    };
+
+  });
+
+}
+
+/* =========================
+EDIT BUTTON
+========================= */
+
+function loadEditButtons(){
+
+  document
+  .querySelectorAll(".edit-btn")
+  .forEach((btn) => {
+
+    btn.onclick = (event) => {
+
+      const currentRow =
+      event.target.closest("tr");
+
+      editTargetRow =
+      currentRow;
+
+      const detailRow =
+      currentRow.closest(".child-wrapper");
+
+      const parentRow =
+      detailRow
+      .closest("tr")
+      .previousElementSibling;
+
+      const jenis =
+      parentRow.children[0].innerText;
+
+      const nominalMin =
+      currentRow.children[1]
+      .innerText
+      .replace(/[^\d]/g,'');
+
+      const nominalMax =
+      currentRow.children[2]
+      .innerText
+      .replace(/[^\d]/g,'');
+
+      const admin =
+      getAdminFromRow(currentRow);
+
+      const charge =
+      currentRow.children[4]
+      .innerText
+      .replace(/[^\d]/g,'');
+
+      document.getElementById("jenisInput").value =
+      jenis;
+
+      document.getElementById("minInput").value =
+      nominalMin;
+
+      document.getElementById("maxInput").value =
+      nominalMax;
+
+      document.getElementById("adminInput").value =
+      admin;
+
+      document.getElementById("chargeInputAddRange").value =
+      charge;
+
+      document.getElementById("jenisInput").readOnly = true;
+
+      setPopupFormMode("add-range");
+
+      /* AMBIL DATA MOTHER */
+
+const kategoriText =
+parentRow.children[1]
+.innerText
+.trim();
+
+const efekText =
+parentRow.children[2]
+.innerText
+.trim();
+
+/* SET KATEGORI */
+
+if(kategoriText.includes("Saldo In")){
+
+  kategoriSelect.value =
+  "saldo_in";
+
+}
+
+else if(kategoriText.includes("Saldo Out")){
+
+  kategoriSelect.value =
+  "saldo_out";
+
+}
+
+else{
+
+  kategoriSelect.value =
+  "none";
+
+}
+
+/* SET EFEK */
+
+if(efekText.includes("Cash In")){
+
+  efekSelect.value =
+  "cash_in";
+
+}
+
+else if(efekText.includes("Cash Out")){
+
+  efekSelect.value =
+  "cash_out";
+
+}
+
+else{
+
+  efekSelect.value =
+  "none";
+
+}
+
+      popup.classList.add("show");
+
+    };
+
+  });
+
+}
+  
+  /* =========================
+UPDATE DATA
+========================= */
+
+function updateData(){
+
+  const jenis =
+  document.getElementById("jenisInput").value;
+
+  const nominalMin =
+  document.getElementById("minInput").value;
+
+  const nominalMax =
+  document.getElementById("maxInput").value;
+
+  const admin =
+  document.getElementById("adminInput").value;
+
+  const charge =
+  getChargeInputValue();
+
+  const kategori =
+document.getElementById("kategoriSelect")
+.options[
+  document.getElementById("kategoriSelect").selectedIndex
+].text;
+
+const efek =
+document.getElementById("efekSelect")
+.options[
+  document.getElementById("efekSelect").selectedIndex
+].text;
+
+  editTargetRow.children[1].innerHTML =
+  formatRupiah(nominalMin);
+
+  editTargetRow.children[2].innerHTML =
+  formatRupiah(nominalMax);
+
+  setAdminCell(
+  editTargetRow,
+  parseAngkaForm(admin)
+  );
+
+  editTargetRow.children[4].innerHTML =
+  formatRupiah(charge);
+
+
+  /* =========================
+UPDATE MOTHER ROW
+========================= */
+
+const detailRow =
+editTargetRow
+.closest(".child-wrapper")
+.closest("tr");
+
+const parentRow =
+detailRow.previousElementSibling;
+
+if(parentRow){
+
+clearRemovedRange(
+parentRow.getAttribute("data-jenis"),
+parseAngkaForm(nominalMin),
+parseAngkaForm(nominalMax)
+);
+
+}
+
+/* UPDATE JENIS */
+
+parentRow.children[0].innerHTML = `
+
+  <div class="transaction-name">
+
+    <div class="transaction-icon">
+
+      ${getTransactionIcon(jenis)}
+
+    </div>
+
+    ${jenis}
+
+  </div>
+
+`;
+
+/* UPDATE KATEGORI */
+
+parentRow.children[1].innerHTML = `
+
+  <div class="effect ${kategori === 'Saldo In'
+  ? 'in'
+  : 'out'}">
+
+    ${kategori === 'Saldo In'
+    ? '↓'
+    : '↑'}
+
+    ${kategori}
+
+  </div>
+
+`;
+
+/* UPDATE EFEK */
+
+parentRow.children[2].innerHTML = `
+
+  <div class="effect ${efek === 'Cash In'
+  ? 'in'
+  : 'out'}">
+
+    ${efek === 'Cash In'
+    ? '↓'
+    : '↑'}
+
+    ${efek}
+
+  </div>
+
+`;
+
+  const SumberSaldo =
+document.getElementById(
+"SumberSaldoSelect"
+).value;
+
+parentRow.children[3].innerHTML =
+SumberSaldo || "-";
+
+  /* SORT ULANG */
+
+const tbody =
+editTargetRow.parentElement;
+
+sortRanges(tbody);
+sortTransactionAZ();
+
+saveData();
+updateSummary();
+updateDataInfo();
+
+syncJenisTransaksi();
+
+loadAdminInlineEditors();
+
+  popup.classList.remove("show");
+
+  editTargetRow = null;
+
+}
+
+  /* =========================
+AUTO SUMMARY
+========================= */
+
+function updateSummary(){
+
+  const parentRows =
+  document.querySelectorAll(
+    '#transactionTable tr[data-jenis]'
+  );
+
+  /* TOTAL JENIS */
+
+  document.getElementById(
+    "totalTransaksi"
+  ).innerText =
+  parentRows.length;
+
+  let saldoIn = 0;
+  let saldoOut = 0;
+  let cashIn = 0;
+  let cashOut = 0;
+
+  parentRows.forEach((row) => {
+
+    const kategori =
+    row.children[1]
+    .innerText
+    .trim();
+
+    const efek =
+    row.children[2]
+    .innerText
+    .trim();
+
+    /* =========================
+    SALDO IN
+    ========================= */
+
+    if(
+      kategori.includes("Saldo In")
+    ){
+      saldoIn++;
+    }
+
+    /* =========================
+    SALDO OUT
+    ========================= */
+
+    if(
+      kategori.includes("Saldo Out")
+    ){
+      saldoOut++;
+    }
+
+    /* =========================
+    CASH IN
+    ========================= */
+
+    if(
+      efek.includes("Cash In")
+    ){
+      cashIn++;
+    }
+
+    /* =========================
+    CASH OUT
+    ========================= */
+
+    if(
+      efek.includes("Cash Out")
+    ){
+      cashOut++;
+    }
+
+  });
+
+  /* UPDATE CARD */
+
+  document.getElementById(
+    "uangMasuk"
+  ).innerText =
+  saldoIn;
+
+  document.getElementById(
+    "uangKeluar"
+  ).innerText =
+  saldoOut;
+
+  document.getElementById(
+    "kasMasuk"
+  ).innerText =
+  cashIn;
+
+  document.getElementById(
+    "kasKeluar"
+  ).innerText =
+  cashOut;
+
+}
+
+  /* =========================
+SEARCH TRANSAKSI
+========================= */
+
+const searchInput =
+document.querySelector(".filter-input");
+
+searchInput.addEventListener("input", () => {
+
+  const keyword =
+  searchInput.value.toLowerCase();
+
+  const parentRows =
+  document.querySelectorAll(
+    '#transactionTable tr[data-jenis]'
+  );
+
+  parentRows.forEach((row) => {
+
+    const jenis =
+    row.innerText.toLowerCase();
+
+    const detailRow =
+    row.nextElementSibling;
+
+    if(jenis.includes(keyword)){
+
+      row.style.display = "";
+
+      /* BIAR CHILD TETEP NORMAL */
+
+      if(
+        detailRow &&
+        detailRow.classList !== "hidden-detail"
+      ){
+
+        detailRow.style.display =
+        detailRow.dataset.open === "true"
+        ? "table-row"
+        : "none";
+
+      }
+
+    }
+
+    else{
+
+      row.style.display = "none";
+
+      if(detailRow){
+
+        detailRow.style.display =
+        "none";
+
+      }
+
+    }
+
+    });
+
+  updateDataInfo();
+
+});
+
+  /* =========================
+RESET FILTER
+========================= */
+
+const resetFilterBtn =
+document.querySelector(".filter-btn");
+
+resetFilterBtn.addEventListener("click", () => {
+
+  searchInput.value = "";
+
+  const parentRows =
+  document.querySelectorAll(
+    '#transactionTable tr[data-jenis]'
+  );
+
+  parentRows.forEach((row) => {
+
+    row.style.display = "";
+
+    const detailRow =
+    row.nextElementSibling;
+
+    if(detailRow){
+
+      detailRow.style.display =
+      detailRow.dataset.open === "true"
+      ? "table-row"
+      : "none";
+
+    }
+
+  });
+updateDataInfo();
+});
+
+ /* =========================
+UPDATE INFO DATA
+========================= */
+
+function updateDataInfo(){
+
+  const allRows =
+  document.querySelectorAll(
+    '#transactionTable tr[data-jenis]'
+  );
+
+  const visibleRows =
+  Array.from(allRows).filter((row) => {
+
+    return row.style.display !== "none";
+
+  });
+
+  const visibleTotal =
+  visibleRows.length;
+
+  const allTotal =
+  allRows.length;
+
+  const info =
+  document.getElementById("dataInfo");
+
+  /* TIDAK ADA DATA */
+
+  if(allTotal === 0){
+
+    info.innerText =
+    "Tidak ada transaksi";
+
+  }
+
+  /* SEARCH / FILTER */
+
+  else if(visibleTotal !== allTotal){
+
+    info.innerText =
+    `${visibleTotal} dari ${allTotal} transaksi ditemukan`;
+
+  }
+
+  /* NORMAL */
+
+  else{
+
+    info.innerText =
+    `${allTotal} transaksi ditemukan`;
+
+  }
+
+}
+
+  /* =========================
+AUTO DATE
+========================= */
+
+const currentDate =
+document.getElementById("currentDate");
+
+const today =
+new Date();
+
+const options = {
+
+  day:"numeric",
+  month:"long",
+  year:"numeric"
+
+};
+
+currentDate.innerText =
+today.toLocaleDateString(
+  "id-ID",
+  options
+);
+
+
+  /* =========================
+SYNC JENIS TRANSAKSI
+========================= */
+
+function syncJenisTransaksi(){
+
+  const semuaTransaksi = [];
+
+  document
+  .querySelectorAll("tr[data-jenis]")
+  .forEach(parentRow => {
+
+    const detailRow =
+    parentRow.nextElementSibling;
+
+    const ranges = [];
+
+    detailRow
+    .querySelectorAll("tbody tr")
+    .forEach(rangeRow => {
+
+      ranges.push({
+
+        min:Number(
+          rangeRow.children[1]
+          .innerText.replace(/[^\d]/g,'')
+        ),
+
+        max:Number(
+          rangeRow.children[2]
+          .innerText.replace(/[^\d]/g,'')
+        ),
+
+        admin:getAdminFromRow(rangeRow),
+
+        charge:Number(
+          rangeRow.children[4]
+          .innerText.replace(/[^\d]/g,'')
+        )
+
+      });
+
+    });
+
+    semuaTransaksi.push({
+
+      nama:
+      parentRow.getAttribute("data-jenis"),
+
+      kategori:
+      parentRow.children[1]
+      .innerText.trim(),
+
+      efek:
+      parentRow.children[2]
+      .innerText.trim(),
+
+      SumberSaldo:
+      parentRow.children[3]
+      .innerText.trim(),
+
+      ranges:ranges
+
+    });
+
+  });
+
+  localStorage.setItem(
+    "jenisTransaksiData",
+    JSON.stringify(semuaTransaksi)
+  );
+  console.log("SAVE MASTER DATA TO LOCALSTORAGE");
+
+  /* DUAL-WRITE: Simpan jenisTransaksi ke Firestore */
+  const uid = getFirestoreUid();
+  if(uid){
+    /* Baca rangeData dan akunBank dari localStorage untuk dikirim bersama */
+    let rangeData = [];
+    let akunBank = [];
+    try { rangeData = JSON.parse(localStorage.getItem("rangeData") || "[]"); } catch(e){}
+    try { akunBank = JSON.parse(localStorage.getItem("akunBankData") || "[]"); } catch(e){}
+    
+    const masterRef = doc(db, "masterData", uid);
+    setDoc(masterRef, {
+      jenisTransaksi: semuaTransaksi,
+      rangeData: rangeData,
+      akunBank: akunBank
+    }, { merge: true })
+      .then(() => {
+        console.log("SAVE MASTER DATA TO FIRESTORE");
+      })
+      .catch(err => {
+        console.warn("FIRESTORE SAVE FAILED, LOCALSTORAGE OK", err);
+      });
+  }
+}
+
+  function loadSumberSaldo(){
+
+  const select =
+  document.getElementById("SumberSaldoSelect");
+
+  if(!select) return;
+
+  const akunList =
+  JSON.parse(
+    localStorage.getItem("akunBankData")
+    || "[]"
+  );
+
+  select.innerHTML =
+  '<option value="">Pilih Sumber Saldo</option>';
+
+  akunList.forEach(item => {
+
+    const option =
+    document.createElement("option");
+
+    option.value =
+    item.nama;
+
+    option.textContent =
+    item.nama;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+loadSumberSaldo();
+
+  const duplicateModal =
+document.getElementById(
+  "duplicateModal"
+);
+
+const duplicateNo =
+document.getElementById(
+  "duplicateNo"
+);
+
+const duplicateYes =
+document.getElementById(
+  "duplicateYes"
+);
+
+duplicateNo.addEventListener(
+  "click",
+  () => {
+
+    duplicateModal
+    .classList
+    .remove("show");
+
+  }
+);
+
+duplicateModal.addEventListener(
+  "click",
+  (e) => {
+
+    if(
+      e.target === duplicateModal
+    ){
+
+      duplicateModal
+      .classList
+      .remove("show");
+
+    }
+
+  }
+);
+
+ duplicateYes.addEventListener(
+  "click",
+  () => {
+
+    duplicateModal
+    .classList
+    .remove("show");
+
+    saveBtn.dataset.forceSave = "true";
+
+    saveBtn.click();
+
+  }
+);
+  
+</script>
+
+</body>
+</html>

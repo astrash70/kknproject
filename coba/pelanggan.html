@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Data Pelanggan</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f5f7f9;
+  color:#1c1c1c;
+}
+
+.dashboard-layout{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:260px;
+  background:
+  linear-gradient(
+    180deg,
+    #052e1b,
+    #06351f,
+    #041f14
+  );
+  padding:24px 16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+  overflow:hidden;
+}
+
+.sidebar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+  radial-gradient(
+    circle at top right,
+    rgba(32,201,111,0.16),
+    transparent 45%
+  );
+  pointer-events:none;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:white;
+  font-size:30px;
+  font-weight:700;
+  margin-bottom:40px;
+  position:relative;
+  z-index:2;
+}
+
+.logo span{
+  font-size:16px;
+  font-weight:700;
+}
+
+.logo-icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.logo-icon i{
+  font-size:22px;
+  color:#8dff9d;
+}
+
+.sidebar-menu{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  position:relative;
+  z-index:2;
+}
+
+.sidebar-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 18px;
+  border-radius:18px;
+  color:rgba(255,255,255,0.82);
+  text-decoration:none;
+  font-size:15px;
+  font-weight:500;
+  transition:0.25s;
+}
+
+.sidebar-item i{
+  width:20px;
+  text-align:center;
+}
+
+.sidebar-item:hover{
+  background:rgba(255,255,255,0.08);
+  color:white;
+}
+
+.sidebar-item.active{
+  background:
+  linear-gradient(
+    135deg,
+    #0a6b2d,
+    #11853c
+  );
+  color:white;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.sidebar-title{
+  color:rgba(255,255,255,0.45);
+  font-size:12px;
+  font-weight:600;
+  margin:22px 14px 8px;
+}
+
+.sidebar-profile{
+  position:relative;
+  z-index:2;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:22px;
+  padding:16px;
+  color:white;
+}
+
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.profile-avatar{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:#1ec45d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+}
+
+.main-content{
+  flex:1;
+  margin-left:260px;
+  padding:28px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:26px;
+  padding:18px 0;
+}
+
+.topbar-left h1{
+  font-size:34px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.topbar-left p{
+  color:#6c757d;
+  font-size:15px;
+}
+
+.card{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  border:1px solid #edf1f3;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.card-title{
+  font-size:24px;
+  font-weight:700;
+}
+
+/* FILTER */
+.filter-bar{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.filter-bar input[type="text"],
+.filter-bar input[type="date"],
+.filter-bar select{
+  height:46px;
+  padding:0 14px;
+  border:1px solid #dfe5e8;
+  border-radius:14px;
+  outline:none;
+  font-size:14px;
+  background:white;
+}
+
+.filter-bar input[type="text"]{
+  flex:1;
+  min-width:200px;
+  padding-left:40px;
+}
+
+.search-wrapper{
+  position:relative;
+  flex:1;
+  min-width:200px;
+}
+
+.search-wrapper i{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.filter-btn-group{
+  display:flex;
+  gap:6px;
+}
+
+.filter-btn{
+  height:46px;
+  padding:0 18px;
+  border:1px solid #dfe5e8;
+  border-radius:14px;
+  background:white;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+  color:#6c757d;
+}
+
+.filter-btn.active{
+  background:#0a6b2d;
+  color:white;
+  border-color:#0a6b2d;
+}
+
+.filter-date-inputs{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.filter-date-inputs input[type="date"]{
+  height:46px;
+  padding:0 14px;
+  border:1px solid #dfe5e8;
+  border-radius:14px;
+  outline:none;
+  font-size:14px;
+  background:white;
+}
+
+.filter-date-inputs span{
+  color:#6c757d;
+  font-size:14px;
+}
+
+/* TABLE */
+.table-box{
+  border:1px solid #edf1f3;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+thead{
+  background:#f7faf8;
+}
+
+th{
+  padding:16px;
+  text-align:left;
+  font-size:14px;
+  position:sticky;
+  top:0;
+  background:#f7faf8;
+  z-index:10;
+}
+
+td{
+  padding:14px 16px;
+  border-top:1px solid #edf1f3;
+  font-size:14px;
+}
+
+.table-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  font-size:14px;
+  color:#667085;
+}
+
+.empty-state{
+  text-align:center;
+  padding:60px 20px;
+  color:#94a3b8;
+}
+
+.empty-state i{
+  font-size:48px;
+  margin-bottom:16px;
+  opacity:0.5;
+}
+
+.empty-state p{
+  font-size:15px;
+}
+
+/* RANK BADGE */
+.rank-badge{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#0a6b2d,#17a34a);
+  color:white;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:13px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main-content{margin-left:0;padding:16px;}
+  .topbar{flex-direction:column;gap:12px;}
+  .topbar-left h1{font-size:22px;}
+  .filter-bar{flex-direction:column;align-items:stretch;}
+  .filter-bar input[type="text"], .search-wrapper{min-width:auto;}
+  .filter-btn-group{flex-wrap:wrap;}
+  .filter-date-inputs{flex-wrap:wrap;}
+  .table-box{overflow-x:auto;}
+  table{min-width:600px;}
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <span>Digital Report</span>
+      </div>
+      <div class="sidebar-menu">
+        <a href="dashboard.html" class="sidebar-item">
+          <i class="fa-solid fa-house"></i>
+          Dashboard
+        </a>
+        <a href="input.html" class="sidebar-item">
+          <i class="fa-solid fa-circle-plus"></i>
+          Input Laporan
+        </a>
+        <a href="database.html" class="sidebar-item">
+          <i class="fa-solid fa-database"></i>
+          Database
+        </a>
+        <a href="report.html" class="sidebar-item active">
+          <i class="fa-regular fa-clipboard"></i>
+          Report
+        </a>
+        <a href="akun.html" class="sidebar-item">
+          <i class="fa-solid fa-user"></i>
+          Akun
+        </a>
+        <div class="sidebar-title">
+          MASTER DATA
+        </div>
+        <a href="report.html" class="sidebar-item">
+          <i class="fa-solid fa-chart-line"></i>
+          Trend
+        </a>
+        <a href="rekap.html" class="sidebar-item">
+          <i class="fa-regular fa-calendar"></i>
+          Rekap Bulanan
+        </a>
+        <a href="pelanggan.html" class="sidebar-item active">
+          <i class="fa-solid fa-user-group"></i>
+          Data Pelanggan
+        </a>
+        <a href="danakeluar.html" class="sidebar-item">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          Dana Keluar
+        </a>
+      </div>
+    </div>
+    <div class="sidebar-profile">
+      <div class="profile-top">
+        <div class="profile-avatar">T</div>
+        <div>
+          <h4>Tokosayyida</h4>
+          <p style="opacity:.7;font-size:13px;">Admin</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1>Data Pelanggan</h1>
+        <p>Daftar seluruh pelanggan berdasarkan transaksi nasabah</p>
+      </div>
+    </div>
+
+    <!-- CARD -->
+    <div class="card">
+
+      <div class="card-header">
+        <div class="card-title">
+          <i class="fa-solid fa-address-book" style="color:#0a6b2d;"></i>
+          &nbsp;Semua Pelanggan
+        </div>
+        <div style="font-size:14px;color:#6c757d;" id="totalPelangganCount">
+          Memuat data...
+        </div>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+
+        <!-- SEARCH -->
+        <div class="search-wrapper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="searchPelanggan"
+            placeholder="Cari nama atau rekening..."
+          >
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <div class="filter-btn-group">
+          <button class="filter-btn active" data-mode="all" onclick="setFilterMode('all')">
+            Semua
+          </button>
+          <button class="filter-btn" data-mode="specific" onclick="setFilterMode('specific')">
+            Tanggal
+          </button>
+          <button class="filter-btn" data-mode="range" onclick="setFilterMode('range')">
+            Range
+          </button>
+        </div>
+
+        <!-- DATE INPUTS -->
+        <div id="dateInputs" style="display:none;" class="filter-date-inputs">
+          <input type="date" id="filterDateStart">
+          <span id="rangeLabel" style="display:none;">sampai</span>
+          <input type="date" id="filterDateEnd" style="display:none;">
+        </div>
+
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-box">
+        <div style="max-height:600px;overflow-y:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:60px;">No</th>
+                <th>Nama Pelanggan</th>
+                <th>Nomor Rekening</th>
+                <th style="width:160px;text-align:center;">Total Transaksi</th>
+              </tr>
+            </thead>
+            <tbody id="pelangganTableBody">
+              <tr>
+                <td colspan="4" class="empty-state">
+                  <i class="fa-solid fa-users"></i>
+                  <p>Memuat data pelanggan...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <div id="tableInfo">Memuat...</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="js/pelanggan.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA0YHpAO0JyCNt-oJNwJdgKCOwLiagrfvg",
+  authDomain: "digital-report-3567d.firebaseapp.com",
+  projectId: "digital-report-3567d",
+  storageBucket: "digital-report-3567d.firebasestorage.app",
+  messagingSenderId: "509408276429",
+  appId: "1:509408276429:web:65323d54b3211644ecde84"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* =========================
+STATE
+========================= */
+
+let currentFilterMode = 'all';
+let allPelangganData = [];
+let _initDone = false;
+let _loadFromFirestoreDone = false;
+
+/* =========================
+FORMAT TANGGAL (YYYY-MM-DD)
+========================= */
+
+function todayKey(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return y + '-' + m + '-' + day;
+}
+
+function setDefaultDates(){
+  const today = todayKey();
+  document.getElementById('filterDateStart').value = today;
+  document.getElementById('filterDateEnd').value = today;
+}
+
+/* =========================
+FILTER MODE
+========================= */
+
+function setFilterMode(mode){
+  currentFilterMode = mode;
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+
+  const dateInputs = document.getElementById('dateInputs');
+  const rangeLabel = document.getElementById('rangeLabel');
+  const dateEnd = document.getElementById('filterDateEnd');
+
+  if (mode === 'all') {
+    dateInputs.style.display = 'none';
+  } else if (mode === 'specific') {
+    dateInputs.style.display = 'flex';
+    rangeLabel.style.display = 'none';
+    dateEnd.style.display = 'none';
+  } else if (mode === 'range') {
+    dateInputs.style.display = 'flex';
+    rangeLabel.style.display = 'inline';
+    dateEnd.style.display = 'inline-block';
+  }
+
+  applyFilters();
+}
+window.setFilterMode = setFilterMode;
+
+/* =========================
+APPLY FILTERS
+========================= */
+
+function applyFilters(){
+  const search = document.getElementById('searchPelanggan').value;
+  const dateStart = document.getElementById('filterDateStart').value;
+  const dateEnd = document.getElementById('filterDateEnd').value;
+
+  // Bangun database fresh
+  refreshPelangganDatabase();
+  allPelangganData = getPelangganData();
+
+  let filteredData;
+
+  if (currentFilterMode === 'specific' && dateStart) {
+    filteredData = filterPelanggan(allPelangganData, search, 'specific', dateStart);
+  } else if (currentFilterMode === 'range' && dateStart && dateEnd) {
+    filteredData = filterPelanggan(allPelangganData, search, 'range', dateStart, dateEnd);
+  } else {
+    filteredData = filterPelanggan(allPelangganData, search, 'all');
+  }
+
+  renderTable(filteredData);
+}
+
+/* =========================
+RENDER TABLE
+========================= */
+
+function renderTable(data){
+  const tbody = document.getElementById('pelangganTableBody');
+  const info = document.getElementById('tableInfo');
+  const countEl = document.getElementById('totalPelangganCount');
+
+  tbody.innerHTML = '';
+
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="empty-state">
+          <i class="fa-solid fa-users-slash"></i>
+          <p>Tidak ada data pelanggan ditemukan</p>
+        </td>
+      </tr>
+    `;
+    info.textContent = '0 pelanggan';
+    countEl.textContent = '0 pelanggan';
+    return;
+  }
+
+  data.forEach((pelanggan, index) => {
+    const nomor = index + 1;
+    const tr = document.createElement('tr');
+
+    if (index === 0) tr.style.background = '#fefce8';
+    else if (index === 1) tr.style.background = '#f8fafc';
+    else if (index === 2) tr.style.background = '#fff7ed';
+
+    tr.innerHTML = `
+      <td>
+        <div class="rank-badge">${nomor}</div>
+      </td>
+      <td>
+        <strong>${pelanggan.nama}</strong>
+      </td>
+      <td style="color:#6c757d;font-family:monospace;">
+        ${pelanggan.rekening !== '-' ? pelanggan.rekening : '<span style="color:#d1d5db;">-</span>'}
+      </td>
+      <td style="text-align:center;">
+        <span style="
+          display:inline-block;
+          padding:6px 14px;
+          border-radius:20px;
+          background:#e8f5e9;
+          color:#15803d;
+          font-weight:700;
+          font-size:14px;
+        ">
+          ${pelanggan.totalTransaksi}
+        </span>
+        <span style="font-size:12px;color:#6c757d;margin-left:4px;">
+          transaksi
+        </span>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  info.textContent = `${data.length} pelanggan`;
+  countEl.textContent = `${data.length} pelanggan`;
+}
+
+/* =========================
+EVENT LISTENERS
+========================= */
+
+document.getElementById('searchPelanggan').addEventListener('input', applyFilters);
+document.getElementById('filterDateStart').addEventListener('change', applyFilters);
+document.getElementById('filterDateEnd').addEventListener('change', applyFilters);
+
+/* =========================
+INIT DENGAN FIRESTORE
+========================= */
+
+async function initPelanggan(){
+  /* Auth guard */
+  onAuthStateChanged(auth, async (user) => {
+    if(!user){
+      window.location.href = 'index.html';
+      return;
+    }
+
+    console.log("UID LOGIN:", user.uid);
+
+    /* Set Firebase instance ke modul pelanggan */
+    window.setPelangganFirebase(user.uid, db);
+
+    /* Load dari Firestore dulu (cache cepat) */
+    const firestoreData = await window.loadPelangganDariFirestore ? await window.loadPelangganDariFirestore() : null;
+    
+    if(firestoreData){
+      _loadFromFirestoreDone = true;
+      console.log("LOAD PELANGGAN FIRESTORE (cache)");
+    } else {
+      console.log("FIRESTORE PELANGGAN KOSONG, FALLBACK TO LOCALSTORAGE");
+    }
+
+    /* Init UI */
+    setDefaultDates();
+    refreshPelangganDatabase();
+    allPelangganData = getPelangganData();
+    applyFilters();
+    _initDone = true;
+  });
+}
+
+/* Mulai init */
+document.addEventListener('DOMContentLoaded', initPelanggan);
+
+</script>
+
+</body>
+</html>

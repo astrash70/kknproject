@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Akun</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f5f7f9;
+  color:#1c1c1c;
+}
+
+.dashboard-layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  background:linear-gradient(180deg,#052e1b,#06351f,#041f14);
+  padding:24px 16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+  overflow:hidden;
+}
+.sidebar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top right,rgba(32,201,111,0.16),transparent 45%);
+  pointer-events:none;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:white;
+  font-size:30px;
+  font-weight:700;
+  margin-bottom:40px;
+  position:relative;
+  z-index:2;
+}
+.logo span{font-size:16px;}
+.logo-icon{
+  width:44px;height:44px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.08);
+}
+.logo-icon i{font-size:22px;color:#8dff9d;}
+.sidebar-menu{
+  display:flex;flex-direction:column;gap:8px;
+  position:relative;z-index:2;
+}
+.sidebar-item{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;border-radius:18px;
+  color:rgba(255,255,255,0.82);
+  text-decoration:none;font-size:15px;font-weight:500;transition:0.25s;
+}
+.sidebar-item:hover{background:rgba(255,255,255,0.08);color:white;}
+.sidebar-item.active{
+  background:linear-gradient(135deg,#0a6b2d,#11853c);
+  color:white;box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+.sidebar-item i{width:20px;font-size:18px;text-align:center;flex-shrink:0;}
+.sidebar-profile{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:22px;padding:16px;color:white;
+}
+.profile-top{
+  display:flex;align-items:center;gap:12px;
+}
+.profile-avatar{
+  width:46px;height:46px;border-radius:50%;
+  background:#1ec45d;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+}
+
+/* MAIN */
+.main-content{
+  flex:1;margin-left:260px;padding:28px;
+}
+
+/* TOPBAR */
+.topbar{
+  position:sticky;top:0;z-index:999;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:26px;padding:18px 0;
+  background:rgba(245,247,249,0.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.topbar-left h1{
+  font-size:34px;font-weight:800;margin-bottom:8px;
+}
+.topbar-left p{color:#6c757d;font-size:15px;}
+
+/* CARD */
+.card{
+  background:white;border-radius:26px;padding:24px;
+  border:1px solid #edf1f3;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  margin-bottom:20px;
+}
+.card-title{
+  font-size:20px;font-weight:700;margin-bottom:6px;
+}
+.card-desc{
+  color:#6c757d;font-size:14px;margin-bottom:16px;
+}
+
+/* PROFILE CARD */
+.profile-card-wrap{
+  background:linear-gradient(135deg,#ffffff 0%,#fafff8 40%,#f0fdf4 100%);
+  border-radius:26px;padding:28px 30px;
+  border:1px solid #e2f0e6;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  margin-bottom:20px;position:relative;
+}
+.profile-card{
+  display:flex;align-items:center;gap:24px;
+  flex-wrap:wrap;position:relative;
+}
+.profile-card-avatar-wrap{position:relative;flex-shrink:0;}
+.profile-card-avatar{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,#15803d,#22c55e);
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;font-weight:800;color:white;
+  flex-shrink:0;box-shadow:0 4px 16px rgba(22,163,74,0.25);
+  overflow:hidden;
+}
+.profile-card-avatar img{
+  width:100%;height:100%;object-fit:cover;
+}
+.avatar-camera{
+  position:absolute;bottom:2px;right:2px;
+  width:28px;height:28px;border-radius:50%;
+  background:white;border:2px solid #f0fdf4;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#15803d;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.profile-card-info{
+  flex:1;min-width:200px;padding-right:140px;
+}
+.profile-name-row{
+  display:flex;align-items:center;gap:8px;margin-bottom:6px;
+}
+.profile-card-info .profile-name{
+  font-size:26px;font-weight:800;color:#1c1c1c;line-height:1.2;
+}
+.verified-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  background:#16a34a;color:white;font-size:11px;flex-shrink:0;
+}
+.profile-role-row{
+  display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;
+}
+.profile-card-info .profile-role{
+  color:#6c757d;font-size:14px;font-weight:600;
+}
+.status-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 12px;border-radius:999px;
+  font-size:11px;font-weight:600;
+}
+.status-badge.active{background:#dcfce7;color:#15803d;}
+.status-badge.warning{background:#fef9c3;color:#a16207;}
+.status-badge.inactive{background:#fef2f2;color:#dc2626;}
+.status-badge i{font-size:8px;}
+.profile-contact{
+  display:flex;flex-direction:column;gap:7px;
+}
+.contact-item{
+  display:flex;align-items:center;gap:9px;
+  font-size:14px;color:#374151;
+}
+.contact-item i{
+  width:16px;font-size:13px;color:#16a34a;
+  flex-shrink:0;text-align:center;
+}
+.contact-item span{color:#6c757d;margin-right:4px;}
+.contact-item strong{font-weight:600;color:#1c1c1c;}
+.profile-card-action{
+  position:absolute;top:0;right:0;
+}
+.btn-plus-account{
+  width:36px;height:36px;border-radius:12px;
+  border:1px solid #d9e6de;
+  background:white;color:#15803d;font-size:18px;font-weight:600;
+  cursor:pointer;transition:0.2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.btn-plus-account:hover{
+  background:linear-gradient(135deg,#0a6b2d,#15803d);
+  color:white;border-color:#0a6b2d;
+  box-shadow:0 4px 12px rgba(10,107,45,0.2);
+}
+
+/* ACCOUNT SWITCHER */
+.account-list{display:flex;flex-direction:column;gap:10px;}
+.account-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:16px;
+  border:1px solid #edf1f3;cursor:pointer;transition:0.2s;
+}
+.account-item:hover{background:#f9fafb;border-color:#cbd5e1;}
+.account-item.active{background:#f0fdf4;border-color:#bbf7d0;}
+.account-item-avatar{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#15803d,#22c55e);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:700;color:white;
+  flex-shrink:0;overflow:hidden;
+}
+.account-item-avatar img{width:100%;height:100%;object-fit:cover;}
+.account-item-info{flex:1;min-width:0;}
+.account-item-info h4{font-size:15px;font-weight:600;margin-bottom:2px;}
+.account-item-info p{font-size:13px;color:#6c757d;}
+.account-item-check{
+  width:24px;height:24px;border-radius:50%;
+  background:#16a34a;color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+}
+.account-add-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:16px;margin-top:6px;
+  border-radius:16px;border:2px dashed #d1d5db;
+  background:transparent;color:#6c757d;
+  font-size:14px;font-weight:600;cursor:pointer;transition:0.2s;
+}
+.account-add-btn:hover{
+  border-color:#16a34a;color:#16a34a;background:#f0fdf4;
+}
+
+/* REGISTRASI */
+.reg-form{display:flex;flex-direction:column;gap:14px;}
+.reg-form .field{display:flex;flex-direction:column;gap:6px;}
+.reg-form .field label{font-size:13px;font-weight:600;color:#374151;}
+.reg-form .field input{
+  height:48px;padding:0 14px;border:1px solid #dfe5e8;
+  border-radius:12px;outline:none;font-size:14px;
+  font-family:inherit;background:#f9fafb;transition:0.2s;
+}
+.reg-form .field input:focus{border-color:#16a34a;background:white;}
+.reg-submit-btn{
+  height:50px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#0a6b2d,#16a34a);
+  color:white;font-size:15px;font-weight:700;
+  cursor:pointer;transition:0.2s;margin-top:4px;
+}
+.reg-submit-btn:hover{
+  opacity:0.95;transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(10,107,45,0.2);
+}
+
+/* MENU LIST */
+.menu-list{
+  display:flex;flex-direction:column;gap:12px;
+}
+.menu-item{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 20px;border-radius:20px;
+  background:white;border:1px solid #edf1f3;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+  cursor:pointer;transition:0.2s;text-decoration:none;color:inherit;
+}
+.menu-item:hover{
+  border-color:#cbd5e1;box-shadow:0 4px 16px rgba(0,0,0,0.06);
+  transform:translateY(-1px);
+}
+.menu-icon{
+  width:50px;height:50px;border-radius:16px;
+  background:rgba(16,185,129,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:#0a6b2d;flex-shrink:0;
+}
+.menu-content{flex:1;min-width:0;}
+.menu-content h4{font-size:16px;font-weight:600;margin-bottom:4px;}
+.menu-content p{font-size:13px;color:#6c757d;line-height:1.4;}
+.menu-chevron{font-size:16px;color:#9ca3af;flex-shrink:0;transition:0.2s;}
+.menu-item:hover .menu-chevron{color:#0a6b2d;transform:translateX(2px);}
+
+/* ACTION BUTTONS */
+.action-buttons{display:flex;flex-direction:column;gap:12px;margin-top:4px;}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 24px;border-radius:18px;
+  font-size:15px;font-weight:600;cursor:pointer;
+  border:none;transition:0.2s;text-decoration:none;
+}
+.btn-outline{background:white;color:#1c1c1c;border:1px solid #d1d5db;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.btn-outline:hover{background:#f9fafb;border-color:#9ca3af;}
+.btn-danger{background:#dc2626;color:white;border:1px solid #dc2626;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.btn-danger:hover{background:#b91c1c;border-color:#b91c1c;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:white;border-radius:26px;
+  width:100%;max-width:540px;max-height:85vh;
+  overflow-y:auto;box-shadow:0 25px 50px rgba(0,0,0,0.15);
+}
+.modal-header{
+  display:flex;justify-content:space-between;
+  align-items:center;padding:24px 28px 16px;
+  border-bottom:1px solid #edf1f3;
+}
+.modal-header h3{font-size:20px;font-weight:700;}
+.modal-close{
+  width:36px;height:36px;border-radius:12px;
+  background:#f3f4f6;border:none;font-size:18px;
+  cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:#6b7280;transition:0.2s;
+}
+.modal-close:hover{background:#e5e7eb;color:#1c1c1c;}
+.modal-body{padding:24px 28px;}
+
+/* INFO TABLE */
+.info-table{width:100%;border-collapse:collapse;}
+.info-table tr{border-bottom:1px solid #f0f2f4;}
+.info-table tr:last-child{border-bottom:none;}
+.info-table td{padding:16px 0;font-size:14px;line-height:1.5;}
+.info-table td:first-child{color:#6c757d;font-weight:500;width:140px;}
+.info-table td:last-child{font-weight:600;color:#1c1c1c;}
+
+/* EDIT FORM */
+.edit-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.edit-field label{font-size:13px;font-weight:600;color:#374151;}
+.edit-field input{
+  height:48px;padding:0 14px;border:1px solid #dfe5e8;
+  border-radius:12px;outline:none;font-size:14px;
+  font-family:inherit;background:#f9fafb;transition:0.2s;
+}
+.edit-field input:focus{border-color:#16a34a;background:white;}
+.edit-field input.readonly-field{
+  background:#f0f0f0;color:#6c757d;cursor:not-allowed;
+}
+.edit-actions{
+  display:flex;gap:12px;margin-top:20px;
+}
+.edit-actions .btn{
+  flex:1;padding:14px;border-radius:14px;
+  font-size:14px;font-weight:700;
+}
+.btn-batal{
+  background:#f3f4f6;color:#374151;border:1px solid #dfe5e8;
+}
+.btn-batal:hover{background:#e5e7eb;}
+.btn-simpan{
+  background:linear-gradient(135deg,#0a6b2d,#16a34a);
+  color:white;border:none;
+}
+.btn-simpan:hover{
+  opacity:0.95;transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(10,107,45,0.2);
+}
+.btn-edit-header{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:12px;
+  background:#f0fdf4;color:#15803d;font-size:13px;font-weight:600;
+  border:1px solid #bbf7d0;cursor:pointer;transition:0.2s;
+}
+.btn-edit-header:hover{background:#dcfce7;border-color:#86efac;}
+
+/* SECURITY */
+.keamanan-list{display:flex;flex-direction:column;gap:0;}
+.keamanan-item{
+  display:flex;align-items:center;padding:18px 0;
+  border-bottom:1px solid #f0f2f4;
+}
+.keamanan-item:last-child{border-bottom:none;}
+.keamanan-icon{
+  width:44px;height:44px;border-radius:14px;
+  background:rgba(16,185,129,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:#0a6b2d;flex-shrink:0;margin-right:16px;
+}
+.keamanan-content{flex:1;min-width:0;}
+.keamanan-content h4{font-size:15px;font-weight:600;color:#1c1c1c;margin-bottom:4px;}
+.keamanan-content p{font-size:13px;color:#6c757d;line-height:1.4;}
+.keamanan-action{flex-shrink:0;margin-left:12px;}
+.keamanan-action .btn-ubah-pw{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:12px;
+  background:#f0fdf4;color:#15803d;font-size:13px;font-weight:600;
+  border:1px solid #bbf7d0;cursor:pointer;transition:0.2s;
+}
+.keamanan-action .btn-ubah-pw:hover{background:#dcfce7;border-color:#86efac;}
+.password-dots{font-size:20px;letter-spacing:3px;color:#374151;font-weight:600;}
+
+/* TUTORIAL */
+.tutorial-list{display:flex;flex-direction:column;gap:12px;}
+.tutorial-item{background:#f9fafb;border:1px solid #eef1f4;border-radius:16px;overflow:hidden;}
+.tutorial-header{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 20px;cursor:pointer;user-select:none;transition:0.2s;
+}
+.tutorial-header:hover{background:#f3f4f6;}
+.tutorial-step{
+  width:36px;height:36px;border-radius:12px;
+  background:linear-gradient(135deg,#0a6b2d,#16a34a);
+  color:white;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;flex-shrink:0;
+}
+.tutorial-header h4{flex:1;font-size:15px;font-weight:600;}
+.tutorial-arrow{font-size:14px;color:#9ca3af;transition:0.2s;}
+.tutorial-item.open .tutorial-arrow{transform:rotate(180deg);color:#0a6b2d;}
+.tutorial-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease;padding:0 20px;}
+.tutorial-item.open .tutorial-body{max-height:200px;padding:0 20px 18px;}
+.tutorial-body p{font-size:14px;color:#4b5563;line-height:1.7;}
+
+/* ABOUT */
+.about-card{
+  background:linear-gradient(135deg,#f0fdf4,#f5f7f9);
+  border:1px solid #d9f0dd;border-radius:22px;
+  padding:28px;margin-bottom:20px;
+}
+.about-card p{font-size:15px;line-height:1.8;color:#374151;margin-bottom:16px;}
+.about-card p:last-child{margin-bottom:0;}
+.about-version{
+  display:inline-block;padding:8px 20px;border-radius:12px;
+  background:#0a6b2d;color:white;font-size:13px;font-weight:600;margin-top:12px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main-content{margin-left:0;padding:16px;padding-bottom:95px;}
+  .topbar{top:0;padding:10px 0;margin-bottom:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+  .topbar-left h1{font-size:22px;}
+  .topbar-left p{font-size:13px;}
+  .card{border-radius:20px;padding:18px;}
+  .profile-card-wrap{padding:20px;}
+  .profile-card{gap:16px;}
+  .profile-card-avatar{width:68px;height:68px;font-size:26px;}
+  .profile-card-info .profile-name{font-size:20px;}
+  .profile-card-info{padding-right:0;}
+  .profile-card-action{position:relative;top:auto;right:auto;width:auto;margin-top:0;margin-left:auto;}
+  .menu-item{padding:14px 16px;border-radius:16px;}
+  .menu-icon{width:44px;height:44px;font-size:18px;}
+  .menu-content h4{font-size:15px;}
+  .menu-content p{font-size:12px;}
+  .modal{max-width:100%;border-radius:20px;margin:10px;}
+  .modal-header{padding:18px 20px 14px;}
+  .modal-body{padding:18px 20px;}
+  .modal-header h3{font-size:18px;}
+  .info-table td{padding:14px 0;font-size:13px;}
+  .info-table td:first-child{width:100px;}
+  .about-card{padding:20px;}
+  .about-card p{font-size:14px;}
+  .btn{padding:14px 20px;font-size:14px;}
+  .edit-field{margin-bottom:14px;}
+  .edit-field input{height:44px;font-size:13px;}
+  .edit-actions{gap:10px;}
+  .edit-actions .btn{padding:12px;font-size:13px;}
+}
+.mobile-nav{display:none;}
+@media(max-width:768px){
+  .mobile-nav{
+    position:fixed;bottom:0;left:0;width:100%;
+    height:78px;background:white;
+    border-top:1px solid #e9ecef;
+    display:flex;justify-content:space-around;align-items:center;
+    z-index:9999;box-shadow:0 -5px 20px rgba(0,0,0,0.06);
+  }
+  .mobile-item{
+    display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:4px;
+    text-decoration:none;color:#7b8794;font-size:11px;font-weight:600;
+  }
+  .mobile-item i{font-size:20px;}
+  .mobile-item.active{color:#0a6b2d;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="logo">
+        <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <span>Digital Report</span>
+      </div>
+      <div class="sidebar-menu">
+        <a href="dashboard.html" class="sidebar-item"><i class="fa-solid fa-house"></i>Dashboard</a>
+        <a href="input.html" class="sidebar-item"><i class="fa-solid fa-circle-plus"></i>Input Laporan</a>
+        <a href="database.html" class="sidebar-item"><i class="fa-solid fa-database"></i>Database</a>
+        <a href="report.html" class="sidebar-item"><i class="fa-regular fa-clipboard"></i>Report</a>
+        <a href="akun.html" class="sidebar-item active"><i class="fa-solid fa-user"></i>Akun</a>
+      </div>
+    </div>
+    <div class="sidebar-profile">
+      <div class="profile-top">
+        <div class="profile-avatar">T</div>
+        <div>
+          <h4>Tokosayyida</h4>
+          <p style="opacity:.7;font-size:13px;">Admin</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1>Akun</h1>
+        <p>Kelola informasi akun dan pengaturan aplikasi.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 1: IDENTITAS AKUN -->
+    <div class="profile-card-wrap">
+      <div class="profile-card">
+
+        <!-- AVATAR -->
+        <div class="profile-card-avatar-wrap">
+          <div class="profile-card-avatar" id="profileAvatar">
+            T
+          </div>
+          <div class="avatar-camera" onclick="pilihFotoProfil()" style="cursor:pointer;">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <input type="file" id="fotoProfilInput" accept="image/*" style="display:none;">
+        </div>
+
+        <!-- INFO -->
+        <div class="profile-card-info">
+          <div class="profile-name-row">
+            <div class="profile-name" id="profileNameDisplay">Tokosayyida</div>
+            <div class="verified-badge"><i class="fa-solid fa-check"></i></div>
+          </div>
+          <div class="profile-role-row">
+            <div class="profile-role">Admin</div>
+            <div class="status-badge active" id="statusBadge">
+              <i class="fa-solid fa-circle"></i><span id="statusText">Agen Aktif</span>
+            </div>
+          </div>
+          <div class="profile-contact">
+            <div class="contact-item">
+              <i class="fa-solid fa-phone"></i><strong id="profileTelepon">0812-3456-7890</strong>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i><strong id="profileEmail">tokosayyida@gmail.com</strong>
+            </div>
+            <div class="contact-item">
+              <i class="fa-solid fa-store"></i><strong id="profileUsaha">TOKOSAYYIDA</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOMBOL PLUS -->
+        <div class="profile-card-action">
+          <button class="btn-plus-account" onclick="openModal('modalAkunSwitcher')" title="Pilih Akun">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 2: MENU AKUN -->
+    <div class="card">
+      <div class="card-title">Menu Akun</div>
+      <div class="card-desc">Pilih menu untuk melihat informasi lebih lanjut.</div>
+      <div class="menu-list">
+
+        <div class="menu-item" onclick="openModal('modalUsaha')">
+          <div class="menu-icon"><i class="fa-solid fa-store"></i></div>
+          <div class="menu-content">
+            <h4>Informasi Usaha</h4>
+            <p>Lihat informasi usaha dan identitas agen.</p>
+          </div>
+          <div class="menu-chevron"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+        <div class="menu-item" onclick="openModal('modalKeamanan')">
+          <div class="menu-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="menu-content">
+            <h4>Keamanan Akun</h4>
+            <p>Kelola password dan keamanan akun.</p>
+          </div>
+          <div class="menu-chevron"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+        <div class="menu-item" onclick="openModal('modalTutorial')">
+          <div class="menu-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="menu-content">
+            <h4>Tutorial Penggunaan</h4>
+            <p>Panduan menggunakan aplikasi Digital Report.</p>
+          </div>
+          <div class="menu-chevron"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+        <div class="menu-item" onclick="openModal('modalTentang')">
+          <div class="menu-icon"><i class="fa-solid fa-circle-info"></i></div>
+          <div class="menu-content">
+            <h4>Tentang Aplikasi</h4>
+            <p>Informasi dan tujuan pembuatan aplikasi.</p>
+          </div>
+          <div class="menu-chevron"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION AKHIR -->
+    <div class="action-buttons">
+      <button class="btn btn-danger" onclick="handleLogout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL INFORMASI USAHA -->
+<!-- ========================= -->
+<div id="modalUsaha" class="modal-overlay" onclick="closeModalOutside(event, 'modalUsaha')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Informasi Usaha</h3>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="btn-edit-header" id="btnEditUsaha" onclick="toggleEditUsaha()">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+        <button class="modal-close" onclick="closeModal('modalUsaha')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+    <div class="modal-body" id="usahaModalBody">
+      <!-- CONTENT DIISI OLEH JAVASCRIPT -->
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL KEAMANAN AKUN -->
+<!-- ========================= -->
+<div id="modalKeamanan" class="modal-overlay" onclick="closeModalOutside(event, 'modalKeamanan')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Keamanan Akun</h3>
+      <button class="modal-close" onclick="closeModal('modalKeamanan')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="keamananModalBody">
+      <!-- CONTENT DIISI OLEH JAVASCRIPT -->
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL TUTORIAL PENGGUNAAN -->
+<!-- ========================= -->
+<div id="modalTutorial" class="modal-overlay" onclick="closeModalOutside(event, 'modalTutorial')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tutorial Penggunaan</h3>
+      <button class="modal-close" onclick="closeModal('modalTutorial')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="tutorial-list">
+        <div class="tutorial-item open">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-step">1</div>
+            <h4>Membuat laporan harian</h4>
+            <div class="tutorial-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+          </div>
+          <div class="tutorial-body"><p>Buka menu Input Laporan, isi data cash, saldo, transaksi nasabah, dan mutasi. Simpan laporan untuk menyimpan data harian.</p></div>
+        </div>
+        <div class="tutorial-item">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-step">2</div>
+            <h4>Menambahkan transaksi nasabah</h4>
+            <div class="tutorial-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+          </div>
+          <div class="tutorial-body"><p>Di halaman Input Laporan, tambahkan transaksi nasabah dengan memilih jenis transaksi, nominal, dan admin. Data akan tersimpan otomatis.</p></div>
+        </div>
+        <div class="tutorial-item">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-step">3</div>
+            <h4>Mengelola database transaksi</h4>
+            <div class="tutorial-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+          </div>
+          <div class="tutorial-body"><p>Database menyimpan semua data laporan, pelanggan, jenis transaksi, dan sumber saldo. Gunakan menu Database untuk mengelola data master.</p></div>
+        </div>
+        <div class="tutorial-item">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-step">4</div>
+            <h4>Melihat laporan dan analisis</h4>
+            <div class="tutorial-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+          </div>
+          <div class="tutorial-body"><p>Menu Report menampilkan laporan keuangan lengkap, termasuk cash flow, ringkasan transaksi, dan analisis pendapatan per periode.</p></div>
+        </div>
+        <div class="tutorial-item">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-step">5</div>
+            <h4>Melihat rekap bulanan</h4>
+            <div class="tutorial-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+          </div>
+          <div class="tutorial-body"><p>Rekap Bulanan menyajikan ringkasan keuangan per bulan, termasuk total pemasukan, pengeluaran, saldo, dan grafik tren transaksi.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL ACCOUNT SWITCHER -->
+<!-- ========================= -->
+<div id="modalAkunSwitcher" class="modal-overlay" onclick="closeModalOutside(event, 'modalAkunSwitcher')">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <h3>Pilih Akun</h3>
+      <button class="modal-close" onclick="closeModal('modalAkunSwitcher')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:#6c757d;margin-bottom:18px;">
+        Pilih akun yang ingin digunakan atau tambahkan akun baru.
+      </p>
+      <div class="account-list" id="accountList"></div>
+      <button class="account-add-btn" onclick="bukaRegistrasi()">
+        <i class="fa-solid fa-plus"></i> Tambah Akun Baru
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL REGISTRASI -->
+<!-- ========================= -->
+<div id="modalRegistrasi" class="modal-overlay" onclick="closeModalOutside(event, 'modalRegistrasi')">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-header">
+      <h3>Daftar Akun Baru</h3>
+      <button class="modal-close" onclick="closeModal('modalRegistrasi')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="reg-form">
+        <div class="field"><label>Nama Akun</label><input type="text" id="regNama" placeholder="Masukkan nama akun" autocomplete="off"></div>
+        <div class="field"><label>Nama Usaha</label><input type="text" id="regUsaha" placeholder="Masukkan nama usaha" autocomplete="off"></div>
+        <div class="field"><label>Email</label><input type="email" id="regEmail" placeholder="Masukkan email" autocomplete="off"></div>
+        <div class="field"><label>Password</label><input type="password" id="regPassword" placeholder="Masukkan password"></div>
+        <div class="field"><label>Konfirmasi Password</label><input type="password" id="regKonfirmasi" placeholder="Ulangi password"></div>
+        <button class="reg-submit-btn" onclick="daftarAkunBaru()">Daftar Akun Baru</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL TENTANG APLIKASI -->
+<!-- ========================= -->
+<div id="modalTentang" class="modal-overlay" onclick="closeModalOutside(event, 'modalTentang')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tentang Aplikasi</h3>
+      <button class="modal-close" onclick="closeModal('modalTentang')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="about-card">
+        <p>Digital Report dibuat untuk membantu agen transaksi digital, loket pembayaran, dan usaha layanan keuangan harian dalam mencatat aktivitas usaha secara lebih terstruktur.</p>
+        <p>Aplikasi ini dirancang agar pemilik usaha dapat memantau transaksi, pendapatan, saldo, serta laporan keuangan harian dan bulanan dalam satu sistem yang sederhana dan mudah digunakan.</p>
+        <p>Tujuan utama aplikasi ini adalah membantu proses pencatatan menjadi lebih rapi, cepat, dan akurat sehingga pemilik usaha dapat memahami kondisi usahanya setiap saat.</p>
+        <div class="about-version">Versi 1.0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <a href="dashboard.html" class="mobile-item"><i>🏠</i><span>Dashboard</span></a>
+  <a href="input.html" class="mobile-item"><i>➕</i><span>Input</span></a>
+  <a href="database.html" class="mobile-item"><i>🗂</i><span>Database</span></a>
+  <a href="report.html" class="mobile-item"><i>📈</i><span>Report</span></a>
+  <a href="akun.html" class="mobile-item active"><i>👤</i><span>Akun</span></a>
+</div>
+
+<script type="module">
+
+/* =========================
+FIREBASE IMPORTS
+========================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA0YHpAO0JyCNt-oJNwJdgKCOwLiagrfvg",
+  authDomain: "digital-report-3567d.firebaseapp.com",
+  projectId: "digital-report-3567d",
+  storageBucket: "digital-report-3567d.firebasestorage.app",
+  messagingSenderId: "509408276429",
+  appId: "1:509408276429:web:65323d54b3211644ecde84"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* =========================
+VARIABEL GLOBAL UID
+========================= */
+let _firestoreUid = null;
+
+function getFirestoreUid(){
+  return _firestoreUid;
+}
+
+/* =========================
+MODAL FUNCTIONS
+========================= */
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+  /* Render ulang modal setiap kali dibuka */
+  if(id === 'modalUsaha'){
+    renderUsahaView();
+  }
+  if(id === 'modalKeamanan'){
+    renderKeamananView();
+  }
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+  /* Reset edit mode jika modal usaha ditutup */
+  if(id === 'modalUsaha'){
+    window._usahaEditMode = false;
+  }
+}
+function closeModalOutside(event, id){
+  if(event.target.classList.contains('modal-overlay')){
+    closeModal(id);
+  }
+}
+
+/* =========================
+TUTORIAL ACCORDION
+========================= */
+function toggleTutorial(header){
+  const item = header.parentElement;
+  item.classList.toggle('open');
+}
+
+/* =========================
+KEAMANAN AKUN - DATA
+========================= */
+function getAkunAktifData(){
+  const akunList = getAkunList();
+  const akunAktif = getAkunAktif();
+  return akunList.find(a => a.id === akunAktif) || null;
+}
+
+function getLastLogin(){
+  const akun = getAkunAktifData();
+  if(!akun) return null;
+  const key = 'lastLogin_' + akun.id;
+  return localStorage.getItem(key);
+}
+
+function simpanLastLogin(){
+  const akun = getAkunAktifData();
+  if(!akun) return;
+  const key = 'lastLogin_' + akun.id;
+  const nowISO = new Date().toISOString();
+  localStorage.setItem(key, nowISO);
+  console.log("SAVE LAST LOGIN TO LOCALSTORAGE");
+
+  /* DUAL-WRITE: Simpan lastLogin ke Firestore */
+  const uid = getFirestoreUid();
+  if(uid){
+    const settingsRef = doc(db, "settings", uid);
+    setDoc(settingsRef, { lastLogin: nowISO }, { merge: true })
+      .then(() => {
+        console.log("SAVE LAST LOGIN TO FIRESTORE");
+      })
+      .catch(err => {
+        console.warn("FIRESTORE LAST LOGIN FAILED, FALLBACK OK", err);
+      });
+  }
+}
+
+function formatTanggalIndonesia(isoString){
+  if(!isoString) return 'Belum tersedia';
+  try {
+    const d = new Date(isoString);
+    if(isNaN(d.getTime())) return 'Belum tersedia';
+    const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const day = d.getDate();
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2,'0');
+    const minutes = String(d.getMinutes()).padStart(2,'0');
+    return day + ' ' + month + ' ' + year + ', ' + hours + ':' + minutes + ' WIB';
+  } catch(e){
+    return 'Belum tersedia';
+  }
+}
+
+function getPasswordDots(){
+  const akun = getAkunAktifData();
+  if(!akun || !akun.password) return '••••••••••••';
+  const pw = akun.password;
+  return '•'.repeat(Math.min(pw.length, 12));
+}
+
+/* =========================
+KEAMANAN AKUN - RENDER VIEW
+========================= */
+function renderKeamananView(){
+  const body = document.getElementById('keamananModalBody');
+  if(!body) return;
+  window._keamananEditMode = false;
+
+  const lastLogin = getLastLogin();
+  const loginStr = formatTanggalIndonesia(lastLogin);
+
+  body.innerHTML = `
+    <div class="keamanan-list">
+      <div class="keamanan-item">
+        <div class="keamanan-icon"><i class="fa-solid fa-lock"></i></div>
+        <div class="keamanan-content">
+          <h4>Password</h4>
+          <p><span class="password-dots">${getPasswordDots()}</span></p>
+        </div>
+        <div class="keamanan-action">
+          <button class="btn-ubah-pw" onclick="renderPasswordForm()">
+            <i class="fa-solid fa-pen"></i> Ubah Password
+          </button>
+        </div>
+      </div>
+      <div class="keamanan-item">
+        <div class="keamanan-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <div class="keamanan-content">
+          <h4>Login Terakhir</h4>
+          <p>${escapeHtml(loginStr)}</p>
+        </div>
+      </div>
+      <div class="keamanan-item">
+        <div class="keamanan-icon"><i class="fa-solid fa-laptop"></i></div>
+        <div class="keamanan-content">
+          <h4>Perangkat Aktif</h4>
+          <p>1 Perangkat Aktif</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* =========================
+KEAMANAN AKUN - RENDER FORM PASSWORD
+========================= */
+function togglePasswordVisibility(inputId, iconId){
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  if(!input || !icon) return;
+  if(input.type === 'password'){
+    input.type = 'text';
+    icon.className = 'fa-solid fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fa-solid fa-eye';
+  }
+}
+
+function renderPasswordForm(){
+  const body = document.getElementById('keamananModalBody');
+  if(!body) return;
+  window._keamananEditMode = true;
+
+  body.innerHTML = `
+    <div style="margin-bottom:16px;">
+      <p style="font-size:14px;color:#6c757d;margin-bottom:18px;">Masukkan password lama dan password baru untuk mengubah kata sandi akun Anda.</p>
+    </div>
+    <div class="edit-field">
+      <label>Password Lama</label>
+      <div style="position:relative;">
+        <input type="password" id="pwLama" placeholder="Masukkan password lama" style="padding-right:44px;width:100%;">
+        <span onclick="togglePasswordVisibility('pwLama','eyeLama')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ca3af;font-size:16px;z-index:2;">
+          <i class="fa-solid fa-eye" id="eyeLama"></i>
+        </span>
+      </div>
+    </div>
+    <div class="edit-field">
+      <label>Password Baru</label>
+      <div style="position:relative;">
+        <input type="password" id="pwBaru" placeholder="Masukkan password baru (min. 6 karakter)" style="padding-right:44px;width:100%;">
+        <span onclick="togglePasswordVisibility('pwBaru','eyeBaru')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ca3af;font-size:16px;z-index:2;">
+          <i class="fa-solid fa-eye" id="eyeBaru"></i>
+        </span>
+      </div>
+    </div>
+    <div class="edit-field">
+      <label>Konfirmasi Password Baru</label>
+      <div style="position:relative;">
+        <input type="password" id="pwKonfirmasi" placeholder="Ulangi password baru" style="padding-right:44px;width:100%;">
+        <span onclick="togglePasswordVisibility('pwKonfirmasi','eyeKonfirmasi')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ca3af;font-size:16px;z-index:2;">
+          <i class="fa-solid fa-eye" id="eyeKonfirmasi"></i>
+        </span>
+      </div>
+    </div>
+    <div class="edit-actions">
+      <button class="btn btn-batal" onclick="batalUbahPassword()">Batal</button>
+      <button class="btn btn-simpan" onclick="simpanPassword()">Simpan Password</button>
+    </div>
+  `;
+}
+
+/* =========================
+KEAMANAN AKUN - SIMPAN PASSWORD
+========================= */
+function simpanPassword(){
+  const pwLama = document.getElementById('pwLama').value;
+  const pwBaru = document.getElementById('pwBaru').value;
+  const pwKonfirmasi = document.getElementById('pwKonfirmasi').value;
+
+  const akunList = getAkunList();
+  const akunAktif = getAkunAktif();
+  const akun = akunList.find(a => a.id === akunAktif);
+
+  if(!akun){
+    alert('Akun tidak ditemukan.');
+    return;
+  }
+
+  /* Validasi password lama */
+  const storedPassword = akun.password || '';
+  if(pwLama !== storedPassword){
+    alert('Password lama tidak cocok.');
+    return;
+  }
+
+  /* Validasi password baru */
+  if(!pwBaru || pwBaru.length < 6){
+    alert('Password baru minimal 6 karakter.');
+    return;
+  }
+
+  if(pwBaru !== pwKonfirmasi){
+    alert('Password baru dan konfirmasi password tidak cocok.');
+    return;
+  }
+
+  /* Simpan password baru */
+  akun.password = pwBaru;
+  localStorage.setItem('multiAkunData', JSON.stringify(akunList));
+  renderKeamananView();
+  alert('Password berhasil diperbarui!');
+}
+
+/* =========================
+KEAMANAN AKUN - BATAL
+========================= */
+function batalUbahPassword(){
+  renderKeamananView();
+}
+
+/* =========================
+INFORMASI USAHA - DATA
+========================= */
+function getDefaultUsahaData(){
+  return {
+    namaUsaha: 'Tokosayyida',
+    jenisUsaha: 'Agen Transaksi Digital',
+    alamat: '-',
+    telepon: '-'
+  };
+}
+
+async function getUsahaData(){
+  /* STRATEGI LOAD: Firestore dulu, fallback localStorage */
+  const uid = getFirestoreUid();
+  if(uid){
+    try {
+      const usahaRef = doc(db, "usahaProfile", uid);
+      const snap = await getDoc(usahaRef);
+      if(snap.exists()){
+        const data = snap.data();
+        console.log("LOAD PROFILE FROM FIRESTORE");
+        /* Pastikan return shape konsisten */
+        return {
+          namaUsaha: data.namaUsaha || 'Tokosayyida',
+          jenisUsaha: data.jenisUsaha || 'Agen Transaksi Digital',
+          alamat: data.alamat || '-',
+          telepon: data.telepon || '-',
+          fotoProfil: data.fotoProfil || null
+        };
+      }
+    } catch(e){
+      console.warn("FIRESTORE LOAD FAILED, FALLBACK TO LOCALSTORAGE", e);
+    }
+  }
+
+  /* FALLBACK: localStorage */
+  console.log("FALLBACK TO LOCALSTORAGE");
+  try {
+    const data = localStorage.getItem('usahaProfileData');
+    if(data){
+      const parsed = JSON.parse(data);
+      /* Baca foto dari localStorage juga */
+      const akun = getAkunAktifData();
+      let fotoProfil = null;
+      if(akun){
+        fotoProfil = localStorage.getItem('fotoProfil_' + akun.id);
+      }
+      return {
+        namaUsaha: parsed.namaUsaha || 'Tokosayyida',
+        jenisUsaha: parsed.jenisUsaha || 'Agen Transaksi Digital',
+        alamat: parsed.alamat || '-',
+        telepon: parsed.telepon || '-',
+        fotoProfil: fotoProfil || null
+      };
+    }
+  } catch(e){}
+  return getDefaultUsahaData();
+}
+
+/* =========================
+INFORMASI USAHA - SAVE
+========================= */
+async function saveUsahaData(data){
+  /* DUAL-WRITE: Simpan ke localStorage + Firestore */
+  localStorage.setItem('usahaProfileData', JSON.stringify(data));
+  console.log("SAVE PROFILE TO LOCALSTORAGE");
+
+  const uid = getFirestoreUid();
+  if(uid){
+    try {
+      const usahaRef = doc(db, "usahaProfile", uid);
+      await setDoc(usahaRef, {
+        namaUsaha: data.namaUsaha,
+        jenisUsaha: data.jenisUsaha,
+        alamat: data.alamat,
+        telepon: data.telepon
+      }, { merge: true });
+      console.log("SAVE PROFILE TO FIRESTORE");
+    } catch(e){
+      console.warn("FIRESTORE SAVE FAILED, LOCALSTORAGE OK", e);
+    }
+  }
+}
+
+/* =========================
+INFORMASI USAHA - RENDER VIEW
+========================= */
+async function renderUsahaView(){
+  const body = document.getElementById('usahaModalBody');
+  if(!body) return;
+  const data = await getUsahaData();
+  window._usahaEditMode = false;
+  document.getElementById('btnEditUsaha').innerHTML = '<i class="fa-solid fa-pen"></i> Edit';
+
+  body.innerHTML = `
+    <table class="info-table">
+      <tr><td>Nama Usaha</td><td>${escapeHtml(data.namaUsaha)}</td></tr>
+      <tr><td>Jenis Usaha</td><td>${escapeHtml(data.jenisUsaha)}</td></tr>
+      <tr><td>Alamat</td><td>${escapeHtml(data.alamat)}</td></tr>
+      <tr><td>Nomor Telepon</td><td>${escapeHtml(data.telepon)}</td></tr>
+      <tr><td>Versi Aplikasi</td><td>1.0</td></tr>
+    </table>
+  `;
+}
+
+/* =========================
+INFORMASI USAHA - RENDER EDIT
+========================= */
+function renderUsahaEdit(){
+  const body = document.getElementById('usahaModalBody');
+  if(!body) return;
+  const data = getUsahaData(); // Note: sync, pakai data dari localStorage cepat dulu
+  window._usahaEditMode = true;
+  document.getElementById('btnEditUsaha').innerHTML = '<i class="fa-solid fa-eye"></i> Lihat';
+
+  body.innerHTML = `
+    <div class="edit-field">
+      <label>Nama Usaha</label>
+      <input type="text" id="editNamaUsaha" value="${escapeHtml(data.namaUsaha)}" placeholder="Masukkan nama usaha">
+    </div>
+    <div class="edit-field">
+      <label>Jenis Usaha</label>
+      <input type="text" id="editJenisUsaha" value="${escapeHtml(data.jenisUsaha)}" placeholder="Masukkan jenis usaha">
+    </div>
+    <div class="edit-field">
+      <label>Alamat</label>
+      <input type="text" id="editAlamat" value="${escapeHtml(data.alamat)}" placeholder="Masukkan alamat">
+    </div>
+    <div class="edit-field">
+      <label>Nomor Telepon</label>
+      <input type="text" id="editTelepon" value="${escapeHtml(data.telepon)}" placeholder="Masukkan nomor telepon">
+    </div>
+    <div class="edit-field">
+      <label>Versi Aplikasi</label>
+      <input type="text" id="editVersi" value="1.0" class="readonly-field" readonly>
+    </div>
+    <div class="edit-actions">
+      <button class="btn btn-batal" onclick="batalEditUsaha()">Batal</button>
+      <button class="btn btn-simpan" onclick="simpanUsaha()">Simpan</button>
+    </div>
+  `;
+}
+
+/* =========================
+INFORMASI USAHA - TOGGLE
+========================= */
+function toggleEditUsaha(){
+  if(window._usahaEditMode){
+    renderUsahaView();
+  } else {
+    renderUsahaEdit();
+  }
+}
+
+/* =========================
+INFORMASI USAHA - SIMPAN
+========================= */
+async function simpanUsaha(){
+  const namaUsaha = document.getElementById('editNamaUsaha').value.trim();
+  const jenisUsaha = document.getElementById('editJenisUsaha').value.trim();
+  const alamat = document.getElementById('editAlamat').value.trim();
+  const telepon = document.getElementById('editTelepon').value.trim();
+
+  if(!namaUsaha){
+    alert('Nama Usaha tidak boleh kosong.');
+    return;
+  }
+
+  const data = {
+    namaUsaha: namaUsaha,
+    jenisUsaha: jenisUsaha || '-',
+    alamat: alamat || '-',
+    telepon: telepon || '-'
+  };
+
+  await saveUsahaData(data);
+  renderUsahaView();
+  syncProfileCard(data);
+  alert('Data usaha berhasil disimpan!');
+}
+
+/* =========================
+INFORMASI USAHA - BATAL
+========================= */
+function batalEditUsaha(){
+  renderUsahaView();
+}
+
+/* =========================
+SYNC PROFILE CARD
+========================= */
+function syncProfileCard(data){
+  /* Update nama usaha di profil card */
+  const nameEl = document.querySelector('.profile-name');
+  if(nameEl) nameEl.textContent = data.namaUsaha;
+
+  /* Update display nama di profile card yang pakai id */
+  const nameDisplay = document.getElementById('profileNameDisplay');
+  if(nameDisplay) nameDisplay.textContent = data.namaUsaha;
+
+  /* Update nama di profile card bagian usaha (toko) */
+  const usahaEl = document.getElementById('profileUsaha');
+  if(usahaEl) usahaEl.textContent = data.namaUsaha.toUpperCase();
+
+  /* Update telepon di profile card */
+  const teleponEl = document.getElementById('profileTelepon');
+  if(teleponEl) teleponEl.textContent = data.telepon;
+
+  /* Update avatar initial jika tidak ada foto */
+  const avatarEl = document.querySelector('.profile-card-avatar');
+  if(avatarEl && !avatarEl.querySelector('img')){
+    avatarEl.textContent = data.namaUsaha.charAt(0).toUpperCase();
+  }
+
+  /* Sinkron ke data akun di multiAkunData */
+  const akunList = getAkunList();
+  const akunAktif = getAkunAktif();
+  const akun = akunList.find(a => a.id === akunAktif);
+  if(akun){
+    akun.nama = data.namaUsaha;
+    akun.telepon = data.telepon;
+    akun.usaha = data.namaUsaha;
+    localStorage.setItem('multiAkunData', JSON.stringify(akunList));
+  }
+}
+
+/* =========================
+HELPER
+========================= */
+function escapeHtml(text){
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+/* =========================
+STATUS AKUN OTOMATIS
+========================= */
+function checkAccountStatus(){
+  const badge = document.getElementById('statusBadge');
+  const text = document.getElementById('statusText');
+  if(!badge || !text) return;
+  let lastKey = '';
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('laporan_')){
+      if(key > lastKey) lastKey = key;
+    }
+  }
+  if(!lastKey){
+    badge.className = 'status-badge inactive';
+    text.textContent = 'Tidak Ada Aktivitas';
+    return;
+  }
+  const dateStr = lastKey.replace('laporan_', '');
+  const parts = dateStr.split('-');
+  if(parts.length !== 3){
+    badge.className = 'status-badge active';
+    text.textContent = 'Agen Aktif';
+    return;
+  }
+  const lastDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+  const now = new Date();
+  const diffDays = Math.floor((now - lastDate) / (1000 * 60 * 60 * 24));
+  if(diffDays <= 3){
+    badge.className = 'status-badge active';
+    text.textContent = 'Agen Aktif';
+  } else if(diffDays <= 7){
+    badge.className = 'status-badge warning';
+    text.textContent = 'Tidak Ada Aktivitas ' + diffDays + ' Hari';
+  } else {
+    badge.className = 'status-badge inactive';
+    text.textContent = 'Tidak Aktif';
+  }
+}
+
+/* =========================
+ACCOUNT MANAGEMENT
+========================= */
+function getAkunList(){
+  try { return JSON.parse(localStorage.getItem('multiAkunData') || '[]'); } catch(e){ return []; }
+}
+function getAkunAktif(){
+  return localStorage.getItem('akunAktif') || 'default';
+}
+
+function renderAkunList(){
+  const list = document.getElementById('accountList');
+  if(!list) return;
+  const akunList = getAkunList();
+  const akunAktif = getAkunAktif();
+  
+  /* Default akun jika belum ada */
+  if(!akunList.length){
+    akunList.push({
+      id: 'default',
+      nama: 'Tokosayyida',
+      email: 'tokosayyida@gmail.com',
+      usaha: 'TOKOSAYYIDA',
+      telepon: '0812-3456-7890'
+    });
+    localStorage.setItem('multiAkunData', JSON.stringify(akunList));
+    if(!localStorage.getItem('akunAktif')){
+      localStorage.setItem('akunAktif', 'default');
+    }
+  }
+
+  list.innerHTML = '';
+  akunList.forEach(akun => {
+    const isActive = akun.id === akunAktif;
+    const firstChar = (akun.nama || '?').charAt(0).toUpperCase();
+    list.innerHTML += `
+      <div class="account-item ${isActive ? 'active' : ''}" onclick="${isActive ? '' : "gantiAkun('" + akun.id + "')"}">
+        <div class="account-item-avatar">${firstChar}</div>
+        <div class="account-item-info">
+          <h4>${akun.nama}</h4>
+          <p>${akun.email}</p>
+        </div>
+        ${isActive ? '<div class="account-item-check"><i class="fa-solid fa-check"></i></div>' : ''}
+      </div>
+    `;
+  });
+}
+
+function gantiAkun(id){
+  const akunList = getAkunList();
+  const akun = akunList.find(a => a.id === id);
+  if(!akun) return;
+  localStorage.setItem('akunAktif', id);
+
+  /* DUAL-WRITE: Simpan akunAktif ke Firestore */
+  const uid = getFirestoreUid();
+  if(uid){
+    const settingsRef = doc(db, "settings", uid);
+    setDoc(settingsRef, { akunAktif: id }, { merge: true })
+      .then(() => {
+        console.log("SAVE AKUN AKTIF TO FIRESTORE");
+      })
+      .catch(err => {
+        console.warn("FIRESTORE AKUN AKTIF SAVE FAILED", err);
+      });
+  }
+
+  closeModal('modalAkunSwitcher');
+  location.reload();
+}
+
+function bukaRegistrasi(){
+  closeModal('modalAkunSwitcher');
+  document.getElementById('modalRegistrasi').classList.add('open');
+}
+
+function daftarAkunBaru(){
+  const nama = document.getElementById('regNama').value.trim();
+  const usaha = document.getElementById('regUsaha').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const konfirmasi = document.getElementById('regKonfirmasi').value;
+
+  if(!nama || !usaha || !email || !password || !konfirmasi){
+    alert('Semua field harus diisi.');
+    return;
+  }
+  if(password !== konfirmasi){
+    alert('Password dan konfirmasi password tidak cocok.');
+    return;
+  }
+  if(password.length < 6){
+    alert('Password minimal 6 karakter.');
+    return;
+  }
+
+  const akunList = getAkunList();
+  if(akunList.find(a => a.email === email)){
+    alert('Email sudah terdaftar.');
+    return;
+  }
+
+  const newId = 'akun_' + Date.now();
+  akunList.push({
+    id: newId,
+    nama: nama,
+    usaha: usaha,
+    email: email,
+    password: password,
+    telepon: '-'
+  });
+  localStorage.setItem('multiAkunData', JSON.stringify(akunList));
+  localStorage.setItem('akunAktif', newId);
+
+  /* DUAL-WRITE: Simpan akunAktif ke Firestore */
+  const uid = getFirestoreUid();
+  if(uid){
+    const settingsRef = doc(db, "settings", uid);
+    setDoc(settingsRef, { akunAktif: newId }, { merge: true })
+      .then(() => {
+        console.log("SAVE NEW AKUN AKTIF TO FIRESTORE");
+      })
+      .catch(err => {
+        console.warn("FIRESTORE NEW AKUN AKTIF SAVE FAILED", err);
+      });
+  }
+
+  document.getElementById('regNama').value = '';
+  document.getElementById('regUsaha').value = '';
+  document.getElementById('regEmail').value = '';
+  document.getElementById('regPassword').value = '';
+  document.getElementById('regKonfirmasi').value = '';
+
+  closeModal('modalRegistrasi');
+  alert('Akun "' + nama + '" berhasil dibuat!');
+  location.reload();
+}
+
+/* Muat data akun aktif ke profil */
+function loadAkunAktif(){
+  const akunList = getAkunList();
+  const akunAktif = getAkunAktif();
+  const akun = akunList.find(a => a.id === akunAktif);
+  if(!akun) return;
+
+  const nameEl = document.querySelector('.profile-name');
+  const roleEl = document.querySelector('.profile-role');
+  const contactItems = document.querySelectorAll('.contact-item');
+  const avatarEl = document.querySelector('.profile-card-avatar');
+
+  if(nameEl) nameEl.textContent = akun.nama;
+  if(roleEl) roleEl.textContent = 'Admin';
+
+  if(avatarEl){
+    const uid = getFirestoreUid();
+    /* STRATEGI LOAD FOTO: Firestore dulu, fallback localStorage */
+    if(uid){
+      const usahaRef = doc(db, "usahaProfile", uid);
+      getDoc(usahaRef).then(snap => {
+        if(snap.exists() && snap.data().fotoProfil){
+          const fotoData = snap.data().fotoProfil;
+          console.log("LOAD FOTO FROM FIRESTORE");
+          avatarEl.innerHTML = '<img src="' + fotoData + '" alt="Foto Profil">';
+        } else {
+          /* FALLBACK: localStorage */
+          loadFotoDariLocalStorage(akun, avatarEl);
+        }
+      }).catch(() => {
+        /* FALLBACK: localStorage */
+        loadFotoDariLocalStorage(akun, avatarEl);
+      });
+    } else {
+      loadFotoDariLocalStorage(akun, avatarEl);
+    }
+  }
+
+  if(contactItems.length >= 3){
+    const teleponEl = contactItems[0].querySelector('strong');
+    const emailEl = contactItems[1].querySelector('strong');
+    const usahaEl = contactItems[2].querySelector('strong');
+    if(teleponEl) teleponEl.textContent = akun.telepon || '-';
+    if(emailEl) emailEl.textContent = akun.email || '-';
+    if(usahaEl) usahaEl.textContent = (akun.usaha || akun.nama).toUpperCase();
+  }
+
+  /* Load usahaProfileData dan sinkron jika ada */
+  const usahaData = getUsahaData();
+  syncProfileCard(usahaData);
+}
+
+/* Helper untuk load foto dari localStorage */
+function loadFotoDariLocalStorage(akun, avatarEl){
+  console.log("LOAD FOTO FROM LOCALSTORAGE");
+  const fotoKey = 'fotoProfil_' + akun.id;
+  const fotoData = localStorage.getItem(fotoKey);
+  if(fotoData){
+    avatarEl.innerHTML = '<img src="' + fotoData + '" alt="Foto Profil">';
+  } else {
+    avatarEl.textContent = akun.nama.charAt(0).toUpperCase();
+  }
+}
+
+/* =========================
+FOTO PROFIL
+========================= */
+function pilihFotoProfil(){
+  document.getElementById('fotoProfilInput').click();
+}
+
+/* Setup event listener untuk input file foto */
+document.addEventListener('DOMContentLoaded', function(){
+  const input = document.getElementById('fotoProfilInput');
+  if(input){
+    input.addEventListener('change', function(e){
+      const file = e.target.files[0];
+      if(!file) return;
+
+      /* Validasi tipe file */
+      if(!file.type.startsWith('image/')){
+        alert('File yang dipilih bukan gambar. Silakan pilih file gambar.');
+        return;
+      }
+
+      /* Validasi ukuran maksimal 2MB */
+      if(file.size > 2 * 1024 * 1024){
+        alert('Ukuran file terlalu besar. Maksimal 2MB.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        const dataUrl = ev.target.result;
+        const akunAktif = getAkunAktif();
+        const fotoKey = 'fotoProfil_' + akunAktif;
+
+        /* DUAL-WRITE: Simpan foto ke localStorage + Firestore */
+        localStorage.setItem(fotoKey, dataUrl);
+        console.log("SAVE FOTO TO LOCALSTORAGE");
+
+        const uid = getFirestoreUid();
+        if(uid){
+          const usahaRef = doc(db, "usahaProfile", uid);
+          setDoc(usahaRef, { fotoProfil: dataUrl }, { merge: true })
+            .then(() => {
+              console.log("SAVE FOTO TO FIRESTORE");
+            })
+            .catch(err => {
+              console.warn("FIRESTORE FOTO SAVE FAILED, LOCALSTORAGE OK", err);
+            });
+        }
+
+        loadAkunAktif();
+      };
+      reader.onerror = function(){
+        alert('Gagal membaca file gambar.');
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+});
+
+/* =========================
+GANTI AKUN & LOGOUT
+========================= */
+function showGantiAkun(){
+  openModal('modalAkunSwitcher');
+}
+
+function handleLogout(){
+  if(confirm('Apakah Anda yakin ingin logout?')){
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+  }
+}
+
+/* =========================
+INIT
+========================= */
+async function initAkun(){
+  /* Tunggu auth state untuk dapat uid */
+  onAuthStateChanged(auth, async (user) => {
+    if(user){
+      _firestoreUid = user.uid;
+      console.log("UID:", user.uid);
+      console.log("LOAD PROFILE FROM FIRESTORE");
+    } else {
+      console.log("UID: null (not authenticated)");
+    }
+
+    /* Jalankan init terlepas dari auth state */
+    checkAccountStatus();
+    renderAkunList();
+
+    /* Load akun aktif – async yang memuat Firestore fallback */
+    const akunList = getAkunList();
+    const akunAktif = getAkunAktif();
+    const akun = akunList.find(a => a.id === akunAktif);
+    if(akun){
+      await loadAkunAktifDenganFirestore(akun);
+    }
+
+    /* Simpan last login jika user terautentikasi */
+    if(user){
+      simpanLastLogin();
+    }
+  });
+}
+
+/* Versi async dari loadAkunAktif untuk memuat data dari Firestore */
+async function loadAkunAktifDenganFirestore(akun){
+  const nameEl = document.querySelector('.profile-name');
+  const roleEl = document.querySelector('.profile-role');
+  const contactItems = document.querySelectorAll('.contact-item');
+  const avatarEl = document.querySelector('.profile-card-avatar');
+
+  if(nameEl) nameEl.textContent = akun.nama;
+  if(roleEl) roleEl.textContent = 'Admin';
+
+  if(avatarEl){
+    const uid = getFirestoreUid();
+    if(uid){
+      try {
+        const usahaRef = doc(db, "usahaProfile", uid);
+        const snap = await getDoc(usahaRef);
+        if(snap.exists()){
+          const data = snap.data();
+          console.log("LOAD PROFILE FROM FIRESTORE");
+
+          /* Sync nama & telepon dari Firestore ke UI */
+          if(data.namaUsaha && nameEl) nameEl.textContent = data.namaUsaha;
+
+          /* Sync foto dari Firestore */
+          if(data.fotoProfil){
+            avatarEl.innerHTML = '<img src="' + data.fotoProfil + '" alt="Foto Profil">';
+          } else {
+            loadFotoDariLocalStorage(akun, avatarEl);
+          }
+
+          /* Sync telepon dari Firestore */
+          if(data.telepon && contactItems.length >= 3){
+            const teleponEl = contactItems[0].querySelector('strong');
+            if(teleponEl) teleponEl.textContent = data.telepon;
+          }
+
+          /* Sync nama usaha dari Firestore */
+          if(data.namaUsaha && contactItems.length >= 3){
+            const usahaEl = contactItems[2].querySelector('strong');
+            if(usahaEl) usahaEl.textContent = data.namaUsaha.toUpperCase();
+          }
+
+          return; /* Selesai, data dari Firestore */
+        }
+      } catch(e){
+        console.warn("FIRESTORE LOAD FAILED, FALLBACK TO LOCALSTORAGE", e);
+      }
+    }
+
+    /* FALLBACK: localStorage */
+    console.log("FALLBACK TO LOCALSTORAGE");
+    loadFotoDariLocalStorage(akun, avatarEl);
+  }
+
+  if(contactItems.length >= 3){
+    const teleponEl = contactItems[0].querySelector('strong');
+    const emailEl = contactItems[1].querySelector('strong');
+    const usahaEl = contactItems[2].querySelector('strong');
+    if(teleponEl) teleponEl.textContent = akun.telepon || '-';
+    if(emailEl) emailEl.textContent = akun.email || '-';
+    if(usahaEl) usahaEl.textContent = (akun.usaha || akun.nama).toUpperCase();
+  }
+}
+
+/* Aplikasikan init */
+document.addEventListener('DOMContentLoaded', initAkun);
+
+/* Ekspos fungsi ke global scope agar onclick dari HTML bisa dipanggil */
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.closeModalOutside = closeModalOutside;
+window.toggleTutorial = toggleTutorial;
+window.toggleEditUsaha = toggleEditUsaha;
+window.togglePasswordVisibility = togglePasswordVisibility;
+window.renderPasswordForm = renderPasswordForm;
+window.simpanPassword = simpanPassword;
+window.batalUbahPassword = batalUbahPassword;
+window.simpanUsaha = simpanUsaha;
+window.batalEditUsaha = batalEditUsaha;
+window.gantiAkun = gantiAkun;
+window.bukaRegistrasi = bukaRegistrasi;
+window.daftarAkunBaru = daftarAkunBaru;
+window.pilihFotoProfil = pilihFotoProfil;
+window.handleLogout = handleLogout;
+
+</script>
+
+</body>
+</html>

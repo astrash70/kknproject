@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sumber Saldo</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#f5f7f9;
+}
+
+.page{
+
+background:white;
+
+border-radius:28px;
+
+padding:26px;
+
+border:1px solid #edf1f3;
+
+box-shadow:
+0 2px 10px rgba(0,0,0,.03);
+
+}
+
+.topbar{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.breadcrumb{
+
+display:flex;
+gap:10px;
+font-size:14px;
+color:#888;
+}
+
+.breadcrumb strong{
+color:#15803d;
+}
+
+.date-box{
+
+padding:10px 16px;
+border:1px solid #e5e7eb;
+border-radius:12px;
+font-weight:600;
+font-size:14px;
+}
+
+.page h1{
+
+font-size:42px;
+margin-bottom:8px;
+}
+
+.page p{
+
+color:#6b7280;
+margin-bottom:40px;
+}
+
+.toolbar{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.search{
+
+width:280px;
+height:48px;
+padding:0 16px;
+border:1px solid #e5e7eb;
+border-radius:14px;
+outline:none;
+}
+
+.add-btn{
+
+border:none;
+padding:14px 22px;
+border-radius:14px;
+
+background:
+linear-gradient(
+135deg,
+#0f8c3f,
+#16a34a
+);
+
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.table-wrap{
+
+border:1px solid #edf1f3;
+border-radius:18px;
+overflow:hidden;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+thead{
+
+background:#f8faf9;
+}
+
+th{
+
+padding:16px;
+text-align:left;
+font-size:14px;
+}
+
+td{
+
+padding:16px;
+border-top:1px solid #edf1f3;
+font-size:14px;
+}
+
+.delete-btn{
+
+width:36px;
+height:36px;
+
+border:none;
+
+background:#fef2f2;
+
+color:#ef4444;
+
+border-radius:10px;
+
+cursor:pointer;
+}
+
+.footer{
+
+margin-top:14px;
+font-size:14px;
+color:#6b7280;
+}
+
+/* POPUP */
+
+.modal{
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,.3);
+
+display:none;
+align-items:center;
+justify-content:center;
+
+z-index:999;
+}
+
+.modal.show{
+display:flex;
+}
+
+.modal-box{
+
+width:420px;
+
+background:white;
+
+padding:28px;
+
+border-radius:24px;
+}
+
+.modal-box h2{
+
+margin-bottom:20px;
+}
+
+.input{
+
+width:100%;
+height:52px;
+
+border:none;
+background:#f3f4f6;
+
+padding:0 16px;
+
+border-radius:14px;
+outline:none;
+}
+
+.save-btn{
+
+margin-top:20px;
+
+width:100%;
+height:54px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+135deg,
+#0f8c3f,
+#16a34a
+);
+
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.dashboard-layout{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+
+width:260px;
+position:fixed;
+overflow:hidden;
+  
+background:
+linear-gradient(
+180deg,
+#052e1b,
+#06351f,
+#041f14
+);
+
+padding:24px 16px;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+
+position:fixed;
+
+top:0;
+left:0;
+
+height:100vh;
+}
+
+.main-content{
+
+flex:1;
+margin-left:260px;
+padding:24px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+color:white;
+font-weight:700;
+margin-bottom:40px;
+}
+
+.sidebar-menu{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.sidebar-item{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+padding:16px 18px;
+
+border-radius:18px;
+
+color:rgba(255,255,255,.82);
+
+text-decoration:none;
+}
+
+  .sidebar-item:hover{
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+}
+
+.sidebar-item.active{
+
+background:
+linear-gradient(
+135deg,
+#0a6b2d,
+#11853c
+);
+
+color:white;
+}
+
+.sidebar-title{
+
+color:rgba(255,255,255,.45);
+
+font-size:12px;
+
+font-weight:600;
+
+margin:24px 14px 8px;
+}
+
+  .sidebar::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+radial-gradient(
+circle at top right,
+rgba(32,201,111,.16),
+transparent 45%
+);
+
+pointer-events:none;
+
+}
+
+.sidebar-profile{
+
+background:
+rgba(255,255,255,.06);
+
+border-radius:22px;
+
+padding:16px;
+
+color:white;
+}
+
+.profile-top{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.profile-avatar{
+
+width:46px;
+height:46px;
+
+border-radius:50%;
+
+background:#1ec45d;
+
+display:flex;
+align-items:center;
+justify-content:center;
+}
+  
+</style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+  <div>
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+
+      <span>Digital Report</span>
+
+    </div>
+
+    <div class="sidebar-menu">
+
+      <a href="dashboard.html" class="sidebar-item">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+      </a>
+
+      <a href="input.html" class="sidebar-item">
+        <i class="fa-solid fa-circle-plus"></i>
+        Input Laporan
+      </a>
+
+      <a href="database.html" class="sidebar-item">
+        <i class="fa-solid fa-database"></i>
+        Database
+      </a>
+
+      <a href="report.html" class="sidebar-item">
+        <i class="fa-regular fa-clipboard"></i>
+        Report
+      </a>
+
+      <a href="akun.html" class="sidebar-item">
+        <i class="fa-solid fa-user"></i>
+        Akun
+      </a>
+
+      <div class="sidebar-title">
+        MASTER DATA
+      </div>
+
+      <a href="database.html" class="sidebar-item">
+        <i class="fa-solid fa-right-left"></i>
+        Jenis Transaksi
+      </a>
+
+      <a href="Sumber Saldo.html"
+         class="sidebar-item active">
+        <i class="fa-solid fa-building-columns"></i>
+        Sumber Saldo
+      </a>
+
+      <a href="datarange.html" class="sidebar-item">
+  <i class="fa-solid fa-layer-group"></i>
+  Data Range
+</a>
+
+    </div>
+
+  </div>
+
+  <div class="sidebar-profile">
+
+    <div class="profile-top">
+
+      <div class="profile-avatar">
+        T
+      </div>
+
+      <div>
+        <h4>Tokosayyida</h4>
+        <p style="opacity:.7;font-size:13px;">
+          Admin
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content">
+
+<div class="page">
+
+<div class="topbar">
+
+<div class="breadcrumb">
+<strong>Database</strong>
+<span>/</span>
+<span>Sumber Saldo</span>
+</div>
+
+<div class="date-box" id="tanggal"></div>
+
+</div>
+
+<h1>Sumber Saldo</h1>
+
+<p>
+Kelola semua tempat penyimpanan saldo yang digunakan untuk transaksi.
+</p>
+
+<div class="toolbar">
+
+<input
+type="text"
+class="search"
+id="searchInput"
+placeholder="Cari sumber saldo..."
+>
+
+<button class="add-btn" id="openPopup">
++ Tambah Sumber
+</button>
+
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th width="80">No</th>
+<th>Nama Sumber</th>
+<th width="80">Aksi</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+
+<div class="footer" id="infoData">
+Menampilkan 0 data
+</div>
+
+</div>
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<h2>Tambah Sumber</h2>
+
+<input
+type="text"
+id="namaSumber"
+class="input"
+placeholder="Masukkan nama sumber"
+>
+
+<button class="save-btn" id="saveBtn">
+Simpan
+</button>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA0YHpAO0JyCNt-oJNwJdgKCOwLiagrfvg",
+  authDomain: "digital-report-3567d.firebaseapp.com",
+  projectId: "digital-report-3567d",
+  storageBucket: "digital-report-3567d.firebasestorage.app",
+  messagingSenderId: "509408276429",
+  appId: "1:509408276429:web:65323d54b3211644ecde84"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let _firestoreUid = null;
+
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    _firestoreUid = user.uid;
+    console.log("UID:", user.uid);
+    /* Load data dari Firestore saat auth siap */
+    loadAkunBankDariFirestore();
+  } else {
+    _firestoreUid = null;
+  }
+});
+
+function getFirestoreUid(){
+  return _firestoreUid;
+}
+
+async function loadAkunBankDariFirestore(){
+  const uid = getFirestoreUid();
+  if(!uid) return;
+  try {
+    const masterRef = doc(db, "masterData", uid);
+    const snap = await getDoc(masterRef);
+    if(snap.exists() && snap.data().akunBank){
+      const firestoreData = snap.data().akunBank;
+      console.log("LOAD MASTER DATA FROM FIRESTORE");
+      /* Update sumberData dengan data dari Firestore */
+      sumberData = firestoreData;
+      /* Sync ke localStorage sebagai cache */
+      localStorage.setItem("akunBankData", JSON.stringify(sumberData));
+      renderTable();
+    }
+  } catch(e){
+    console.warn("FIRESTORE LOAD FAILED, FALLBACK TO LOCALSTORAGE", e);
+  }
+}
+
+const modal =
+document.getElementById("modal");
+
+const openPopup =
+document.getElementById("openPopup");
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+const namaInput =
+document.getElementById("namaSumber");
+
+const tableBody =
+document.getElementById("tableBody");
+
+let sumberData =
+JSON.parse(
+localStorage.getItem("akunBankData")
+|| "[]"
+);
+
+openPopup.onclick = () => {
+
+modal.classList.add("show");
+
+namaInput.focus();
+
+};
+
+/* Enter key on namaSumber triggers save */
+namaInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    saveBtn.click();
+  }
+});
+
+function saveStorage(){
+  /* DUAL-WRITE: Simpan ke localStorage + Firestore */
+  localStorage.setItem(
+    "akunBankData",
+    JSON.stringify(sumberData)
+  );
+  console.log("SAVE MASTER DATA TO LOCALSTORAGE");
+
+  const uid = getFirestoreUid();
+  if(uid){
+    const masterRef = doc(db, "masterData", uid);
+    setDoc(masterRef, { akunBank: sumberData }, { merge: true })
+      .then(() => {
+        console.log("SAVE MASTER DATA TO FIRESTORE");
+      })
+      .catch(err => {
+        console.warn("FIRESTORE SAVE FAILED, LOCALSTORAGE OK", err);
+      });
+  }
+}
+
+function renderTable(){
+
+tableBody.innerHTML = "";
+
+sumberData.forEach((item,index)=>{
+
+tableBody.innerHTML += `
+
+<tr>
+
+<td>${index+1}</td>
+
+<td>
+<strong>${item.nama}</strong>
+</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="hapusData(${index})">
+
+<i class="fa-solid fa-trash"></i>
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("infoData").innerText =
+`Menampilkan ${sumberData.length} data`;
+
+}
+
+function hapusData(index){
+
+if(!confirm("Hapus sumber saldo?"))
+return;
+
+sumberData.splice(index,1);
+
+saveStorage();
+
+renderTable();
+
+}
+
+saveBtn.onclick = ()=>{
+
+const nama =
+namaInput.value.trim();
+
+if(!nama) return;
+
+sumberData.push({
+nama:nama
+});
+
+saveStorage();
+
+renderTable();
+
+namaInput.value="";
+
+modal.classList.remove("show");
+
+};
+
+document
+.getElementById("searchInput")
+.addEventListener("input",(e)=>{
+
+const keyword =
+e.target.value.toLowerCase();
+
+const rows =
+tableBody.querySelectorAll("tr");
+
+rows.forEach(row=>{
+
+row.style.display =
+row.innerText.toLowerCase().includes(keyword)
+? ""
+: "none";
+
+});
+
+});
+
+document
+.getElementById("tanggal")
+.innerText =
+new Date().toLocaleDateString(
+"id-ID",
+{
+day:"numeric",
+month:"long",
+year:"numeric"
+}
+);
+
+renderTable();
+
+window.addEventListener("beforeunload", saveStorage);
+
+document.addEventListener("visibilitychange", () => {
+
+if(document.visibilityState === "hidden"){
+
+saveStorage();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
