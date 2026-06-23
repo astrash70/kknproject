@@ -1123,6 +1123,7 @@ async function getUsahaData(){
       if(snap.exists()){
         const data = snap.data();
         console.log("LOAD PROFILE FROM FIRESTORE");
+        console.log("PROFILE FIRESTORE DATA:", data);
         /* Pastikan return shape konsisten */
         return {
           namaUsaha: data.namaUsaha || 'Tokosayyida',
@@ -1177,7 +1178,8 @@ async function saveUsahaData(data){
         namaUsaha: data.namaUsaha,
         jenisUsaha: data.jenisUsaha,
         alamat: data.alamat,
-        telepon: data.telepon
+        telepon: data.telepon,
+        fotoProfil: data.fotoProfil || null
       }, { merge: true });
       console.log("SAVE PROFILE TO FIRESTORE");
     } catch(e){
@@ -1210,10 +1212,10 @@ async function renderUsahaView(){
 /* =========================
 INFORMASI USAHA - RENDER EDIT
 ========================= */
-function renderUsahaEdit(){
+async function renderUsahaEdit(){
   const body = document.getElementById('usahaModalBody');
   if(!body) return;
-  const data = getUsahaData(); // Note: sync, pakai data dari localStorage cepat dulu
+  const data = await getUsahaData();
   window._usahaEditMode = true;
   document.getElementById('btnEditUsaha').innerHTML = '<i class="fa-solid fa-eye"></i> Lihat';
 
@@ -1517,7 +1519,7 @@ function daftarAkunBaru(){
 }
 
 /* Muat data akun aktif ke profil */
-function loadAkunAktif(){
+async function loadAkunAktif(){
   const akunList = getAkunList();
   const akunAktif = getAkunAktif();
   const akun = akunList.find(a => a.id === akunAktif);
@@ -1564,7 +1566,7 @@ function loadAkunAktif(){
   }
 
   /* Load usahaProfileData dan sinkron jika ada */
-  const usahaData = getUsahaData();
+  const usahaData = await getUsahaData();
   syncProfileCard(usahaData);
 }
 
@@ -1677,6 +1679,9 @@ async function initAkun(){
     const akun = akunList.find(a => a.id === akunAktif);
     if(akun){
       await loadAkunAktifDenganFirestore(akun);
+      /* Refresh profile card setelah data dari Firestore */
+      const freshData = await getUsahaData();
+      syncProfileCard(freshData);
     }
 
     /* Simpan last login jika user terautentikasi */
